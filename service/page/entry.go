@@ -2,7 +2,6 @@ package page
 
 import (
 	"encoding/json"
-	"fmt"
 	"io/ioutil"
 	"strings"
 
@@ -43,12 +42,13 @@ func (page *Page) parse(tplFile string) error {
 
 func (page *Page) Render(tpl string) string {
 
+	bytes, _ := json.Marshal(page.Data)
+
 	context := map[string]interface{}{
 		"title": page.Title,
 		"data":  page.Data,
+		"raw":   string(bytes),
 	}
-	bytes, _ := json.Marshal(page.Data)
-	fmt.Println(string(bytes))
 
 	if err := page.parse(tpl); err != nil {
 		return err.Error()

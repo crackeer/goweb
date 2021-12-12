@@ -2,7 +2,6 @@ package container
 
 import (
 	"database/sql"
-	"fmt"
 	"sync"
 
 	_ "github.com/mattn/go-sqlite3"
@@ -21,7 +20,6 @@ func init() {
 //  @return error
 func LockDatabase() (*sql.DB, error) {
 	dbLocker.Lock()
-	fmt.Println(config.Sqlite3DatabaseFile)
 	return sql.Open("sqlite3", config.Sqlite3DatabaseFile)
 }
 
