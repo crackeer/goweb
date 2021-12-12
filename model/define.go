@@ -2,7 +2,14 @@ package model
 
 import "encoding/json"
 
-const ObjectTypeLink = "link"
+const (
+	TypeLink = "link"
+	TypeMD   = "md"
+)
+
+const (
+	TagDiary = "diary"
+)
 
 /*
 CREATE TABLE object(

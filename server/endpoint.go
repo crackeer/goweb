@@ -18,7 +18,9 @@ func Run() error {
 	api.POST("object/update", handler.UpdateObject)
 
 	page := router.Group("page")
-	page.GET("links", handler.RenderLinkPage)
+	page.GET("index", handler.RenderIndex)
+	page.GET("links", handler.RenderLinkList)
+	page.GET("edit_links", handler.RenderEditLink)
 
 	return router.Run(fmt.Sprintf(":%d", config.Port))
 }

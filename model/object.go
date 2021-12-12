@@ -7,9 +7,13 @@ import (
 	"github.com/crackeer/goweb/container"
 )
 
-const insertSQL = "INSERT INTO object(title, content, tag, type, create_time, update_time) values(?, ?, ?, ?, ?, ?)"
-const updateSQL = "UPDATE object SET title=?, content=?, tag=?, update_time=? WHERE id= ?"
-const selectSQL = "SELECT id, title, content, tag, type, create_time, update_time FROM object where type=?"
+const (
+	insertSQL = "INSERT INTO object(title, content, tag, type, create_time, update_time) values(?, ?, ?, ?, ?, ?)"
+	updateSQL = "UPDATE object SET title=?, content=?, tag=?, update_time=? WHERE id= ?"
+	selectSQL = "SELECT id, title, content, tag, type, create_time, update_time FROM object where type=?"
+
+	querySQL = "SELECT id, title, content, tag, type, create_time, update_time FROM object where type=? and tag=? and title=? order by id asc"
+)
 
 func (object *Object) Update() error {
 
@@ -78,4 +82,37 @@ func GetAll(objectType string) ([]Object, error) {
 	rows.Close()
 	db.Close()
 	return list, nil
+}
+
+func GetTheOne(objectType string, theTag, theTitle string) (*Object, error) {
+	list := []*Object{}
+	db, _ := container.LockDatabase()
+	defer container.UnlockDatabase()
+
+	rows, err := db.Query(querySQL, objectType, theTag, theTitle)
+	if err != nil {
+		return nil, err
+	}
+
+	var (
+		id                                                   int64
+		title, content, tag, objType, createTime, updateTime string
+	)
+	rows.Scan()
+	for rows.Next() {
+		if err := rows.Scan(&id, &title, &content, &tag, &objType, &createTime, &updateTime); err == nil {
+			list = append(list, &Object{
+				ID:         id,
+				Title:      title,
+				Content:    content,
+				Tag:        tag,
+				Type:       objType,
+				CreateTime: createTime,
+				UpdateTime: updateTime,
+			})
+		}
+	}
+	rows.Close()
+	db.Close()
+	return list[len(list)-1], nil
 }

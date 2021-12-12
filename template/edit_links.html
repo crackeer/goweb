@@ -1,0 +1,74 @@
+<div class="row">
+    <div class="col-md-6" style="border-right: 1px dashed gray;">
+        {% for l in data %}
+        <div class="panel panel-default" style="padding: 3px;">
+            <p>{{l.tag}}</p>
+            <div class="btn-group" role="group" aria-label="...">
+                {% for xx in l.list %}
+                <a data-id={{xx.id}} data-title="{{xx.title}}" data-content="{{xx.content}}" data-tag="{{xx.tag}}"
+                    class="to-edit-link btn">{{ xx.title }}</a>
+                {% endfor %}
+            </div>
+        </div>
+        {% endfor %}
+
+    </div>
+    <div class="col-md-6">
+        <form>
+            <div class="form-group">
+                <label for="recipient-name" class="control-label">标题</label>
+                <input type="text" class="form-control" id="edit-title">
+            </div>
+            <div class="form-group">
+                <label for="message-text" class="control-label">地址</label>
+                <textarea class="form-control" id="edit-content"></textarea>
+            </div>
+            <div class="form-group">
+                <label for="recipient-name" class="control-label">标签</label>
+                <input type="text" class="form-control" id="edit-tag">
+                {% for l in data %}
+                <label class="radio-inline">
+                    <input type="radio" name="tag-radio" value="{{l.tag}}" class="quick-tag">{{l.tag}}
+                </label>
+                {% endfor %}
+            </div>
+            <div class="form-group">
+                <button type="button" class="btn btn-danger btn-sm confirm-edit-link" data-add="0">修改</button>
+                <button type="button" class="btn btn-primary btn-sm confirm-edit-link" data-add="1">新增</button>
+            </div>
+            <input id="edit-id" type="hidden">
+        </form>
+    </div>
+</div>
+
+<script text="text/javascript">
+    $(document).ready(function () {
+        $('.quick-tag').change(function () {
+            $('#edit-tag').val($(this).val())
+        })
+        $('.to-edit-link').click(function () {
+            $('#edit-id').val($(this).data("id"))
+            $('#edit-title').val($(this).data("title"))
+            $('#edit-content').val($(this).data("content"))
+            $('#edit-tag').val($(this).data("tag"))
+        })
+        $('.confirm-edit-link').click(function () {
+            let data = { id: parseInt($('#edit-id').val()), title: $('#edit-title').val(), content: $('#edit-content').val(), tag: $('#edit-tag').val(), type: 'link' }
+            if($(this).data('add') == '1') {
+                data.id = 0
+            }
+            $.ajax({
+                method: 'post',
+                url: '/api/object/update',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function (result) {
+                    if (result.code == 0) {
+                        window.location.reload()
+                    }
+                }
+            })
+        })
+
+    })
+</script>

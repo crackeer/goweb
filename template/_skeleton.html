@@ -24,10 +24,21 @@
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/jsonview@1.2.0/dist/jquery.jsonview.css" />
     <script src="https://cdn.jsdelivr.net/npm/jsonview@1.2.0/dist/jquery.jsonview.js"></script>
 
+    <!-- ⚠️生产环境请指定版本号，如 https://cdn.jsdelivr.net/npm/vditor@x.x.x/dist... -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/vditor/dist/index.css" />
+    <script src="https://cdn.jsdelivr.net/npm/vditor/dist/index.min.js"></script>
+
+
 </head>
 
 <body>
     <div style="margin:20px auto;width:80%;">
+        <ol class="breadcrumb">
+            <li><a href="/page/index">首页</a></li>
+            {% if path != "/page/index" %}
+            <li><a href="{{path}}" class="active">{{title}}</a></li>
+            {% endif %}
+        </ol>
         {{BODY}}
     </div>
 </body>

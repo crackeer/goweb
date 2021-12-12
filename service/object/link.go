@@ -9,7 +9,7 @@ import (
 // GetAllLinkList
 //  @return []map
 func GetAllLinkList() []map[string]interface{} {
-	objects, _ := model.GetAll(model.ObjectTypeLink)
+	objects, _ := model.GetAll(model.TypeLink)
 
 	mapData := map[string][]map[string]interface{}{}
 	for _, tmp := range objects {

@@ -29,5 +29,6 @@ func UpdateObject(ctx *gin.Context) {
 
 	ctx.JSON(http.StatusOK, map[string]interface{}{
 		"code": 0,
+		"data": object.ToMap(),
 	})
 }

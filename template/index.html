@@ -1,0 +1,43 @@
+<div class="panel panel-primary">
+    <div class="panel-body">
+        <a href="/page/links" class="btn">书签</a>
+        <a href="/page/edit_links" class="btn">管理书签</a>
+    </div>
+</div>
+<h2 class="text-danger"><strong>{{data.date}}</strong></h2>
+<div id="vditor"></div>
+<input type="hidden" value="{{data.diary.id}}" id="diary-id">
+<input type="hidden" value="{{data.date}}" id="diary-title">
+<input type="hidden" value="{{data.diary.content}}" id="diary-content">
+
+<script text="text/javascript">
+    $(document).ready(function () {
+        var editor = new Vditor('vditor', {
+            placeholder: '开始记录',
+            cache: {
+                enable: false,
+            },
+            minHeight: 500,
+            input: (val) => {
+                let data = { id: parseInt($('#diary-id').val()), title: $('#diary-title').val(), content: val, tag: 'diary', type: 'md' }
+                $.ajax({
+                    method: 'post',
+                    url: '/api/object/update',
+                    contentType: 'application/json',
+                    data: JSON.stringify(data),
+                    success: function (result) {
+                        if (result.code != 0) {
+                            alert("同步失败")
+                        } else {
+                            $('#diary-id').val(result.data.id)
+                        }
+                    }
+                })
+            }
+        })
+        setTimeout(() => {
+            editor.setValue($('#diary-content').val(), true)
+        }, 500)
+
+    })
+</script>

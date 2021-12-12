@@ -5,24 +5,28 @@ import (
 	"io/ioutil"
 	"strings"
 
+	"github.com/crackeer/goweb/container"
 	"github.com/flosch/pongo2/v4"
+	"github.com/gin-gonic/gin"
 )
 
 // Page
 type Page struct {
-	Title string
-	Data  interface{}
+	GinCtx *gin.Context
+	Title  string
+	Data   interface{}
 
 	skeletonFile string
 
 	tplContent string
 }
 
-func NewPage(title string, data interface{}, skeletonFile string) *Page {
+func NewPage(ctx *gin.Context, title string, data interface{}) *Page {
 	return &Page{
+		GinCtx:       ctx,
 		Title:        title,
 		Data:         data,
-		skeletonFile: skeletonFile,
+		skeletonFile: container.GetSkeletionTemplatePath(),
 	}
 }
 
@@ -48,6 +52,7 @@ func (page *Page) Render(tpl string) string {
 		"title": page.Title,
 		"data":  page.Data,
 		"raw":   string(bytes),
+		"path":  page.GinCtx.Request.URL.String(),
 	}
 
 	if err := page.parse(tpl); err != nil {
