@@ -1,0 +1,7 @@
+{
+    "port": 8080,
+    "sqlite3_database_file": "./sqlite3.db",
+    "template_file_ext": ".html",
+    "template_file_dir": "./template/",
+    "template_skeleton_file": "_skeleton"
+}
