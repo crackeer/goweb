@@ -114,5 +114,8 @@ func GetTheOne(objectType string, theTag, theTitle string) (*Object, error) {
 	}
 	rows.Close()
 	db.Close()
-	return list[len(list)-1], nil
+	if len(list) > 0 {
+		return list[len(list)-1], nil
+	}
+	return nil, nil
 }
