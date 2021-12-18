@@ -1,0 +1,9 @@
+<h3 class="text-danger"><strong>{{data.title}}</strong></h3>
+<div id="markdown-view" style="margin-top: 20px;">
+    <textarea style="display:none;">{{data.content}}</textarea>
+</div>
+<script text="text/javascript">
+    $(document).ready(function () {
+        editormd.markdownToHTML("markdown-view", {});
+    })
+</script>

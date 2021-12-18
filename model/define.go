@@ -3,12 +3,9 @@ package model
 import "encoding/json"
 
 const (
-	TypeLink = "link"
-	TypeMD   = "md"
-)
-
-const (
-	TagDiary = "diary"
+	TypeLink  = "link"
+	TypeMD    = "md"
+	TypeDiary = "diary"
 )
 
 /*

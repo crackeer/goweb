@@ -21,6 +21,8 @@ func Run() error {
 	page.GET("index", handler.RenderIndex)
 	page.GET("links", handler.RenderLinkList)
 	page.GET("edit_links", handler.RenderEditLink)
+	page.GET("diarys", handler.RenderDiaryList)
+	page.GET("markdown/:id", handler.RenderMarkdown)
 	router.NoRoute(handler.RenderIndex)
 
 	return router.Run(fmt.Sprintf(":%d", config.Port))
