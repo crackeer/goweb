@@ -1,14 +1,12 @@
 <div class="panel panel-primary">
     <div class="panel-body">
-        <a href="/page/links" class="btn">书签</a>
-        <a href="/page/edit_links" class="btn">管理书签</a>
-        <a href="/page/diarys" class="btn">日记</a>
+        <a href="/page/link/list" class="btn">书签</a>
+        <a href="/page/link/edit" class="btn">管理书签</a>
+        <a href="/page/diary/list" class="btn">日记列表</a>
+        <a href="/page/markdown/list" class="btn">markdown文档列表</a>
+        <a href="/page/markdown/create" class="btn">创建markdown文档</a>
     </div>
 </div>
-<link rel="stylesheet" href="//cdn.jsdelivr.net/npm/editor.md@1.5.0/css/editormd.min.css">
-<script src="//cdn.jsdelivr.net/npm/editor.md@1.5.0/editormd.min.js"></script>
-<script src="//cdn.jsdelivr.net/npm/editor.md@1.5.0/lib/prettify.min.js"></script>
-<script src="//cdn.jsdelivr.net/npm/editor.md@1.5.0/lib/marked.min.js"></script>
 
 <h3 class="text-danger"><strong>日记-{{data.date}}</strong></h3>
 <div id="editor" style="margin-top: 20px;">

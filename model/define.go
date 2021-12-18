@@ -4,7 +4,7 @@ import "encoding/json"
 
 const (
 	TypeLink  = "link"
-	TypeMD    = "md"
+	TypeMD    = "markdown"
 	TypeDiary = "diary"
 )
 

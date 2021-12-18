@@ -87,3 +87,54 @@ func RenderMarkdown(ctx *gin.Context) {
 
 	ctx.Data(http.StatusOK, "text/html", []byte(html))
 }
+
+// RenderCreateMarkdown
+//  @param ctx
+func RenderCreateMarkdown(ctx *gin.Context) {
+
+	tags, _ := model.GetTags(model.TypeMD)
+
+	pager := pageService.NewPage(ctx, "创建文档", tags)
+
+	html := pager.Render(container.GetFullTemplatePath("create_markdown"))
+
+	ctx.Data(http.StatusOK, "text/html", []byte(html))
+}
+
+// RenderMarkdownList
+//  @param ctx
+func RenderMarkdownList(ctx *gin.Context) {
+
+	tags, _ := model.GetTags(model.TypeMD)
+	if len(tags) < 1 {
+		pager := pageService.NewPage(ctx, "markdown文档列表", map[string]interface{}{
+			"tags": tags,
+			"list": []map[string]interface{}{},
+			"tag":  "",
+			"page": 1,
+		})
+		html := pager.Render(container.GetFullTemplatePath("markdown_list"))
+		ctx.Data(http.StatusOK, "text/html", []byte(html))
+		return
+	}
+	page := ctx.DefaultQuery("page", "1")
+	val, _ := strconv.Atoi(page)
+
+	tag := ctx.DefaultQuery("tag", tags[0])
+	objects, _ := model.GetObjectList(model.TypeMD, tag, int64(val))
+
+	list := []map[string]interface{}{}
+	for _, v := range objects {
+		list = append(list, v.ToMap())
+	}
+
+	pager := pageService.NewPage(ctx, "markdown文档列表", map[string]interface{}{
+		"tags": tags,
+		"list": list,
+		"page": val,
+		"tag":  tag,
+	})
+
+	html := pager.Render(container.GetFullTemplatePath("markdown_list"))
+	ctx.Data(http.StatusOK, "text/html", []byte(html))
+}

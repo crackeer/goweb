@@ -19,10 +19,12 @@ func Run() error {
 
 	page := router.Group("page")
 	page.GET("index", handler.RenderIndex)
-	page.GET("links", handler.RenderLinkList)
-	page.GET("edit_links", handler.RenderEditLink)
-	page.GET("diarys", handler.RenderDiaryList)
-	page.GET("markdown/:id", handler.RenderMarkdown)
+	page.GET("link/list", handler.RenderLinkList)
+	page.GET("link/edit", handler.RenderEditLink)
+	page.GET("diary/list", handler.RenderDiaryList)
+	page.GET("markdown/detail/:id", handler.RenderMarkdown)
+	page.GET("markdown/create", handler.RenderCreateMarkdown)
+	page.GET("markdown/list", handler.RenderMarkdownList)
 	router.NoRoute(handler.RenderIndex)
 
 	return router.Run(fmt.Sprintf(":%d", config.Port))

@@ -2,7 +2,7 @@
     <p>日记</p>
     <div class="btn-group" role="group" aria-label="...">
         {% for xx in data %}
-        <a class="to-edit-link btn" href="/page/markdown/{{xx.id|stringformat:"%.f"}}" target="_blank">{{ xx.title }}</a>
+        <a class="to-edit-link btn" href="/page/markdown/detail/{{xx.id|stringformat:"%.f"}}" target="_blank">{{ xx.title }}</a>
         {% endfor %}
     </div>
 </div>

@@ -19,6 +19,14 @@ func UpdateObject(ctx *gin.Context) {
 		return
 	}
 
+	if len(object.Title) < 1 {
+		ctx.JSON(http.StatusOK, map[string]interface{}{
+			"code":    -2,
+			"message": "title是必须的",
+		})
+		return
+	}
+
 	if err := object.Update(); err != nil {
 		ctx.JSON(http.StatusOK, map[string]interface{}{
 			"code":    -1,

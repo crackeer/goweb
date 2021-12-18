@@ -1,0 +1,47 @@
+<form class="form-horizontal">
+    <div class="form-group">
+        <label for="title" class="col-sm-1 control-label">标签</label>
+        <div class="col-sm-5">
+            {% for t in data.tags %}
+            <label class="radio-inline">
+                <input type="radio" name="tag-radio" value="{{t}}" class="quick-tag" {% if(t==data.tag) %} checked {% endif %}>{{t}}
+            </label>
+            {% endfor %}
+        </div>
+    </div>
+</form>
+<hr />
+
+<div class="btn-group" role="group" aria-label="...">
+    {% for item in data.list %}
+    <a class="btn" href="/page/markdown/detail/{{item.id|stringformat:"%.f"}}" target="_blank">{{ item.title }}</a>
+    {% endfor %}
+</div>
+
+
+
+<input type="hidden" value="{{data.tag}}" id="tag">
+<input type="hidden" value="{{data.page}}" id="page">
+
+<script text="text/javascript">
+    $(document).ready(function () {
+        $('.quick-tag').change(function () {
+            window.location.href = '/page/markdown/list?tag=' + $(this).val() + '&page=' + $('#page').val()
+        })
+        $('#create-id').click(function () {
+            let data = { title: $('#title').val(), content: editor.getValue(), tag: $('#tag').val(), type: 'markdown' }
+            $.ajax({
+                method: 'post',
+                url: '/api/object/update',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function (result) {
+                    if (result.code == 0) {
+                        window.location.href = "/page/markdowns"
+                    }
+                }
+            })
+        })
+
+    })
+</script>
