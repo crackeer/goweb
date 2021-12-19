@@ -1,5 +1,5 @@
 {
-    "port": 8080,
+    "port": 8888,
     "sqlite3_database_file": "./sqlite3.db",
     "template_file_ext": ".html",
     "template_file_dir": "./template/",
