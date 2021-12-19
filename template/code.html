@@ -11,7 +11,7 @@
 
 <div style="margin: 20px auto; text-align: center;">
     <button type="button" class="btn btn-danger" id="delete-id">删除</button>
-    <a class="btn btn-primary" id="update-id" href="/page/code/edit?id={{data.object.id|stringformat:"%.f"}}">修改</a>
+    <a class="btn btn-primary" id="update-id" href="/page/code/edit?id={{data.object.id|stringformat:" %.f"}}">修改</a>
 </div>
 <input type="hidden" value="{{data.object.id|stringformat:" %.f"}}" id="id">
 <input type="hidden" value="{{data.object.tag}}" id="tag">
@@ -27,7 +27,7 @@
             searchReplace: true,
             readOnly: true,
             path: "//cdn.jsdelivr.net/npm/editor.md@1.5.0/lib/",
-             mode : "{{data.object.tag}}"
+            mode: "{{data.object.tag}}"
         });
         $('#delete-id').click(function () {
             bootbox.confirm("确认要删除该代码？将无法恢复", function (result) {

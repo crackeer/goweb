@@ -50,6 +50,7 @@
 
         $('.quick-tag').change(function () {
             $('#tag').val($(this).val())
+            editor.setCodeMirrorOption("mode", $(this).val())
         })
         $('#create-id').click(function () {
             let data = { title: $('#title').val(), content:editor.getValue(), tag: $('#tag').val(), type: 'markdown' }
@@ -60,7 +61,7 @@
                 data: JSON.stringify(data),
                 success: function (result) {
                     if (result.code == 0) {
-                        window.location.href="/page/markdowns"
+                        window.location.href="/page/markdown/list"
                     }
                 }
             })

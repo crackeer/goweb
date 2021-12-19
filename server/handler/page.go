@@ -46,9 +46,9 @@ func RenderLinkList(ctx *gin.Context) {
 func RenderEditLink(ctx *gin.Context) {
 	list := objectService.GetAllLinkList()
 
-	page := pageService.NewPage(ctx, "修改书签", list)
+	page := pageService.NewPage(ctx, "书签管理", list)
 
-	html := page.Render(container.GetFullTemplatePath("edit_links"))
+	html := page.Render(container.GetFullTemplatePath("edit_link"))
 
 	ctx.Data(http.StatusOK, "text/html", []byte(html))
 }
@@ -97,7 +97,7 @@ func RenderCreateMarkdown(ctx *gin.Context) {
 
 	tags, _ := model.GetTags(model.TypeMD)
 
-	pager := pageService.NewPage(ctx, "创建文档", tags)
+	pager := pageService.NewPage(ctx, "创建markdown文档", tags)
 
 	html := pager.Render(container.GetFullTemplatePath("create_markdown"))
 
@@ -212,7 +212,6 @@ func RenderCodeList(ctx *gin.Context) {
 
 	tag := ctx.DefaultQuery("tag", "go")
 	objects, total, _ := model.GetObjectList(model.TypeCode, tag, int64(val))
-	fmt.Println(tag, objects)
 	list := []map[string]interface{}{}
 	for _, v := range objects {
 		list = append(list, v.ToMap())
