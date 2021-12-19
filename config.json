@@ -3,5 +3,27 @@
     "sqlite3_database_file": "./sqlite3.db",
     "template_file_ext": ".html",
     "template_file_dir": "./template/",
-    "template_skeleton_file": "_skeleton"
+    "template_skeleton_file": "_skeleton",
+    "code_languages": [
+        {
+            "value": "go",
+            "text": "Golang"
+        },
+        {
+            "value": "javascript",
+            "text": "JavaScript"
+        },
+        {
+            "value": "php",
+            "text": "PHP"
+        },
+        {
+            "value": "text/html",
+            "text": "HTML"
+        },
+        {
+            "value": "text/json",
+            "text": "JSON"
+        }
+    ]
 }

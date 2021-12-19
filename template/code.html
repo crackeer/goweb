@@ -1,26 +1,36 @@
 <div style="margin-bottom:20px; text-align: center;">
     <h3 class="text-danger"><strong>{{data.object.title}}</strong></h3>
 </div>
+<p><strong>语言：</strong> {{data.object.tag}}</p>
 
-<div class="panel panel-default">
-    <div class="panel-body">
-    <div id="markdown-view" style="margin-top: 20px;">
-        <textarea style="display:none;">{{data.object.content}}</textarea>
-    </div>
-    </div>
+
+<div id="editor" style="margin-top: 20px;">
+    <!-- Tips: Editor.md can auto append a `<textarea>` tag -->
+    <textarea style="display:none;">{{data.object.content}}</textarea>
 </div>
+
 <div style="margin: 20px auto; text-align: center;">
     <button type="button" class="btn btn-danger" id="delete-id">删除</button>
-    <a class="btn btn-primary" id="update-id" href="/page/markdown/edit?id={{data.object.id|stringformat:"%.f"}}">修改</a>
+    <a class="btn btn-primary" id="update-id" href="/page/code/edit?id={{data.object.id|stringformat:"%.f"}}">修改</a>
 </div>
 <input type="hidden" value="{{data.object.id|stringformat:" %.f"}}" id="id">
 <input type="hidden" value="{{data.object.tag}}" id="tag">
 <script text="text/javascript">
     $(document).ready(function () {
-        editormd.markdownToHTML("markdown-view", {});
 
+        var editor = editormd("editor", {
+            width: "100%",
+            height: '800px',
+            watch: false,
+            toolbar: false,
+            codeFold: true,
+            searchReplace: true,
+            readOnly: true,
+            path: "//cdn.jsdelivr.net/npm/editor.md@1.5.0/lib/",
+             mode : "{{data.object.tag}}"
+        });
         $('#delete-id').click(function () {
-            bootbox.confirm("确认要删除该文档？将无法恢复", function (result) {
+            bootbox.confirm("确认要删除该代码？将无法恢复", function (result) {
                 if (!result) {
                     return
                 }
@@ -32,7 +42,7 @@
                     data: JSON.stringify(data),
                     success: function (result) {
                         if (result.code == 0) {
-                            window.location.href = "/page/markdown/list?tag=" + $('#tag').val()
+                            window.location.href = "/page/code/list?tag=" + $('#tag').val()
                         }
                     }
                 })
@@ -40,5 +50,4 @@
         })
 
     })
-
 </script>

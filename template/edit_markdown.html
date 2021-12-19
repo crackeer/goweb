@@ -1,0 +1,78 @@
+{% if(data.object.type == "markdown")%}
+<form class="form-horizontal">
+    <div class="form-group">
+        <label for="title" class="col-sm-1 control-label">标题</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" id="title" placeholder="请输入标题" value="{{data.object.title}}">
+        </div>
+    </div>
+</form>
+{% else %}
+   <input type="hidden" value="{{data.object.title}}" id="title">
+{% endif %}
+
+<div id="editor" style="margin-top: 20px;">
+    <!-- Tips: Editor.md can auto append a `<textarea>` tag -->
+    <textarea style="display:none;">{{data.object.content}}</textarea>
+</div>
+{% if(data.object.type == "markdown")%}
+<form class="form-horizontal">
+    <div class="form-group">
+        <label for="title" class="col-sm-1 control-label">标签</label>
+        <div class="col-sm-5">
+            <input type="text" class="form-control" id="tag" placeholder="请输入标签" value="{{data.object.tag}}">
+        </div>
+    </div>
+    <div class="form-group">
+        <div class="col-sm-offset-1 col-sm-9">
+            {% for tag in data.tags %}
+            <label class="radio-inline">
+                <input type="radio" name="tag-radio" value="{{tag}}" class="quick-tag" {% if(tag == data.object.tag)%}checked{% endif %}>{{tag}}
+            </label>
+            {% endfor %}
+        </div>
+    </div>
+</form>
+{% else %}
+   <input type="hidden" value="{{data.object.title}}" id="title">
+{% endif %}
+
+<div style="margin: 20px auto; text-align: center;">
+    <button type="button" class="btn btn-primary" id="update-id">修改</button>
+</div>
+<input type="hidden" value="{{data.object.id|stringformat:"%.f"}}" id="id">
+
+<script text="text/javascript">
+    $(document).ready(function () {
+        var editor = editormd("editor", {
+            width: "100%",
+            height: '800px',
+            delay: 1000,
+            path: "//cdn.jsdelivr.net/npm/editor.md@1.5.0/lib/",
+            toolbarIcons: function () {
+                // Or return editormd.toolbarModes[name]; // full, simple, mini
+                // Using "||" set icons align right.
+                return ["undo", "redo", "|", "bold", "hr", "|", "preview", "watch", "|", "fullscreen", "link", "table", "||", "watch", "fullscreen", "preview"]
+            },
+        });
+
+        $('.quick-tag').change(function () {
+            $('#tag').val($(this).val())
+        })
+        $('#update-id').click(function () {
+            let data = { title: $('#title').val(), content:editor.getValue(), tag: $('#tag').val(), type: 'markdown', id : parseInt($('#id').val()) }
+            $.ajax({
+                method: 'post',
+                url: '/api/object/update',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function (result) {
+                    if (result.code == 0) {
+                        window.location.href="/page/markdown/detail?id=" +  $('#id').val()
+                    }
+                }
+            })
+        })
+
+    })
+</script>

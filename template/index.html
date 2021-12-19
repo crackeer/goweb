@@ -1,14 +1,20 @@
 <div class="panel panel-primary">
     <div class="panel-body">
-        <a href="/page/link/list" class="btn">书签</a>
+        <h5><strong>一些有意思的功能</strong></h5>
+        <a href="/page/link/list" class="btn"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span> 书签</a>
         <a href="/page/link/edit" class="btn">管理书签</a>
         <a href="/page/diary/list" class="btn">日记列表</a>
-        <a href="/page/markdown/list" class="btn">markdown文档列表</a>
+        <a href="/page/markdown/list" class="btn"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span> markdown文档列表</a>
         <a href="/page/markdown/create" class="btn">创建markdown文档</a>
+
+        <a href="/page/code/list" class="btn"><span class="glyphicon glyphicon-text-size" aria-hidden="true"></span> 代码片段列表</a>
+        <a href="/page/code/create" class="btn">创建代码片段</a>
     </div>
 </div>
+<div style="margin-top: 50px;margin-bottom: 20px;">
+    <h3 class="text-danger"><strong>今日记 - <small>{{data.date}}</small></strong></h3>
+</div>
 
-<h3 class="text-danger"><strong>日记-{{data.date}}</strong></h3>
 <div id="editor" style="margin-top: 20px;">
     <!-- Tips: Editor.md can auto append a `<textarea>` tag -->
     <textarea style="display:none;">{{data.diary.content}}</textarea>

@@ -18,9 +18,12 @@ const (
 
 	queryDiaryListSQL = "SELECT id, title, tag, type, create_time, update_time FROM object where type=? order by id desc limit ? offset ?"
 
-	queryListSQL = "SELECT id, title, tag, type, create_time, update_time FROM object where type=? and tag=? order by id asc limit ? offset ?"
+	queryListSQL        = "SELECT id, title, tag, type, create_time, update_time FROM object where type=? and tag=? order by id asc limit ? offset ?"
+	queryObjectCountSQL = "SELECT count(*) as count FROM object where type=? and tag=?"
 
 	querySingleSQL = "SELECT id, title, content, tag, type, create_time, update_time FROM object where id = ?"
+
+	deleteObjectSQL = "delete FROM object where id = ?"
 )
 
 const (
@@ -28,6 +31,9 @@ const (
 	diaryPageSize int64 = 365
 )
 
+// Update
+//  @receiver object
+//  @return error
 func (object *Object) Update() error {
 
 	db, _ := container.LockDatabase()
@@ -65,6 +71,10 @@ func (object *Object) Update() error {
 	return nil
 }
 
+// GetAll
+//  @param objectType
+//  @return []Object
+//  @return error
 func GetAll(objectType string) ([]Object, error) {
 	list := []Object{}
 	db, _ := container.LockDatabase()
@@ -111,7 +121,6 @@ func GetTheDiary(objectType string, theTag string) (*Object, error) {
 		id                                                   int64
 		title, content, tag, objType, createTime, updateTime string
 	)
-	rows.Scan()
 	for rows.Next() {
 		if err := rows.Scan(&id, &title, &content, &tag, &objType, &createTime, &updateTime); err == nil {
 			list = append(list, &Object{
@@ -150,7 +159,6 @@ func GetTags(objectType string) ([]string, error) {
 	var (
 		tag string
 	)
-	rows.Scan()
 	for rows.Next() {
 		if err := rows.Scan(&tag); err == nil {
 			list = append(list, tag)
@@ -167,18 +175,18 @@ func GetTags(objectType string) ([]string, error) {
 //  @param page
 //  @return []string
 //  @return error
-func GetObjectList(objectType string, queryTag string, page int64) ([]*Object, error) {
+func GetObjectList(objectType string, queryTag string, page int64) ([]*Object, int64, error) {
 	list := []*Object{}
 	db, _ := container.LockDatabase()
 	defer container.UnlockDatabase()
 
 	rows, err := db.Query(queryListSQL, objectType, queryTag, pageSize, (page-1)*pageSize)
 	if err != nil {
-		return nil, err
+		return nil, 0, err
 	}
 
 	var (
-		id                                          int64
+		id, total                                   int64
 		title, tag, objType, createTime, updateTime string
 	)
 	rows.Scan()
@@ -194,9 +202,15 @@ func GetObjectList(objectType string, queryTag string, page int64) ([]*Object, e
 			})
 		}
 	}
+
+	stmt, countError := db.Prepare(queryObjectCountSQL)
+	if countError == nil {
+		stmt.QueryRow(objectType, queryTag).Scan(&total)
+	}
+
 	rows.Close()
 	db.Close()
-	return list, nil
+	return list, total, nil
 }
 
 // GetDiaryList
@@ -276,4 +290,24 @@ func GetObjectByID(id int64) (*Object, error) {
 		return list[len(list)-1], nil
 	}
 	return nil, nil
+}
+
+// DeleteObjectByID
+//  @param id
+//  @return error
+func DeleteObjectByID(id int64) error {
+	db, _ := container.LockDatabase()
+	defer container.UnlockDatabase()
+
+	stmt, err := db.Prepare(deleteObjectSQL)
+	if err != nil {
+		return err
+	}
+	_, err = stmt.Exec(id)
+	stmt.Close()
+	db.Close()
+	if err != nil {
+		return err
+	}
+	return nil
 }

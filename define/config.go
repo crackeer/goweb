@@ -7,4 +7,6 @@ type Config struct {
 	TemplateFileExt      string `json:"template_file_ext"`
 	TemplateFileDir      string `json:"template_file_dir"`
 	TemplateSkeletonFile string `json:"template_skeleton_file"`
+
+	CodeLanguages []map[string]interface{} `json:"code_languages"`
 }

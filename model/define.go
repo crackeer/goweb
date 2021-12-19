@@ -6,6 +6,7 @@ const (
 	TypeLink  = "link"
 	TypeMD    = "markdown"
 	TypeDiary = "diary"
+	TypeCode  = "code"
 )
 
 /*
