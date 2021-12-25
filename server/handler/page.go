@@ -20,8 +20,8 @@ func RenderIndex(ctx *gin.Context) {
 	date := common.GetNowDate()
 	obj, _ := model.GetTheDiary(model.TypeDiary, date)
 	page := pageService.NewPage(ctx, "首页", map[string]interface{}{
-		"date":  date,
-		"diary": obj.ToMap(),
+		"date":   date,
+		"object": obj.ToMap(),
 	})
 
 	html := page.Render(container.GetFullTemplatePath("index"))

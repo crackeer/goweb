@@ -17,6 +17,7 @@ func Run() error {
 
 	api := router.Group("api")
 	api.POST("object/update", handler.UpdateObject)
+	api.POST("object/append", handler.AppendObject)
 	api.POST("object/delete", handler.DeleteObject)
 
 	page := router.Group("page")
