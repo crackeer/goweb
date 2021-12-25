@@ -7,11 +7,40 @@ import (
 
 	"github.com/crackeer/goweb/common"
 	"github.com/crackeer/goweb/container"
+	"github.com/crackeer/goweb/define"
 	"github.com/crackeer/goweb/model"
 	objectService "github.com/crackeer/goweb/service/object"
 	pageService "github.com/crackeer/goweb/service/page"
 	"github.com/gin-gonic/gin"
 )
+
+// RenderIndex
+//  @param ctx
+func RenderLogin(ctx *gin.Context) {
+	conf := container.GetConfig()
+	err := ""
+	if ctx.Request.Method == http.MethodPost {
+		password := common.MD5(ctx.PostForm("password"))
+		if conf.PasswordMD5 == password {
+			ctx.SetCookie(define.TokenKey, common.MD5(conf.PasswordMD5), 3600*24*30, "/", "", true, true)
+			page := pageService.NewPage(ctx, "登录成功", map[string]interface{}{})
+			html := page.Render(container.GetFullTemplatePath("login_success"))
+			ctx.Data(http.StatusOK, "text/html", []byte(html))
+			return
+		}
+		err = "密码错误"
+	}
+
+	date := common.GetNowDate()
+	page := pageService.NewPage(ctx, "请登录", map[string]interface{}{
+		"date":  date,
+		"error": err,
+	})
+
+	html := page.Render(container.GetFullTemplatePath("login"))
+
+	ctx.Data(http.StatusOK, "text/html", []byte(html))
+}
 
 // RenderIndex
 //  @param ctx

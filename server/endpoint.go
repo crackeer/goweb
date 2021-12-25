@@ -6,6 +6,7 @@ import (
 
 	"github.com/crackeer/goweb/container"
 	"github.com/crackeer/goweb/server/handler"
+	"github.com/crackeer/goweb/server/middleware"
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,7 +15,9 @@ func Run() error {
 	router := gin.New()
 	config := container.GetConfig()
 	gin.SetMode(gin.DebugMode)
+	router.Any("page/login", handler.RenderLogin)
 
+	router.Use(middleware.Login())
 	api := router.Group("api")
 	api.POST("object/update", handler.UpdateObject)
 	api.POST("object/append", handler.AppendObject)

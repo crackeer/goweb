@@ -8,5 +8,8 @@ type Config struct {
 	TemplateFileDir      string `json:"template_file_dir"`
 	TemplateSkeletonFile string `json:"template_skeleton_file"`
 
+	PasswordMD5 string `json:"password_md5"`
+	Key         string `json:"key"`
+
 	CodeLanguages []map[string]interface{} `json:"code_languages"`
 }

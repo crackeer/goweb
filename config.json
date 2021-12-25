@@ -25,5 +25,7 @@
             "value": "text/json",
             "text": "JSON"
         }
-    ]
+    ],
+    "password_md5" : "a12dadb8024fd2ddc5a86120ebf50c27",
+    "key" : "123456789"
 }
