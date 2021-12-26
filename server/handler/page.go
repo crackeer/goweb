@@ -14,6 +14,30 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func getPager(ctx *gin.Context) *pageService.Page {
+	val, exists := ctx.Get("renderer")
+	if exists {
+		if pager, ok := val.(*pageService.Page); ok {
+			return pager
+		}
+	}
+	return nil
+}
+
+func setData(ctx *gin.Context, data interface{}) {
+	pager := getPager(ctx)
+	if pager != nil {
+		pager.SetData(data)
+	}
+}
+
+func setTitle(ctx *gin.Context, title string) {
+	pager := getPager(ctx)
+	if pager != nil {
+		pager.SetTitle(title)
+	}
+}
+
 // RenderIndex
 //  @param ctx
 func RenderLogin(ctx *gin.Context) {
@@ -23,23 +47,16 @@ func RenderLogin(ctx *gin.Context) {
 		password := common.MD5(ctx.PostForm("password"))
 		if conf.PasswordMD5 == password {
 			ctx.SetCookie(define.TokenKey, common.MD5(conf.PasswordMD5), 3600*24*30, "/", "", true, true)
-			page := pageService.NewPage(ctx, "登录成功", map[string]interface{}{})
-			html := page.Render(container.GetFullTemplatePath("login_success"))
-			ctx.Data(http.StatusOK, "text/html", []byte(html))
 			return
 		}
 		err = "密码错误"
 	}
 
 	date := common.GetNowDate()
-	page := pageService.NewPage(ctx, "请登录", map[string]interface{}{
+	setData(ctx, map[string]interface{}{
 		"date":  date,
 		"error": err,
 	})
-
-	html := page.Render(container.GetFullTemplatePath("login"))
-
-	ctx.Data(http.StatusOK, "text/html", []byte(html))
 }
 
 // RenderIndex
@@ -48,38 +65,22 @@ func RenderIndex(ctx *gin.Context) {
 
 	date := common.GetNowDate()
 	obj, _ := model.GetTheDiary(model.TypeDiary, date)
-	page := pageService.NewPage(ctx, "首页", map[string]interface{}{
+	setData(ctx, map[string]interface{}{
 		"date":   date,
 		"object": obj.ToMap(),
 	})
-
-	html := page.Render(container.GetFullTemplatePath("index"))
-
-	ctx.Data(http.StatusOK, "text/html", []byte(html))
 }
 
 // RenderLinkList
 //  @param ctx
 func RenderLinkList(ctx *gin.Context) {
-	list := objectService.GetAllLinkList()
-
-	page := pageService.NewPage(ctx, "书签列表", list)
-
-	html := page.Render(container.GetFullTemplatePath("links"))
-
-	ctx.Data(http.StatusOK, "text/html", []byte(html))
+	setData(ctx, objectService.GetAllLinkList())
 }
 
 // RenderLinkList
 //  @param ctx
 func RenderEditLink(ctx *gin.Context) {
-	list := objectService.GetAllLinkList()
-
-	page := pageService.NewPage(ctx, "书签管理", list)
-
-	html := page.Render(container.GetFullTemplatePath("edit_link"))
-
-	ctx.Data(http.StatusOK, "text/html", []byte(html))
+	setData(ctx, objectService.GetAllLinkList())
 }
 
 // RenderDiaryList
@@ -96,11 +97,7 @@ func RenderDiaryList(ctx *gin.Context) {
 		list = append(list, v.ToMap())
 	}
 
-	pager := pageService.NewPage(ctx, "日记列表", list)
-
-	html := pager.Render(container.GetFullTemplatePath("diary_list"))
-
-	ctx.Data(http.StatusOK, "text/html", []byte(html))
+	setData(ctx, list)
 }
 
 // RenderDiaryList
@@ -111,13 +108,9 @@ func RenderMarkdown(ctx *gin.Context) {
 	val, _ := strconv.Atoi(id)
 	object, _ := model.GetObjectByID(int64(val))
 
-	pager := pageService.NewPage(ctx, object.Title, map[string]interface{}{
+	setData(ctx, map[string]interface{}{
 		"object": object.ToMap(),
 	})
-
-	html := pager.Render(container.GetFullTemplatePath("markdown"))
-
-	ctx.Data(http.StatusOK, "text/html", []byte(html))
 }
 
 // RenderCreateMarkdown
@@ -126,11 +119,7 @@ func RenderCreateMarkdown(ctx *gin.Context) {
 
 	tags, _ := model.GetTags(model.TypeMD)
 
-	pager := pageService.NewPage(ctx, "创建markdown文档", tags)
-
-	html := pager.Render(container.GetFullTemplatePath("create_markdown"))
-
-	ctx.Data(http.StatusOK, "text/html", []byte(html))
+	setData(ctx, tags)
 }
 
 // RenderEditMarkdown
@@ -145,14 +134,11 @@ func RenderEditMarkdown(ctx *gin.Context) {
 	if object.Type == model.TypeDiary {
 		title = fmt.Sprintf("修改日记 - %s", object.Title)
 	}
-	pager := pageService.NewPage(ctx, title, map[string]interface{}{
+	setTitle(ctx, title)
+	setData(ctx, map[string]interface{}{
 		"object": object.ToMap(),
 		"tags":   tags,
 	})
-
-	html := pager.Render(container.GetFullTemplatePath("edit_markdown"))
-
-	ctx.Data(http.StatusOK, "text/html", []byte(html))
 }
 
 // RenderMarkdownList
@@ -161,15 +147,13 @@ func RenderMarkdownList(ctx *gin.Context) {
 
 	tags, _ := model.GetTags(model.TypeMD)
 	if len(tags) < 1 {
-		pager := pageService.NewPage(ctx, "markdown文档列表", map[string]interface{}{
+		setData(ctx, map[string]interface{}{
 			"tags":  tags,
 			"list":  []map[string]interface{}{},
 			"tag":   "",
 			"page":  1,
 			"total": 0,
 		})
-		html := pager.Render(container.GetFullTemplatePath("markdown_list"))
-		ctx.Data(http.StatusOK, "text/html", []byte(html))
 		return
 	}
 	page := ctx.DefaultQuery("page", "1")
@@ -183,7 +167,7 @@ func RenderMarkdownList(ctx *gin.Context) {
 		list = append(list, v.ToMap())
 	}
 
-	pager := pageService.NewPage(ctx, "markdown文档列表", map[string]interface{}{
+	setData(ctx, map[string]interface{}{
 		"tags":  tags,
 		"list":  list,
 		"page":  val,
@@ -191,8 +175,6 @@ func RenderMarkdownList(ctx *gin.Context) {
 		"total": total,
 	})
 
-	html := pager.Render(container.GetFullTemplatePath("markdown_list"))
-	ctx.Data(http.StatusOK, "text/html", []byte(html))
 }
 
 // RenderCreateMarkdown
@@ -202,14 +184,10 @@ func RenderCreateCode(ctx *gin.Context) {
 	lang := ctx.DefaultQuery("tag", "go")
 
 	config := container.GetConfig()
-	pager := pageService.NewPage(ctx, "创建代码片段", map[string]interface{}{
+	setData(ctx, map[string]interface{}{
 		"tags": config.CodeLanguages,
 		"tag":  lang,
 	})
-
-	html := pager.Render(container.GetFullTemplatePath("create_code"))
-
-	ctx.Data(http.StatusOK, "text/html", []byte(html))
 }
 
 // RenderCreateMarkdown
@@ -222,14 +200,12 @@ func RenderEditCode(ctx *gin.Context) {
 	object, _ := model.GetObjectByID(int64(val))
 	config := container.GetConfig()
 	title := fmt.Sprintf("修改代码 - %s", object.Title)
-	pager := pageService.NewPage(ctx, title, map[string]interface{}{
+	setTitle(ctx, title)
+	setData(ctx, map[string]interface{}{
 		"object": object.ToMap(),
 		"tags":   config.CodeLanguages,
 	})
 
-	html := pager.Render(container.GetFullTemplatePath("edit_code"))
-
-	ctx.Data(http.StatusOK, "text/html", []byte(html))
 }
 
 // RenderCreateMarkdown
@@ -246,7 +222,7 @@ func RenderCodeList(ctx *gin.Context) {
 		list = append(list, v.ToMap())
 	}
 	config := container.GetConfig()
-	pager := pageService.NewPage(ctx, "代码列表", map[string]interface{}{
+	setData(ctx, map[string]interface{}{
 		"tags":  config.CodeLanguages,
 		"list":  list,
 		"page":  val,
@@ -254,11 +230,9 @@ func RenderCodeList(ctx *gin.Context) {
 		"total": total,
 	})
 
-	html := pager.Render(container.GetFullTemplatePath("code_list"))
-	ctx.Data(http.StatusOK, "text/html", []byte(html))
 }
 
-// RenderDiaryList
+// RenderCode
 //  @param ctx
 func RenderCode(ctx *gin.Context) {
 	id := ctx.DefaultQuery("id", "0")
@@ -266,11 +240,7 @@ func RenderCode(ctx *gin.Context) {
 	val, _ := strconv.Atoi(id)
 	object, _ := model.GetObjectByID(int64(val))
 
-	pager := pageService.NewPage(ctx, object.Title, map[string]interface{}{
+	setData(ctx, map[string]interface{}{
 		"object": object.ToMap(),
 	})
-
-	html := pager.Render(container.GetFullTemplatePath("code"))
-
-	ctx.Data(http.StatusOK, "text/html", []byte(html))
 }

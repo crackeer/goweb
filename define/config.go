@@ -12,4 +12,12 @@ type Config struct {
 	Key         string `json:"key"`
 
 	CodeLanguages []map[string]interface{} `json:"code_languages"`
+
+	Page map[string]PageConf `json:"page"`
+}
+
+type PageConf struct {
+	Title string `json:"title"`
+	TPL   string `json:"tpl"`
+	Type  string `json:"type"`
 }

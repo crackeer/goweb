@@ -26,6 +26,52 @@
             "text": "JSON"
         }
     ],
-    "password_md5" : "a12dadb8024fd2ddc5a86120ebf50c27",
-    "key" : "123456789"
+    "password_md5": "a12dadb8024fd2ddc5a86120ebf50c27",
+    "key": "123456789",
+    "page": {
+        "index": {
+            "title": "首页"
+        },
+        "diary/list": {
+            "title": "日记列表"
+        },
+        "diary/detail": {
+            "title": "日记详情",
+            "tpl": "markdown/detail"
+        },
+        "diary/edit": {
+            "title": "日记修改",
+            "tpl": "markdown/edit"
+        },
+        "markdown/list": {
+            "title": "文档列表"
+        },
+        "markdown/detail": {
+            "title": "文档详情"
+        },
+        "markdown/create": {
+            "title": "文档创建"
+        },
+        "markdown/edit": {
+            "title": "文档修改"
+        },
+        "link/list": {
+            "title": "书签列表"
+        },
+        "link/edit": {
+            "title": "书签管理"
+        },
+        "code/list": {
+            "title": "代码列表"
+        },
+        "code/detail": {
+            "title": "代码详情"
+        },
+        "code/create": {
+            "title": "代码创建"
+        },
+        "code/edit": {
+            "title": "代码修改"
+        }
+    }
 }

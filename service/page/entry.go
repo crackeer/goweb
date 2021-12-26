@@ -18,7 +18,51 @@ type Page struct {
 
 	skeletonFile string
 
+	context map[string]interface{}
+
 	tplContent string
+	tpl        string
+}
+
+// SetPageType
+//  @receiver page
+//  @param pageType
+func (page *Page) SetPageType(pageType string) {
+	page.context["page_type"] = pageType
+}
+
+// SetData
+//  @receiver page
+//  @param data
+func (page *Page) SetData(data interface{}) {
+	bytes, _ := json.Marshal(page.Data)
+	page.context["data"] = data
+	page.context["raws"] = string(bytes)
+}
+
+// SetTitle
+//  @receiver page
+//  @param title
+func (page *Page) SetTPLFile(fileName string) {
+	page.tpl = fileName
+}
+
+// SetTitle
+//  @receiver page
+//  @param title
+func (page *Page) SetTitle(title string) {
+	page.context["title"] = title
+}
+
+// DefaultPage
+//  @param ctx
+//  @return *Page
+func DefaultPage(ctx *gin.Context) *Page {
+	return &Page{
+		GinCtx:       ctx,
+		context:      map[string]interface{}{},
+		skeletonFile: container.GetSkeletionTemplatePath(),
+	}
 }
 
 func NewPage(ctx *gin.Context, title string, data interface{}) *Page {
@@ -26,6 +70,7 @@ func NewPage(ctx *gin.Context, title string, data interface{}) *Page {
 		GinCtx:       ctx,
 		Title:        title,
 		Data:         data,
+		context:      map[string]interface{}{},
 		skeletonFile: container.GetSkeletionTemplatePath(),
 	}
 }
@@ -44,22 +89,13 @@ func (page *Page) parse(tplFile string) error {
 
 }
 
-func (page *Page) Render(tpl string) string {
+func (page *Page) Render() string {
 
-	bytes, _ := json.Marshal(page.Data)
-
-	context := map[string]interface{}{
-		"title": page.Title,
-		"data":  page.Data,
-		"raw":   string(bytes),
-		"path":  page.GinCtx.Request.URL.String(),
-	}
-
-	if err := page.parse(tpl); err != nil {
+	if err := page.parse(page.tpl); err != nil {
 		return err.Error()
 	}
 	tplParser, _ := pongo2.FromString(page.tplContent)
-	html, _ := tplParser.Execute(pongo2.Context(context))
+	html, _ := tplParser.Execute(pongo2.Context(page.context))
 
 	return html
 

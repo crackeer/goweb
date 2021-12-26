@@ -1,8 +1,10 @@
 package handler
 
 import (
+	"io/ioutil"
 	"net/http"
 
+	"github.com/crackeer/goweb/common"
 	"github.com/crackeer/goweb/model"
 	"github.com/gin-gonic/gin"
 )
@@ -101,5 +103,56 @@ func DeleteObject(ctx *gin.Context) {
 		"code":    0,
 		"message": "删除成功",
 		"data":    nil,
+	})
+}
+
+// UploadObject
+//  @param ctx
+func UploadObject(ctx *gin.Context) {
+	header, err := ctx.FormFile("file")
+	if err != nil {
+		ctx.JSON(http.StatusOK, map[string]interface{}{
+			"code":    -1,
+			"message": err.Error(),
+		})
+		return
+	}
+
+	tmpFile, err := header.Open()
+
+	if err != nil {
+		ctx.JSON(http.StatusOK, map[string]interface{}{
+			"code":    -1,
+			"message": err.Error(),
+		})
+		return
+	}
+	bytes, err := ioutil.ReadAll(tmpFile)
+	if err != nil {
+		ctx.JSON(http.StatusOK, map[string]interface{}{
+			"code":    -1,
+			"message": err.Error(),
+		})
+		return
+	}
+
+	object := &model.Object{
+		Content: string(bytes),
+		Type:    model.TypeImage,
+		Title:   common.MD5(header.Filename),
+	}
+	if err := object.Update(); err != nil {
+		ctx.JSON(http.StatusOK, map[string]interface{}{
+			"code":    -1,
+			"message": err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, map[string]interface{}{
+		"code": 0,
+		"data": map[string]interface{}{
+			"id": object.ID,
+		},
 	})
 }

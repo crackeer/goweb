@@ -7,6 +7,7 @@ const (
 	TypeMD    = "markdown"
 	TypeDiary = "diary"
 	TypeCode  = "code"
+	TypeImage = "image"
 )
 
 /*
