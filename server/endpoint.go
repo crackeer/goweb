@@ -18,6 +18,7 @@ func Run() error {
 	router.Any("page/login", handler.RenderLogin)
 
 	router.Use(middleware.Login())
+	router.StaticFile("database", config.Sqlite3DatabaseFile)
 	api := router.Group("api")
 	api.POST("object/update", handler.UpdateObject)
 	api.POST("object/upload", handler.UploadObject)
