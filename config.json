@@ -4,6 +4,7 @@
     "template_file_ext": ".html",
     "template_file_dir": "./template/",
     "template_skeleton_file": "_skeleton",
+    "domain" : ".xxx.com",
     "code_languages": [
         {
             "value": "go",
