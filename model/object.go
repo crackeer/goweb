@@ -11,6 +11,7 @@ import (
 const (
 	insertSQL = "INSERT INTO object(title, content, tag, type, create_time, update_time) values(?, ?, ?, ?, ?, ?)"
 	updateSQL = "UPDATE object SET title=?, content=?, tag=?, update_time=? WHERE id= ?"
+	appendSQL = "UPDATE object SET title=?, content=content || ?, tag=?, update_time=? WHERE id= ?"
 	selectSQL = "SELECT id, title, content, tag, type, create_time, update_time FROM object where type=?"
 
 	querySQL    = "SELECT id, title, content, tag, type, create_time, update_time FROM object where type=? and tag=? order by id asc"
@@ -59,6 +60,29 @@ func (object *Object) Update() error {
 	}
 
 	stmt, err := db.Prepare(updateSQL)
+	if err != nil {
+		return err
+	}
+	_, err = stmt.Exec(object.Title, object.Content, object.Tag, common.GetNowTimeString(), object.ID)
+	stmt.Close()
+	db.Close()
+	if err != nil {
+		return err
+	}
+	return nil
+}
+
+// Append
+//  @receiver object
+//  @return error
+func (object *Object) Append() error {
+	if object.ID < 1 {
+		return object.Update()
+	}
+	db, _ := container.LockDatabase()
+	defer container.UnlockDatabase()
+
+	stmt, err := db.Prepare(appendSQL)
 	if err != nil {
 		return err
 	}

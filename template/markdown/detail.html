@@ -11,7 +11,7 @@
 </div>
 <div style="margin: 20px auto; text-align: center;">
     <button type="button" class="btn btn-danger" id="delete-id">删除</button>
-    <a class="btn btn-primary" id="update-id" href="/page/markdown/edit?id={{data.object.id|stringformat:"%.f"}}">修改</a>
+    <a class="btn btn-primary" id="update-id" href="/page/{{page_type}}/edit?id={{data.object.id|stringformat:"%.f"}}">修改</a>
 </div>
 <input type="hidden" value="{{data.object.id|stringformat:" %.f"}}" id="id">
 <input type="hidden" value="{{data.object.tag}}" id="tag">
@@ -32,7 +32,7 @@
                     data: JSON.stringify(data),
                     success: function (result) {
                         if (result.code == 0) {
-                            window.location.href = "/page/markdown/list?tag=" + $('#tag').val()
+                            window.location.href = "/page/{{page_type}}/list?tag=" + $('#tag').val()
                         }
                     }
                 })

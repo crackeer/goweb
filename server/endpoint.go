@@ -6,6 +6,7 @@ import (
 
 	"github.com/crackeer/goweb/container"
 	"github.com/crackeer/goweb/server/handler"
+	"github.com/crackeer/goweb/server/middleware"
 	"github.com/gin-gonic/gin"
 )
 
@@ -14,16 +15,25 @@ func Run() error {
 	router := gin.New()
 	config := container.GetConfig()
 	gin.SetMode(gin.DebugMode)
+	router.Any("page/login", handler.RenderLogin)
 
+	router.Use(middleware.Login())
+	router.StaticFile("database", config.Sqlite3DatabaseFile)
 	api := router.Group("api")
 	api.POST("object/update", handler.UpdateObject)
+	api.POST("object/upload", handler.UploadObject)
+	api.POST("object/append", handler.AppendObject)
 	api.POST("object/delete", handler.DeleteObject)
 
-	page := router.Group("page")
+	router.GET("image/:id", handler.RenderImage)
+
+	page := router.Group("page", middleware.InitPage(), middleware.RenderPage())
 	page.GET("index", handler.RenderIndex)
 	page.GET("link/list", handler.RenderLinkList)
 	page.GET("link/edit", handler.RenderEditLink)
 	page.GET("diary/list", handler.RenderDiaryList)
+	page.GET("diary/detail", handler.RenderMarkdown)
+	page.GET("diary/edit", handler.RenderEditMarkdown)
 	page.GET("markdown/detail", handler.RenderMarkdown)
 	page.GET("markdown/create", handler.RenderCreateMarkdown)
 	page.GET("markdown/list", handler.RenderMarkdownList)

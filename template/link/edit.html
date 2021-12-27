@@ -16,6 +16,10 @@
     <div class="col-md-6">
         <form>
             <div class="form-group">
+                <label for="recipient-id" class="control-label">ID</label>
+                <p id="edit-show-id"></p>
+            </div>
+            <div class="form-group">
                 <label for="recipient-name" class="control-label">标题</label>
                 <input type="text" class="form-control" id="edit-title">
             </div>
@@ -47,6 +51,7 @@
             $('#edit-tag').val($(this).val())
         })
         $('.to-edit-link').click(function () {
+            $('#edit-show-id').html(parseInt($(this).data("id")))
             $('#edit-id').val($(this).data("id"))
             $('#edit-title').val($(this).data("title"))
             $('#edit-content').val($(this).data("content"))
@@ -54,7 +59,7 @@
         })
         $('.confirm-edit-link').click(function () {
             let data = { id: parseInt($('#edit-id').val()), title: $('#edit-title').val(), content: $('#edit-content').val(), tag: $('#edit-tag').val(), type: 'link' }
-            if($(this).data('add') == '1') {
+            if ($(this).data('add') == '1') {
                 data.id = 0
             }
             $.ajax({

@@ -1,0 +1,12 @@
+<div style="margin: 20% auto;width: 50%;">
+    <h4>请输入管理员密码</h4>
+    <form method="post" name="form4">
+        <input type="password" class="form-control" name="password">
+        {%if data.error != "" %}
+    <p class="text-danger">{{data.error}}</p> 
+    {%endif%}
+        <div style="margin-top: 10px;">
+            <button class="btn btn-primary" type="submit">确认</button>
+        </div>
+    </form>
+</div>
