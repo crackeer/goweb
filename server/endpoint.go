@@ -15,8 +15,7 @@ func Run() error {
 	router := gin.New()
 	config := container.GetConfig()
 	gin.SetMode(gin.DebugMode)
-	router.GET("page/login", middleware.InitPage(), middleware.RenderPage(), handler.RenderLogin)
-	router.POST("page/login", handler.RenderLogin)
+	router.Any("page/login", middleware.InitPage(), middleware.RenderPage(), handler.RenderLogin)
 
 	router.Use(middleware.Login())
 	router.StaticFile("database", config.Sqlite3DatabaseFile)
