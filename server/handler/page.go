@@ -53,7 +53,7 @@ func RenderLogin(ctx *gin.Context) {
 	if ctx.Request.Method == http.MethodPost {
 		password := common.MD5(ctx.PostForm("password"))
 		if conf.PasswordMD5 == password {
-			ctx.SetCookie(define.TokenKey, common.MD5(conf.PasswordMD5), 3600*24*30, "/", "", true, true)
+			ctx.SetCookie(define.TokenKey, common.MD5(conf.PasswordMD5), 3600*24*30, "/", conf.Domain, false, false)
 			setTPLFile(ctx, container.GetFullTemplatePath("login/success"))
 			return
 		}
