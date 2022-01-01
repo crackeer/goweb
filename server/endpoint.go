@@ -25,6 +25,7 @@ func Run() error {
 	api.POST("object/upload", handler.UploadObject)
 	api.POST("object/append", handler.AppendObject)
 	api.POST("object/delete", handler.DeleteObject)
+	api.POST("object/share", handler.ShareObject)
 
 	router.GET("image/:id", handler.RenderImage)
 

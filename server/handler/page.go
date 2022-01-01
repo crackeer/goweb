@@ -79,7 +79,7 @@ func RenderLogin(ctx *gin.Context) {
 func RenderIndex(ctx *gin.Context) {
 
 	date := common.GetNowDate()
-	obj, _ := model.GetTheDiary(model.TypeDiary, date)
+	obj, _ := model.GetObjectByTag(model.TypeDiary, date)
 	setData(ctx, map[string]interface{}{
 		"date":   date,
 		"object": obj.ToMap(),
