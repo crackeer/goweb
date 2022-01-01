@@ -34,7 +34,7 @@
 
 <body>
     <div style="margin:20px auto;width:80%;">
-        {%if page_type != "login" %}
+        {%if page_type != "login" && page_type != "share" %}
         <ul class="nav nav-tabs">
             <li role="presentation" {% if page_type == "index" %} class="active" {%endif%}>
                 <a href="/page/index"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>

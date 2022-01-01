@@ -31,6 +31,13 @@ func setData(ctx *gin.Context, data interface{}) {
 	}
 }
 
+func setPageType(ctx *gin.Context, pageType string) {
+	pager := getPager(ctx)
+	if pager != nil {
+		pager.SetPageType(pageType)
+	}
+}
+
 func setTitle(ctx *gin.Context, title string) {
 	pager := getPager(ctx)
 	if pager != nil {
@@ -41,7 +48,7 @@ func setTitle(ctx *gin.Context, title string) {
 func setTPLFile(ctx *gin.Context, title string) {
 	pager := getPager(ctx)
 	if pager != nil {
-		pager.SetTPLFile(title)
+		pager.SetTPLFile(container.GetFullTemplatePath(title))
 	}
 }
 
@@ -54,7 +61,7 @@ func RenderLogin(ctx *gin.Context) {
 		password := common.MD5(ctx.PostForm("password"))
 		if conf.PasswordMD5 == password {
 			ctx.SetCookie(define.TokenKey, common.MD5(conf.PasswordMD5), 3600*24*30, "/", conf.Domain, false, false)
-			setTPLFile(ctx, container.GetFullTemplatePath("login/success"))
+			setTPLFile(ctx, "login/success")
 			return
 		}
 		err = "密码错误"

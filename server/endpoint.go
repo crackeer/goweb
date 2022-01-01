@@ -17,6 +17,7 @@ func Run() error {
 	gin.SetMode(gin.DebugMode)
 	router.Any("page/login", middleware.InitPage(), middleware.RenderPage(), handler.RenderLogin)
 
+	router.GET("share/:code", middleware.InitPage(), middleware.RenderPage(), handler.RenderShare)
 	router.Use(middleware.Login())
 	router.StaticFile("database", config.Sqlite3DatabaseFile)
 	api := router.Group("api")
