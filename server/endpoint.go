@@ -16,6 +16,7 @@ func Run() error {
 	config := container.GetConfig()
 	gin.SetMode(gin.DebugMode)
 	router.Any("page/login", middleware.InitPage(), middleware.RenderPage(), handler.RenderLogin)
+	router.Any("page/logout", middleware.InitPage(), middleware.RenderPage(), handler.RenderLogout)
 
 	router.GET("share/:code", middleware.InitPage(), middleware.RenderPage(), handler.RenderShare)
 	router.Use(middleware.Login())

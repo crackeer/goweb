@@ -52,6 +52,13 @@ func setTPLFile(ctx *gin.Context, title string) {
 	}
 }
 
+// RenderLogout
+//  @param ctx
+func RenderLogout(ctx *gin.Context) {
+	conf := container.GetConfig()
+	ctx.SetCookie(define.TokenKey, "", -1, "/", conf.Domain, false, false)
+}
+
 // RenderIndex
 //  @param ctx
 func RenderLogin(ctx *gin.Context) {

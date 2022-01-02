@@ -112,7 +112,7 @@ func ShareObject(objectID int64, expire int64) (string, error) {
 	if err != nil {
 		return "", err
 	}
-	tag := common.RandString(10)
+	tag := common.RandomString(10)
 
 	_, err = stmt.Exec(fmt.Sprintf("%d", object.ID), fmt.Sprintf("%d", expire), tag, TypeShare, common.GetNowTimeString(), common.GetNowTimeString())
 	stmt.Close()

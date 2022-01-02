@@ -20,12 +20,16 @@ func Md5Crypt(data []byte) string {
 	return fmt.Sprintf("%x", has) //将[]byte转成16进制
 }
 
-func RandString(len int) string {
-	r := rand.New(rand.NewSource(time.Now().UnixNano()))
-	bytes := make([]byte, len)
-	for i := 0; i < len; i++ {
-		b := r.Intn(26) + 65
-		bytes[i] = byte(b)
+var defaultLetters = []rune("abcdefghijklmnopqrstuvwxyz0123456789")
+
+// RandomString returns a random string with a fixed length
+func RandomString(n int) string {
+	letters := defaultLetters
+
+	b := make([]rune, n)
+	for i := range b {
+		b[i] = letters[rand.Intn(len(letters))]
 	}
-	return string(bytes)
+
+	return string(b)
 }
