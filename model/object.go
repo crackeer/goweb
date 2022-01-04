@@ -95,6 +95,35 @@ func (object *Object) Append() error {
 	return nil
 }
 
+// Share
+//  @receiver object
+//  @param expire
+//  @return string
+//  @return error
+func ShareObject(objectID int64, expire int64) (string, error) {
+
+	object, _ := GetObjectByID(objectID)
+	if object.ID < 1 {
+		return "", errors.New("不存在记录")
+	}
+	db, _ := container.LockDatabase()
+	defer container.UnlockDatabase()
+	stmt, err := db.Prepare(insertSQL)
+	if err != nil {
+		return "", err
+	}
+	tag := common.RandomString(10)
+
+	_, err = stmt.Exec(fmt.Sprintf("%d", object.ID), fmt.Sprintf("%d", expire), tag, TypeShare, common.GetNowTimeString(), common.GetNowTimeString())
+	stmt.Close()
+	db.Close()
+	if err != nil {
+		return "", err
+	}
+
+	return tag, nil
+}
+
 // GetAll
 //  @param objectType
 //  @return []Object
@@ -131,7 +160,12 @@ func GetAll(objectType string) ([]Object, error) {
 	return list, nil
 }
 
-func GetTheDiary(objectType string, theTag string) (*Object, error) {
+// GetObjectByTag
+//  @param objectType
+//  @param theTag
+//  @return *Object
+//  @return error
+func GetObjectByTag(objectType string, theTag string) (*Object, error) {
 	list := []*Object{}
 	db, _ := container.LockDatabase()
 	defer container.UnlockDatabase()

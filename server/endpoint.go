@@ -16,7 +16,9 @@ func Run() error {
 	config := container.GetConfig()
 	gin.SetMode(gin.DebugMode)
 	router.Any("page/login", middleware.InitPage(), middleware.RenderPage(), handler.RenderLogin)
+	router.Any("page/logout", middleware.InitPage(), middleware.RenderPage(), handler.RenderLogout)
 
+	router.GET("share/:code", middleware.InitPage(), middleware.RenderPage(), handler.RenderShare)
 	router.Use(middleware.Login())
 	router.StaticFile("database", config.Sqlite3DatabaseFile)
 	api := router.Group("api")
@@ -24,6 +26,7 @@ func Run() error {
 	api.POST("object/upload", handler.UploadObject)
 	api.POST("object/append", handler.AppendObject)
 	api.POST("object/delete", handler.DeleteObject)
+	api.POST("object/share", handler.ShareObject)
 
 	router.GET("image/:id", handler.RenderImage)
 

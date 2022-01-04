@@ -3,6 +3,7 @@ package handler
 import (
 	"io/ioutil"
 	"net/http"
+	"time"
 
 	"github.com/crackeer/goweb/common"
 	"github.com/crackeer/goweb/model"
@@ -153,6 +154,47 @@ func UploadObject(ctx *gin.Context) {
 		"code": 0,
 		"data": map[string]interface{}{
 			"id": object.ID,
+		},
+	})
+}
+
+type share struct {
+	ID       int64 `json:"id"`
+	Duration int64 `json:"duration"`
+}
+
+// ShareObject
+//  @param ctx
+func ShareObject(ctx *gin.Context) {
+
+	object := &share{}
+	if err := ctx.ShouldBindJSON(object); err != nil {
+		ctx.JSON(http.StatusOK, map[string]interface{}{
+			"code":    -1,
+			"message": err.Error(),
+		})
+		return
+	}
+
+	var expire int64 = -1
+	if object.Duration > 0 {
+		expire = object.Duration + time.Now().Unix()
+	}
+
+	shareCode, err := model.ShareObject(object.ID, expire)
+	if err != nil {
+		ctx.JSON(http.StatusOK, map[string]interface{}{
+			"code":    -3,
+			"message": err.Error(),
+		})
+		return
+	}
+
+	ctx.JSON(http.StatusOK, map[string]interface{}{
+		"code":    0,
+		"message": "删除成功",
+		"data": map[string]interface{}{
+			"share_url": "/share/" + shareCode,
 		},
 	})
 }
