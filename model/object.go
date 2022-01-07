@@ -271,45 +271,6 @@ func GetObjectList(objectType string, queryTag string, page int64) ([]*Object, i
 	return list, total, nil
 }
 
-// GetDiaryList
-//  @param page
-//  @return []*Object
-//  @return error
-func GetDiaryList(page int64) ([]*Object, error) {
-	list := []*Object{}
-	db, _ := container.LockDatabase()
-	defer container.UnlockDatabase()
-
-	rows, err := db.Query(queryDiaryListSQL, TypeDiary, diaryPageSize, (page-1)*diaryPageSize)
-	if err != nil {
-		fmt.Println(err.Error())
-		return nil, err
-	}
-
-	var (
-		id                                          int64
-		title, tag, objType, createTime, updateTime string
-	)
-	rows.Scan()
-	for rows.Next() {
-		if err := rows.Scan(&id, &title, &tag, &objType, &createTime, &updateTime); err == nil {
-			list = append(list, &Object{
-				ID:         id,
-				Title:      title,
-				Tag:        tag,
-				Type:       objType,
-				CreateTime: createTime,
-				UpdateTime: updateTime,
-			})
-		} else {
-			fmt.Println(err.Error())
-		}
-	}
-	rows.Close()
-	db.Close()
-	return list, nil
-}
-
 // GetObjectByID
 //  @param id
 //  @return *Object

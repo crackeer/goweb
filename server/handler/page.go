@@ -81,18 +81,6 @@ func RenderLogin(ctx *gin.Context) {
 	})
 }
 
-// RenderIndex
-//  @param ctx
-func RenderIndex(ctx *gin.Context) {
-
-	date := common.GetNowDate()
-	obj, _ := model.GetObjectByTag(model.TypeDiary, date)
-	setData(ctx, map[string]interface{}{
-		"date":   date,
-		"object": obj.ToMap(),
-	})
-}
-
 // RenderLinkList
 //  @param ctx
 func RenderLinkList(ctx *gin.Context) {
@@ -103,23 +91,6 @@ func RenderLinkList(ctx *gin.Context) {
 //  @param ctx
 func RenderEditLink(ctx *gin.Context) {
 	setData(ctx, objectService.GetAllLinkList())
-}
-
-// RenderDiaryList
-//  @param ctx
-func RenderDiaryList(ctx *gin.Context) {
-	page := ctx.DefaultQuery("page", "1")
-
-	val, _ := strconv.Atoi(page)
-	objects, _ := model.GetDiaryList(int64(val))
-
-	list := []map[string]interface{}{}
-
-	for _, v := range objects {
-		list = append(list, v.ToMap())
-	}
-
-	setData(ctx, list)
 }
 
 // RenderDiaryList
@@ -153,9 +124,6 @@ func RenderEditMarkdown(ctx *gin.Context) {
 	object, _ := model.GetObjectByID(int64(val))
 	tags, _ := model.GetTags(model.TypeMD)
 	title := fmt.Sprintf("修改文档 - %s", object.Title)
-	if object.Type == model.TypeDiary {
-		title = fmt.Sprintf("修改日记 - %s", object.Title)
-	}
 	setTitle(ctx, title)
 	setData(ctx, map[string]interface{}{
 		"object": object.ToMap(),
@@ -197,72 +165,4 @@ func RenderMarkdownList(ctx *gin.Context) {
 		"total": total,
 	})
 
-}
-
-// RenderCreateMarkdown
-//  @param ctx
-func RenderCreateCode(ctx *gin.Context) {
-
-	lang := ctx.DefaultQuery("tag", "go")
-
-	config := container.GetConfig()
-	setData(ctx, map[string]interface{}{
-		"tags": config.CodeLanguages,
-		"tag":  lang,
-	})
-}
-
-// RenderCreateMarkdown
-//  @param ctx
-func RenderEditCode(ctx *gin.Context) {
-
-	id := ctx.DefaultQuery("id", "0")
-
-	val, _ := strconv.Atoi(id)
-	object, _ := model.GetObjectByID(int64(val))
-	config := container.GetConfig()
-	title := fmt.Sprintf("修改代码 - %s", object.Title)
-	setTitle(ctx, title)
-	setData(ctx, map[string]interface{}{
-		"object": object.ToMap(),
-		"tags":   config.CodeLanguages,
-	})
-
-}
-
-// RenderCreateMarkdown
-//  @param ctx
-func RenderCodeList(ctx *gin.Context) {
-
-	page := ctx.DefaultQuery("page", "1")
-	val, _ := strconv.Atoi(page)
-
-	tag := ctx.DefaultQuery("tag", "go")
-	objects, total, _ := model.GetObjectList(model.TypeCode, tag, int64(val))
-	list := []map[string]interface{}{}
-	for _, v := range objects {
-		list = append(list, v.ToMap())
-	}
-	config := container.GetConfig()
-	setData(ctx, map[string]interface{}{
-		"tags":  config.CodeLanguages,
-		"list":  list,
-		"page":  val,
-		"tag":   tag,
-		"total": total,
-	})
-
-}
-
-// RenderCode
-//  @param ctx
-func RenderCode(ctx *gin.Context) {
-	id := ctx.DefaultQuery("id", "0")
-
-	val, _ := strconv.Atoi(id)
-	object, _ := model.GetObjectByID(int64(val))
-
-	setData(ctx, map[string]interface{}{
-		"object": object.ToMap(),
-	})
 }

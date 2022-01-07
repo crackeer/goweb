@@ -1,7 +1,0 @@
-<div class="panel panel-default" style="padding: 3px;">
-    <div class="btn-group" role="group" aria-label="...">
-        {% for xx in data %}
-        <a class="to-edit-link btn" href="/page/diary/detail?id={{xx.id|stringformat:"%.f"}}">{{ xx.title }}</a>
-        {% endfor %}
-    </div>
-</div>

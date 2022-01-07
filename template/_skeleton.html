@@ -36,10 +36,6 @@
     <div style="margin:20px auto;width:80%;">
         {%if page_type != "login" && page_type != "share" %}
         <ul class="nav nav-tabs">
-            <li role="presentation" {% if page_type=="index" %} class="active" {%endif%}>
-                <a href="/page/index"><span class="glyphicon glyphicon-home" aria-hidden="true"></span>
-                    首页</a>
-            </li>
             <li role="presentation" {% if page_type=="link" %} class="active" {%endif%}>
                 <a href="/page/link/list"><span class="glyphicon glyphicon-bookmark" aria-hidden="true"></span>
                     书签</a>
@@ -48,19 +44,9 @@
                 <a href="/page/markdown/list"><span class="glyphicon glyphicon-blackboard" aria-hidden="true"></span>
                     markdown文档</a>
             </li>
-            <li role="presentation" {% if page_type=="diary" %} class="active" {%endif%}>
-                <a href="/page/diary/list"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span>
-                    日记</a>
-            </li>
-            <li role="presentation" {% if page_type=="code" %} class="active" {%endif%}>
-                <a href="/page/code/list" class="btn"><span class="glyphicon glyphicon-text-size"
-                        aria-hidden="true"></span>
-                    代码</a>
-            </li>
             <div class="action">
                 <a href="/page/link/edit" class="btn btn-primary btn-sm">管理书签</a>
                 <a href="/page/markdown/create" class="btn btn-primary btn-sm">新建markdown</a>
-                <a href="/page/code/create" class="btn btn-primary btn-sm">新建代码</a>
                 <a href="/page/logout" class="btn btn-danger btn-sm"><span class="glyphicon glyphicon-off"
                         aria-hidden="true"></span> 锁定</a>
             </div>
@@ -98,11 +84,7 @@
             for (var i = 0, len = e.clipboardData.items.length; i < len; i++) {
                 var item = e.clipboardData.items[i];
                 console.log(item);
-                if (item.kind === "string") {
-                    item.getAsString(function (str) {
-                        window.Editor.insertValue(str)
-                    })
-                } else if (item.kind === "file") {
+                if (item.kind === "file") {
                     var blob = item.getAsFile();
                     if (blob.size === 0) {
                         return;

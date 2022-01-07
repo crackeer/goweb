@@ -5,9 +5,7 @@ import "encoding/json"
 const (
 	TypeLink  = "link"
 	TypeMD    = "markdown"
-	TypeDiary = "diary"
 	TypeShare = "share"
-	TypeCode  = "code"
 	TypeImage = "image"
 )
 
