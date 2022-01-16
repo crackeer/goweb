@@ -19,7 +19,7 @@ const (
 
 	queryDiaryListSQL = "SELECT id, title, tag, type, create_time, update_time FROM object where type=? order by id desc limit ? offset ?"
 
-	queryListSQL        = "SELECT id, title, tag, type, create_time, update_time FROM object where type=? and tag=? order by id asc limit ? offset ?"
+	queryListSQL        = "SELECT id, title, tag, type, create_time, update_time FROM object where type=? and tag=? order by id desc limit ? offset ?"
 	queryObjectCountSQL = "SELECT count(*) as count FROM object where type=? and tag=?"
 
 	querySingleSQL = "SELECT id, title, content, tag, type, create_time, update_time FROM object where id = ?"
