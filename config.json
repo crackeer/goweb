@@ -4,46 +4,10 @@
     "template_file_ext": ".html",
     "template_file_dir": "./template/",
     "template_skeleton_file": "_skeleton",
-    "domain" : "ke.com",
-    "code_languages": [
-        {
-            "value": "go",
-            "text": "Golang"
-        },
-        {
-            "value": "javascript",
-            "text": "JavaScript"
-        },
-        {
-            "value": "php",
-            "text": "PHP"
-        },
-        {
-            "value": "text/html",
-            "text": "HTML"
-        },
-        {
-            "value": "text/json",
-            "text": "JSON"
-        }
-    ],
     "password_md5": "a12dadb8024fd2ddc5a86120ebf50c27",
     "key": "123456789",
+    "domain": "ke.com",
     "page": {
-        "index": {
-            "title": "首页"
-        },
-        "diary/list": {
-            "title": "日记列表"
-        },
-        "diary/detail": {
-            "title": "日记详情",
-            "tpl": "markdown/detail"
-        },
-        "diary/edit": {
-            "title": "日记修改",
-            "tpl": "markdown/edit"
-        },
         "markdown/list": {
             "title": "文档列表"
         },
@@ -61,18 +25,6 @@
         },
         "link/edit": {
             "title": "书签管理"
-        },
-        "code/list": {
-            "title": "代码列表"
-        },
-        "code/detail": {
-            "title": "代码详情"
-        },
-        "code/create": {
-            "title": "代码创建"
-        },
-        "code/edit": {
-            "title": "代码修改"
         }
     }
 }

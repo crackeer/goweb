@@ -31,23 +31,15 @@ func Run() error {
 	router.GET("image/:id", handler.RenderImage)
 
 	page := router.Group("page", middleware.InitPage(), middleware.RenderPage())
-	page.GET("index", handler.RenderIndex)
 	page.GET("link/list", handler.RenderLinkList)
 	page.GET("link/edit", handler.RenderEditLink)
-	page.GET("diary/list", handler.RenderDiaryList)
-	page.GET("diary/detail", handler.RenderMarkdown)
-	page.GET("diary/edit", handler.RenderEditMarkdown)
 	page.GET("markdown/detail", handler.RenderMarkdown)
 	page.GET("markdown/create", handler.RenderCreateMarkdown)
 	page.GET("markdown/list", handler.RenderMarkdownList)
 	page.GET("markdown/edit", handler.RenderEditMarkdown)
 
-	page.GET("code/create", handler.RenderCreateCode)
-	page.GET("code/list", handler.RenderCodeList)
-	page.GET("code/edit", handler.RenderEditCode)
-	page.GET("code/detail", handler.RenderCode)
 	router.NoRoute(func(c *gin.Context) {
-		c.Redirect(http.StatusTemporaryRedirect, "/page/index")
+		c.Redirect(http.StatusTemporaryRedirect, "/page/link/list")
 	})
 
 	return router.Run(fmt.Sprintf(":%d", config.Port))
