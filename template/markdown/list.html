@@ -11,19 +11,36 @@
     </div>
 </form>
 
-<div class="panel panel-default">
-    <div class="panel-body">
-<div class="btn-group" role="group" aria-label="...">
+<ul class="list-group">
     {% for item in data.list %}
-    <a class="btn" href="/page/markdown/detail?id={{item.id|stringformat:"%.f"}}">{{ item.title }}</a>
+    <a class="list-group-item" href="/page/markdown/detail?id={{item.id|stringformat:"%.f"}}">
+        <p class="title">{{ item.title}}</p>
+        <p class="list-group-item-text">
+            <span class="update-tip">更新于</span>
+            <span class="time">{{ item.update_time}}</span>
+        </p>
+    </a>
     {% endfor %}
-</div>
-</div>
-</div>
+</ul>
 
 <input type="hidden" value="{{data.tag}}" id="tag">
 <input type="hidden" value="{{data.page}}" id="page">
-
+<style>
+    .title {
+        font-size: 16px;
+    }
+    .update-tip {
+        color: gray;
+        display: inline-block;
+        font-size: 12px;
+    }
+    .time {
+        color: #666666;
+        display: inline-block;
+        margin-left: 1px;
+        font-size: 15;
+    }
+</style>
 <script text="text/javascript">
     $(document).ready(function () {
         $('.quick-tag').change(function () {
