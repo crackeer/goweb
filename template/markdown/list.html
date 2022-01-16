@@ -1,7 +1,7 @@
 <form class="form-horizontal">
     <div class="form-group">
         <label for="title" class="col-sm-1 control-label">标签</label>
-        <div class="col-sm-5">
+        <div class="col-sm-11">
             {% for t in data.tags %}
             <label class="radio-inline">
                 <input type="radio" name="tag-radio" value="{{t}}" class="quick-tag" {% if(t==data.tag) %} checked {% endif %}>{{t}}
