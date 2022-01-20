@@ -206,25 +206,10 @@ func GetObjectByTag(objectType string, theTag string) (*Object, error) {
 //  @return error
 func GetTags(objectType string) ([]string, error) {
 	list := []string{}
-	db, _ := container.LockDatabase()
-	defer container.UnlockDatabase()
-
-	rows, err := db.Query(queryTagSQL, objectType)
-	if err != nil {
-		return nil, err
-	}
-
-	var (
-		tag string
-	)
-	for rows.Next() {
-		if err := rows.Scan(&tag); err == nil {
-			list = append(list, tag)
-		}
-	}
-	rows.Close()
-	db.Close()
-	return list, nil
+	err := container.GetDatabase().Model(&Object{}).Where(map[string]interface{}{
+		"type": objectType,
+	}).Select("distinct tag").Pluck("tag", &list).Error
+	return list, err
 }
 
 // GetObjectList
@@ -235,80 +220,26 @@ func GetTags(objectType string) ([]string, error) {
 //  @return error
 func GetObjectList(objectType string, queryTag string, page int64) ([]*Object, int64, error) {
 	list := []*Object{}
-	db, _ := container.LockDatabase()
-	defer container.UnlockDatabase()
+	var total int64
+	offset := (page - 1) * pageSize
+	tx := container.GetDatabase().Model(&Object{}).Where(map[string]interface{}{
+		"type": objectType,
+		"tag":  queryTag,
+	})
+	tx.Count(&total)
 
-	rows, err := db.Query(queryListSQL, objectType, queryTag, pageSize, (page-1)*pageSize)
-	if err != nil {
-		return nil, 0, err
-	}
-
-	var (
-		id, total                                   int64
-		title, tag, objType, createTime, updateTime string
-	)
-	rows.Scan()
-	for rows.Next() {
-		if err := rows.Scan(&id, &title, &tag, &objType, &createTime, &updateTime); err == nil {
-			list = append(list, &Object{
-				ID:         id,
-				Title:      title,
-				Tag:        tag,
-				Type:       objType,
-				CreateTime: createTime,
-				UpdateTime: updateTime,
-			})
-		}
-	}
-
-	stmt, countError := db.Prepare(queryObjectCountSQL)
-	if countError == nil {
-		stmt.QueryRow(objectType, queryTag).Scan(&total)
-	}
-
-	rows.Close()
-	db.Close()
-	return list, total, nil
+	err := tx.Select([]string{
+		"id", "title", "tag", "type", "create_time", "update_time",
+	}).Offset(int(offset)).Limit(int(pageSize)).Find(&list).Error
+	return list, total, err
 }
 
-// GetObjectByID
-//  @param id
-//  @return *Object
-//  @return error
 func GetObjectByID(id int64) (*Object, error) {
-	list := []*Object{}
-	db, _ := container.LockDatabase()
-	defer container.UnlockDatabase()
-
-	rows, err := db.Query(querySingleSQL, id)
-	if err != nil {
-		return nil, err
-	}
-
-	var (
-		xid                                                  int64
-		title, content, tag, objType, createTime, updateTime string
-	)
-	rows.Scan()
-	for rows.Next() {
-		if err := rows.Scan(&xid, &title, &content, &tag, &objType, &createTime, &updateTime); err == nil {
-			list = append(list, &Object{
-				ID:         xid,
-				Title:      title,
-				Content:    content,
-				Tag:        tag,
-				Type:       objType,
-				CreateTime: createTime,
-				UpdateTime: updateTime,
-			})
-		}
-	}
-	rows.Close()
-	db.Close()
-	if len(list) > 0 {
-		return list[len(list)-1], nil
-	}
-	return nil, nil
+	retData := &Object{}
+	err := container.GetDatabase().Model(&Object{}).Where(map[string]interface{}{
+		"id": id,
+	}).First(retData).Error
+	return retData, err
 }
 
 // DeleteObjectByID
