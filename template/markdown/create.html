@@ -61,7 +61,7 @@
                 data: JSON.stringify(data),
                 success: function (result) {
                     if (result.code == 0) {
-                        window.location.href="/page/markdown/list"
+                        window.location.href="/markdown/list?tag=" +  $('#tag').val()
                     }
                 }
             })

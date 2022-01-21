@@ -69,7 +69,7 @@
                 data: JSON.stringify(data),
                 success: function (result) {
                     if (result.code == 0) {
-                        window.location.href="/page/{{page_type}}/detail?id=" +  $('#id').val()
+                        window.location.href="/{{page_type}}/detail?id=" +  $('#id').val()
                     }
                 }
             })
