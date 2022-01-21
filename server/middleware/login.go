@@ -28,5 +28,5 @@ func Login() gin.HandlerFunc {
 }
 
 func getLoginURL(ctx *gin.Context) string {
-	return "/page/login"
+	return "/login"
 }

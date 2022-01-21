@@ -84,6 +84,9 @@
                     }
                 ],
                 callback: function (result) {
+                    if(result == null) {
+                        return
+                    }
                     let data = { id: parseInt($('#id').val()), duration : parseInt(result)}
                     $.ajax({
                         method: 'post',

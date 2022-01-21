@@ -9,27 +9,7 @@ import (
 )
 
 const (
-	insertSQL = "INSERT INTO object(title, content, tag, type, create_time, update_time) values(?, ?, ?, ?, ?, ?)"
-	updateSQL = "UPDATE object SET title=?, content=?, tag=?, update_time=? WHERE id= ?"
-	appendSQL = "UPDATE object SET title=?, content=content || ?, tag=?, update_time=? WHERE id= ?"
-	selectSQL = "SELECT id, title, content, tag, type, create_time, update_time FROM object where type=?"
-
-	querySQL    = "SELECT id, title, content, tag, type, create_time, update_time FROM object where type=? and tag=? order by id asc"
-	queryTagSQL = "SELECT distinct(tag) FROM object where type=?"
-
-	queryDiaryListSQL = "SELECT id, title, tag, type, create_time, update_time FROM object where type=? order by id desc limit ? offset ?"
-
-	queryListSQL        = "SELECT id, title, tag, type, create_time, update_time FROM object where type=? and tag=? order by id desc limit ? offset ?"
-	queryObjectCountSQL = "SELECT count(*) as count FROM object where type=? and tag=?"
-
-	querySingleSQL = "SELECT id, title, content, tag, type, create_time, update_time FROM object where id = ?"
-
-	deleteObjectSQL = "delete FROM object where id = ?"
-)
-
-const (
-	pageSize      int64 = 20
-	diaryPageSize int64 = 365
+	pageSize int64 = 20
 )
 
 // Update
@@ -37,66 +17,32 @@ const (
 //  @return error
 func (object *Object) Update() error {
 
-	db, _ := container.LockDatabase()
-	defer container.UnlockDatabase()
-
 	if object.ID < 1 {
 
-		if len(object.Type) < 1 {
-			return errors.New("please set object type")
+		retData := &Object{
+			Title:      object.Title,
+			Content:    object.Content,
+			Tag:        object.Tag,
+			Type:       object.Type,
+			CreateTime: common.GetNowTimeString(),
+			UpdateTime: common.GetNowTimeString(),
 		}
-		stmt, err := db.Prepare(insertSQL)
-		if err != nil {
-			return err
-		}
-		result, err := stmt.Exec(object.Title, object.Content, object.Tag, object.Type, common.GetNowTimeString(), common.GetNowTimeString())
-		stmt.Close()
-		db.Close()
-		if err != nil {
-			return err
-		}
-		object.ID, _ = result.LastInsertId()
-		return nil
+
+		return container.GetDatabase().Create(retData).Error
 	}
 
-	stmt, err := db.Prepare(updateSQL)
-	if err != nil {
-		return err
-	}
-	_, err = stmt.Exec(object.Title, object.Content, object.Tag, common.GetNowTimeString(), object.ID)
-	stmt.Close()
-	db.Close()
-	if err != nil {
-		return err
-	}
-	return nil
+	return container.GetDatabase().Model(&Object{}).Where(map[string]interface{}{
+		"id": object.ID,
+	}).Updates(map[string]interface{}{
+		"title":       object.Title,
+		"content":     object.Content,
+		"tag":         object.Tag,
+		"update_time": common.GetNowTimeString(),
+	}).Error
 }
 
-// Append
-//  @receiver object
-//  @return error
-func (object *Object) Append() error {
-	if object.ID < 1 {
-		return object.Update()
-	}
-	db, _ := container.LockDatabase()
-	defer container.UnlockDatabase()
-
-	stmt, err := db.Prepare(appendSQL)
-	if err != nil {
-		return err
-	}
-	_, err = stmt.Exec(object.Title, object.Content, object.Tag, common.GetNowTimeString(), object.ID)
-	stmt.Close()
-	db.Close()
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-// Share
-//  @receiver object
+// ShareObject
+//  @param objectID
 //  @param expire
 //  @return string
 //  @return error
@@ -106,58 +52,36 @@ func ShareObject(objectID int64, expire int64) (string, error) {
 	if object.ID < 1 {
 		return "", errors.New("不存在记录")
 	}
-	db, _ := container.LockDatabase()
-	defer container.UnlockDatabase()
-	stmt, err := db.Prepare(insertSQL)
-	if err != nil {
-		return "", err
-	}
-	tag := common.RandomString(10)
 
-	_, err = stmt.Exec(fmt.Sprintf("%d", object.ID), fmt.Sprintf("%d", expire), tag, TypeShare, common.GetNowTimeString(), common.GetNowTimeString())
-	stmt.Close()
-	db.Close()
-	if err != nil {
-		return "", err
+	retData := &Object{
+		Title:      fmt.Sprintf("%d", object.ID),
+		Content:    fmt.Sprintf("%d", expire),
+		Tag:        common.RandomString(10),
+		Type:       TypeShare,
+		CreateTime: common.GetNowTimeString(),
+		UpdateTime: common.GetNowTimeString(),
 	}
 
-	return tag, nil
+	err := container.GetDatabase().Create(retData).Error
+
+	return retData.Tag, err
 }
 
 // GetAll
 //  @param objectType
 //  @return []Object
 //  @return error
-func GetAll(objectType string) ([]Object, error) {
-	list := []Object{}
-	db, _ := container.LockDatabase()
-	defer container.UnlockDatabase()
+func GetAll(objectType string) ([]*Object, error) {
 
-	rows, err := db.Query(selectSQL, objectType)
-	if err != nil {
-		return list, err
-	}
+	list := []*Object{}
+	tx := container.GetDatabase().Model(&Object{}).Where(map[string]interface{}{
+		"type": objectType,
+	})
 
-	var (
-		id                                                   int64
-		title, content, tag, objType, createTime, updateTime string
-	)
-	for rows.Next() {
-		if err := rows.Scan(&id, &title, &content, &tag, &objType, &createTime, &updateTime); err == nil {
-			list = append(list, Object{
-				ID:         id,
-				Title:      title,
-				Content:    content,
-				Tag:        tag,
-				Type:       objType,
-				CreateTime: createTime,
-				UpdateTime: updateTime,
-			})
-		}
-	}
-	rows.Close()
-	db.Close()
-	return list, nil
+	err := tx.Select([]string{
+		"id", "title", "content", "tag", "type", "create_time", "update_time",
+	}).Find(&list).Error
+	return list, err
 }
 
 // GetObjectByTag
@@ -166,38 +90,12 @@ func GetAll(objectType string) ([]Object, error) {
 //  @return *Object
 //  @return error
 func GetObjectByTag(objectType string, theTag string) (*Object, error) {
-	list := []*Object{}
-	db, _ := container.LockDatabase()
-	defer container.UnlockDatabase()
-
-	rows, err := db.Query(querySQL, objectType, theTag)
-	if err != nil {
-		return nil, err
-	}
-
-	var (
-		id                                                   int64
-		title, content, tag, objType, createTime, updateTime string
-	)
-	for rows.Next() {
-		if err := rows.Scan(&id, &title, &content, &tag, &objType, &createTime, &updateTime); err == nil {
-			list = append(list, &Object{
-				ID:         id,
-				Title:      title,
-				Content:    content,
-				Tag:        tag,
-				Type:       objType,
-				CreateTime: createTime,
-				UpdateTime: updateTime,
-			})
-		}
-	}
-	rows.Close()
-	db.Close()
-	if len(list) > 0 {
-		return list[len(list)-1], nil
-	}
-	return nil, nil
+	obj := &Object{}
+	err := container.GetDatabase().Model(&Object{}).Where(map[string]interface{}{
+		"type": objectType,
+		"tag":  theTag,
+	}).Order("id desc").First(obj).Error
+	return obj, err
 }
 
 // GetTags
@@ -230,10 +128,14 @@ func GetObjectList(objectType string, queryTag string, page int64) ([]*Object, i
 
 	err := tx.Select([]string{
 		"id", "title", "tag", "type", "create_time", "update_time",
-	}).Offset(int(offset)).Limit(int(pageSize)).Find(&list).Error
+	}).Offset(int(offset)).Limit(int(pageSize)).Order("id desc").Find(&list).Error
 	return list, total, err
 }
 
+// GetObjectByID
+//  @param id
+//  @return *Object
+//  @return error
 func GetObjectByID(id int64) (*Object, error) {
 	retData := &Object{}
 	err := container.GetDatabase().Model(&Object{}).Where(map[string]interface{}{
@@ -246,18 +148,7 @@ func GetObjectByID(id int64) (*Object, error) {
 //  @param id
 //  @return error
 func DeleteObjectByID(id int64) error {
-	db, _ := container.LockDatabase()
-	defer container.UnlockDatabase()
-
-	stmt, err := db.Prepare(deleteObjectSQL)
-	if err != nil {
-		return err
-	}
-	_, err = stmt.Exec(id)
-	stmt.Close()
-	db.Close()
-	if err != nil {
-		return err
-	}
-	return nil
+	return container.GetDatabase().Where(map[string]interface{}{
+		"id": id,
+	}).Delete(&Object{}).Error
 }
