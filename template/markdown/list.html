@@ -13,7 +13,7 @@
 
 <ul class="list-group">
     {% for item in data.list %}
-    <a class="list-group-item" href="/page/markdown/detail?id={{item.id|stringformat:"%.f"}}">
+    <a class="list-group-item" href="/markdown/detail?id={{item.id|stringformat:"%.f"}}">
         <p class="title">{{ item.title}}</p>
         <p class="list-group-item-text">
             <span class="update-tip">更新于</span>
@@ -44,7 +44,7 @@
 <script text="text/javascript">
     $(document).ready(function () {
         $('.quick-tag').change(function () {
-            window.location.href = '/page/markdown/list?tag=' + $(this).val() + '&page=' + $('#page').val()
+            window.location.href = '/markdown/list?tag=' + $(this).val() + '&page=' + $('#page').val()
         })
     })
 </script>

@@ -30,6 +30,10 @@ type Object struct {
 	UpdateTime string `json:"update_time"`
 }
 
+func (Object) TableName() string {
+	return "object"
+}
+
 func (object *Object) ToMap() map[string]interface{} {
 	bytes, _ := json.Marshal(object)
 	retData := map[string]interface{}{}

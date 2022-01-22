@@ -1,0 +1,1078 @@
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/object/update        --> github.com/crackeer/goweb/server/handler.UpdateObject (1 handlers)
+[GIN-debug] GET    /page/index               --> github.com/crackeer/goweb/server/handler.RenderIndex (1 handlers)
+[GIN-debug] GET    /page/links               --> github.com/crackeer/goweb/server/handler.RenderLinkList (1 handlers)
+[GIN-debug] GET    /page/edit_links          --> github.com/crackeer/goweb/server/handler.RenderEditLink (1 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :8888
+2021/12/13 09:32:41 http: panic serving 10.202.19.209:56102: runtime error: index out of range [-1]
+goroutine 88 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x9c8420, 0xc000024180})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/model.GetTheOne({0x9f0200, 0x2}, {0x9f18a2, 0x5}, {0xc00038a1f0, 0xa})
+	/home/liuhu016/gitee/goweb/model/object.go:117 +0x69f
+github.com/crackeer/goweb/server/handler.RenderIndex(0xc000522480)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:19 +0x5d
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000082680, 0xc000390200)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000082680, {0xab3f10, 0xc0000ca0e0}, 0xc000390400)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc0005223c0}, {0xab3f10, 0xc0000ca0e0}, 0xc000390400)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc00012e960, {0xab8a20, 0xc00008e330})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2021/12/13 09:32:41 http: panic serving 10.202.19.209:56106: runtime error: index out of range [-1]
+goroutine 99 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x9c8420, 0xc00030a228})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/model.GetTheOne({0x9f0200, 0x2}, {0x9f18a2, 0x5}, {0xc00012c360, 0xa})
+	/home/liuhu016/gitee/goweb/model/object.go:117 +0x69f
+github.com/crackeer/goweb/server/handler.RenderIndex(0x20)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:19 +0x5d
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000082680, 0xc000192100)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000082680, {0xab3f10, 0xc0001c4000}, 0xc000192000)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc0003821e0}, {0xab3f10, 0xc0001c4000}, 0xc000192000)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc000228000, {0xab8a20, 0xc00008e330})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2021/12/13 09:32:41 http: panic serving 10.202.19.209:56110: runtime error: index out of range [-1]
+goroutine 102 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x9c8420, 0xc00030a3a8})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/model.GetTheOne({0x9f0200, 0x2}, {0x9f18a2, 0x5}, {0xc00012c6d0, 0xa})
+	/home/liuhu016/gitee/goweb/model/object.go:117 +0x69f
+github.com/crackeer/goweb/server/handler.RenderIndex(0x20)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:19 +0x5d
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000082680, 0xc000192300)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000082680, {0xab3f10, 0xc0001c40e0}, 0xc000192200)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc000382450}, {0xab3f10, 0xc0001c40e0}, 0xc000192200)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc000228280, {0xab8a20, 0xc00008e330})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2021/12/13 09:32:41 http: panic serving 10.202.19.209:56112: runtime error: index out of range [-1]
+goroutine 76 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x9c8420, 0xc0000b4120})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/model.GetTheOne({0x9f0200, 0x2}, {0x9f18a2, 0x5}, {0xc000090360, 0xa})
+	/home/liuhu016/gitee/goweb/model/object.go:117 +0x69f
+github.com/crackeer/goweb/server/handler.RenderIndex(0xc00024ade0)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:19 +0x5d
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000082680, 0xc000480200)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000082680, {0xab3f10, 0xc0000b2380}, 0xc000480600)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc00024ac90}, {0xab3f10, 0xc0000b2380}, 0xc000480600)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc000310820, {0xab8a20, 0xc00008e330})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2021/12/13 09:32:41 http: panic serving 10.202.19.214:54272: runtime error: index out of range [-1]
+goroutine 105 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x9c8420, 0xc00030a420})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/model.GetTheOne({0x9f0200, 0x2}, {0x9f18a2, 0x5}, {0xc00012c970, 0xa})
+	/home/liuhu016/gitee/goweb/model/object.go:117 +0x69f
+github.com/crackeer/goweb/server/handler.RenderIndex(0x20)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:19 +0x5d
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000082680, 0xc000192500)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000082680, {0xab3f10, 0xc0001c41c0}, 0xc000192400)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc000382690}, {0xab3f10, 0xc0001c41c0}, 0xc000192400)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc000228500, {0xab8a20, 0xc00008e330})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2021/12/13 09:32:41 http: panic serving 10.202.19.214:54278: runtime error: index out of range [-1]
+goroutine 91 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x9c8420, 0xc0000241f8})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/model.GetTheOne({0x9f0200, 0x2}, {0x9f18a2, 0x5}, {0xc00038a440, 0xa})
+	/home/liuhu016/gitee/goweb/model/object.go:117 +0x69f
+github.com/crackeer/goweb/server/handler.RenderIndex(0x20)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:19 +0x5d
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000082680, 0xc000390600)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000082680, {0xab3f10, 0xc0000ca1c0}, 0xc000390500)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc000522630}, {0xab3f10, 0xc0000ca1c0}, 0xc000390500)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc00012ebe0, {0xab8a20, 0xc00008e330})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2021/12/13 09:32:41 http: panic serving 10.202.19.214:54280: runtime error: index out of range [-1]
+goroutine 108 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x9c8420, 0xc00030a498})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/model.GetTheOne({0x9f0200, 0x2}, {0x9f18a2, 0x5}, {0xc00012cc00, 0xa})
+	/home/liuhu016/gitee/goweb/model/object.go:117 +0x69f
+github.com/crackeer/goweb/server/handler.RenderIndex(0x20)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:19 +0x5d
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000082680, 0xc000192700)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000082680, {0xab3f10, 0xc0001c42a0}, 0xc000192600)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc0003828d0}, {0xab3f10, 0xc0001c42a0}, 0xc000192600)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc000228780, {0xab8a20, 0xc00008e330})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2021/12/13 09:32:41 http: panic serving 10.202.19.214:54284: runtime error: index out of range [-1]
+goroutine 94 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x9c8420, 0xc000024270})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/model.GetTheOne({0x9f0200, 0x2}, {0x9f18a2, 0x5}, {0xc00038a680, 0xa})
+	/home/liuhu016/gitee/goweb/model/object.go:117 +0x69f
+github.com/crackeer/goweb/server/handler.RenderIndex(0x20)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:19 +0x5d
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000082680, 0xc000390800)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000082680, {0xab3f10, 0xc0000ca2a0}, 0xc000390700)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc000522870}, {0xab3f10, 0xc0000ca2a0}, 0xc000390700)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc00012ee60, {0xab8a20, 0xc00008e330})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2021/12/13 09:32:54 http: panic serving 10.202.19.212:57842: runtime error: index out of range [-1]
+goroutine 79 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x9c8420, 0xc0000b4198})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/model.GetTheOne({0x9f0200, 0x2}, {0x9f18a2, 0x5}, {0xc0000905b0, 0xa})
+	/home/liuhu016/gitee/goweb/model/object.go:117 +0x69f
+github.com/crackeer/goweb/server/handler.RenderIndex(0x20)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:19 +0x5d
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000082680, 0xc000480800)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000082680, {0xab3f10, 0xc0000b2460}, 0xc000480700)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc00024b770}, {0xab3f10, 0xc0000b2460}, 0xc000480700)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc000310b40, {0xab8a20, 0xc00008e330})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2021/12/13 09:32:54 http: panic serving 10.202.19.212:57844: runtime error: index out of range [-1]
+goroutine 97 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x9c8420, 0xc0000242e8})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/model.GetTheOne({0x9f0200, 0x2}, {0x9f18a2, 0x5}, {0xc00038a8d0, 0xa})
+	/home/liuhu016/gitee/goweb/model/object.go:117 +0x69f
+github.com/crackeer/goweb/server/handler.RenderIndex(0x20)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:19 +0x5d
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000082680, 0xc000390a00)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000082680, {0xab3f10, 0xc0000ca380}, 0xc000390900)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc000522ab0}, {0xab3f10, 0xc0000ca380}, 0xc000390900)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc00012f0e0, {0xab8a20, 0xc00008e330})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2021/12/13 09:32:54 http: panic serving 10.202.19.212:57846: runtime error: index out of range [-1]
+goroutine 130 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x9c8420, 0xc00030abe8})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/model.GetTheOne({0x9f0200, 0x2}, {0x9f18a2, 0x5}, {0xc00022fdb0, 0xa})
+	/home/liuhu016/gitee/goweb/model/object.go:117 +0x69f
+github.com/crackeer/goweb/server/handler.RenderIndex(0xc00033c300)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:19 +0x5d
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000082680, 0xc000192900)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000082680, {0xab3f10, 0xc0001c4460}, 0xc000192c00)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc00033c1b0}, {0xab3f10, 0xc0001c4460}, 0xc000192c00)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc000228dc0, {0xab8a20, 0xc00008e330})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2021/12/13 09:32:54 http: panic serving 10.202.19.212:57850: runtime error: index out of range [-1]
+goroutine 146 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x9c8420, 0xc0000b4210})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/model.GetTheOne({0x9f0200, 0x2}, {0x9f18a2, 0x5}, {0xc0000907f0, 0xa})
+	/home/liuhu016/gitee/goweb/model/object.go:117 +0x69f
+github.com/crackeer/goweb/server/handler.RenderIndex(0x20)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:19 +0x5d
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000082680, 0xc000480a00)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000082680, {0xab3f10, 0xc0000b2540}, 0xc000480900)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc00024bd70}, {0xab3f10, 0xc0000b2540}, 0xc000480900)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc000310dc0, {0xab8a20, 0xc00008e330})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2021/12/13 09:32:54 http: panic serving 10.202.19.210:35532: runtime error: index out of range [-1]
+goroutine 72 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x9c8420, 0xc000024348})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/model.GetTheOne({0x9f0200, 0x2}, {0x9f18a2, 0x5}, {0xc00038ab00, 0xa})
+	/home/liuhu016/gitee/goweb/model/object.go:117 +0x69f
+github.com/crackeer/goweb/server/handler.RenderIndex(0x20)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:19 +0x5d
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000082680, 0xc000390b00)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000082680, {0xab3f10, 0xc0000ca460}, 0xc000480300)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc00024a120}, {0xab3f10, 0xc0000ca460}, 0xc000480300)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc0003100a0, {0xab8a20, 0xc00008e330})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2021/12/13 09:32:54 http: panic serving 10.202.19.210:46956: runtime error: index out of range [-1]
+goroutine 133 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x9c8420, 0xc00030ac60})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/model.GetTheOne({0x9f0200, 0x2}, {0x9f18a2, 0x5}, {0xc00022fff0, 0xa})
+	/home/liuhu016/gitee/goweb/model/object.go:117 +0x69f
+github.com/crackeer/goweb/server/handler.RenderIndex(0x20)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:19 +0x5d
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000082680, 0xc000192e00)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000082680, {0xab3f10, 0xc0001c4540}, 0xc000192d00)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc00033c570}, {0xab3f10, 0xc0001c4540}, 0xc000192d00)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc000229040, {0xab8a20, 0xc00008e330})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2021/12/13 09:32:54 http: panic serving 10.202.19.210:46960: runtime error: index out of range [-1]
+goroutine 149 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x9c8420, 0xc0000b4288})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/model.GetTheOne({0x9f0200, 0x2}, {0x9f18a2, 0x5}, {0xc000090b80, 0xa})
+	/home/liuhu016/gitee/goweb/model/object.go:117 +0x69f
+github.com/crackeer/goweb/server/handler.RenderIndex(0x20)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:19 +0x5d
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000082680, 0xc000480c00)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000082680, {0xab3f10, 0xc0000b2620}, 0xc000480b00)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc00008e4b0}, {0xab3f10, 0xc0000b2620}, 0xc000480b00)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc000311040, {0xab8a20, 0xc00008e330})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2021/12/13 09:32:54 http: panic serving 10.202.19.210:46968: runtime error: index out of range [-1]
+goroutine 136 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x9c8420, 0xc00030acd8})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/model.GetTheOne({0x9f0200, 0x2}, {0x9f18a2, 0x5}, {0xc0002a0230, 0xa})
+	/home/liuhu016/gitee/goweb/model/object.go:117 +0x69f
+github.com/crackeer/goweb/server/handler.RenderIndex(0x20)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:19 +0x5d
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000082680, 0xc000193000)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000082680, {0xab3f10, 0xc0001c4620}, 0xc000192f00)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc00033c7b0}, {0xab3f10, 0xc0001c4620}, 0xc000192f00)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc0002292c0, {0xab8a20, 0xc00008e330})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2021/12/13 09:32:54 http: panic serving 10.202.19.210:46972: runtime error: index out of range [-1]
+goroutine 152 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x9c8420, 0xc0000b4300})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/model.GetTheOne({0x9f0200, 0x2}, {0x9f18a2, 0x5}, {0xc000090dc0, 0xa})
+	/home/liuhu016/gitee/goweb/model/object.go:117 +0x69f
+github.com/crackeer/goweb/server/handler.RenderIndex(0x20)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:19 +0x5d
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000082680, 0xc000480e00)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000082680, {0xab3f10, 0xc0000b2700}, 0xc000480d00)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc00008e6f0}, {0xab3f10, 0xc0000b2700}, 0xc000480d00)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc000311220, {0xab8a20, 0xc00008e330})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/object/update        --> github.com/crackeer/goweb/server/handler.UpdateObject (1 handlers)
+[GIN-debug] GET    /page/index               --> github.com/crackeer/goweb/server/handler.RenderIndex (1 handlers)
+[GIN-debug] GET    /page/links               --> github.com/crackeer/goweb/server/handler.RenderLinkList (1 handlers)
+[GIN-debug] GET    /page/edit_links          --> github.com/crackeer/goweb/server/handler.RenderEditLink (1 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :8888
+signal: killed
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] POST   /api/object/update        --> github.com/crackeer/goweb/server/handler.UpdateObject (1 handlers)
+[GIN-debug] POST   /api/object/delete        --> github.com/crackeer/goweb/server/handler.DeleteObject (1 handlers)
+[GIN-debug] GET    /page/index               --> github.com/crackeer/goweb/server/handler.RenderIndex (1 handlers)
+[GIN-debug] GET    /page/link/list           --> github.com/crackeer/goweb/server/handler.RenderLinkList (1 handlers)
+[GIN-debug] GET    /page/link/edit           --> github.com/crackeer/goweb/server/handler.RenderEditLink (1 handlers)
+[GIN-debug] GET    /page/diary/list          --> github.com/crackeer/goweb/server/handler.RenderDiaryList (1 handlers)
+[GIN-debug] GET    /page/markdown/detail     --> github.com/crackeer/goweb/server/handler.RenderMarkdown (1 handlers)
+[GIN-debug] GET    /page/markdown/create     --> github.com/crackeer/goweb/server/handler.RenderCreateMarkdown (1 handlers)
+[GIN-debug] GET    /page/markdown/list       --> github.com/crackeer/goweb/server/handler.RenderMarkdownList (1 handlers)
+[GIN-debug] GET    /page/markdown/edit       --> github.com/crackeer/goweb/server/handler.RenderEditMarkdown (1 handlers)
+[GIN-debug] GET    /page/code/create         --> github.com/crackeer/goweb/server/handler.RenderCreateCode (1 handlers)
+[GIN-debug] GET    /page/code/list           --> github.com/crackeer/goweb/server/handler.RenderCodeList (1 handlers)
+[GIN-debug] GET    /page/code/edit           --> github.com/crackeer/goweb/server/handler.RenderEditCode (1 handlers)
+[GIN-debug] GET    /page/code/detail         --> github.com/crackeer/goweb/server/handler.RenderCode (1 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :8888
+2021/12/21 14:38:34 http: panic serving 10.202.19.214:53780: runtime error: invalid memory address or nil pointer dereference
+goroutine 685 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x983dc0, 0xfc2220})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/server/handler.RenderEditCode(0xc000303740)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:195 +0x69
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000392000, 0xc00043e100)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000392000, {0xab9010, 0xc000390460}, 0xc00043e900)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc0003793b0}, {0xab9010, 0xc000390460}, 0xc00043e900)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc0001fe640, {0xabdd60, 0xc000384210})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2021/12/21 14:38:34 http: panic serving 10.202.19.214:36884: runtime error: invalid memory address or nil pointer dereference
+goroutine 700 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x983dc0, 0xfc2220})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/server/handler.RenderEditCode(0x20)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:195 +0x69
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000392000, 0xc000320a00)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000392000, {0xab9010, 0xc000390540}, 0xc000320900)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc000303a40}, {0xab9010, 0xc000390540}, 0xc000320900)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc0002e6fa0, {0xabdd60, 0xc000384210})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2021/12/21 14:38:34 http: panic serving 10.202.19.214:36886: runtime error: invalid memory address or nil pointer dereference
+goroutine 708 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x983dc0, 0xfc2220})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/server/handler.RenderEditCode(0xc000384f90)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:195 +0x69
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000392000, 0xc000320200)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000392000, {0xab9010, 0xc00041a460}, 0xc0001ed100)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc000384ed0}, {0xab9010, 0xc00041a460}, 0xc0001ed100)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc0000baf00, {0xabdd60, 0xc000384210})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2021/12/21 14:38:34 http: panic serving 10.202.19.214:36888: runtime error: invalid memory address or nil pointer dereference
+goroutine 703 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x983dc0, 0xfc2220})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/server/handler.RenderEditCode(0x20)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:195 +0x69
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000392000, 0xc000320c00)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000392000, {0xab9010, 0xc000390620}, 0xc000320b00)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc000303d70}, {0xab9010, 0xc000390620}, 0xc000320b00)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc0002e70e0, {0xabdd60, 0xc000384210})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2021/12/21 14:38:34 http: panic serving 10.202.19.214:36890: runtime error: invalid memory address or nil pointer dereference
+goroutine 723 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x983dc0, 0xfc2220})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/server/handler.RenderEditCode(0xc0002c47b0)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:195 +0x69
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000392000, 0xc0001ec100)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000392000, {0xab9010, 0xc000298380}, 0xc00043f000)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc0002c46f0}, {0xab9010, 0xc000298380}, 0xc00043f000)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc0001ff400, {0xabdd60, 0xc000384210})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2021/12/21 14:38:34 http: panic serving 10.202.19.209:55030: runtime error: invalid memory address or nil pointer dereference
+goroutine 726 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x983dc0, 0xfc2220})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/server/handler.RenderEditCode(0x20)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:195 +0x69
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000392000, 0xc00043f200)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000392000, {0xab9010, 0xc000298460}, 0xc00043f100)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc0002c4a50}, {0xab9010, 0xc000298460}, 0xc00043f100)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc0001ff680, {0xabdd60, 0xc000384210})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2021/12/21 14:38:34 http: panic serving 10.202.19.209:55040: runtime error: invalid memory address or nil pointer dereference
+goroutine 738 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x983dc0, 0xfc2220})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/server/handler.RenderEditCode(0x20)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:195 +0x69
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000392000, 0xc000320f00)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000392000, {0xab9010, 0xc000390700}, 0xc000320e00)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc0003500c0}, {0xab9010, 0xc000390700}, 0xc000320e00)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc0002e7220, {0xabdd60, 0xc000384210})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2021/12/21 14:38:34 http: panic serving 10.202.19.209:55046: runtime error: invalid memory address or nil pointer dereference
+goroutine 729 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x983dc0, 0xfc2220})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/server/handler.RenderEditCode(0x20)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:195 +0x69
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000392000, 0xc00043f400)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000392000, {0xab9010, 0xc000298620}, 0xc00043f300)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc0002c4ea0}, {0xab9010, 0xc000298620}, 0xc00043f300)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc0001ff900, {0xabdd60, 0xc000384210})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2021/12/21 14:38:34 http: panic serving 10.202.19.209:55048: runtime error: invalid memory address or nil pointer dereference
+goroutine 711 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x983dc0, 0xfc2220})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/server/handler.RenderEditCode(0x20)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:195 +0x69
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000392000, 0xc0001ed300)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000392000, {0xab9010, 0xc00041a620}, 0xc0001ed200)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc000385380}, {0xab9010, 0xc00041a620}, 0xc0001ed200)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc0000bb040, {0xabdd60, 0xc000384210})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+signal: killed
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (1 handlers)
+[GIN-debug] POST   /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (1 handlers)
+[GIN-debug] PUT    /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (1 handlers)
+[GIN-debug] PATCH  /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (1 handlers)
+[GIN-debug] HEAD   /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (1 handlers)
+[GIN-debug] OPTIONS /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (1 handlers)
+[GIN-debug] DELETE /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (1 handlers)
+[GIN-debug] CONNECT /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (1 handlers)
+[GIN-debug] TRACE  /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (1 handlers)
+[GIN-debug] GET    /database                 --> github.com/gin-gonic/gin.(*RouterGroup).StaticFile.func1 (2 handlers)
+[GIN-debug] HEAD   /database                 --> github.com/gin-gonic/gin.(*RouterGroup).StaticFile.func1 (2 handlers)
+[GIN-debug] POST   /api/object/update        --> github.com/crackeer/goweb/server/handler.UpdateObject (2 handlers)
+[GIN-debug] POST   /api/object/upload        --> github.com/crackeer/goweb/server/handler.UploadObject (2 handlers)
+[GIN-debug] POST   /api/object/append        --> github.com/crackeer/goweb/server/handler.AppendObject (2 handlers)
+[GIN-debug] POST   /api/object/delete        --> github.com/crackeer/goweb/server/handler.DeleteObject (2 handlers)
+[GIN-debug] GET    /image/:id                --> github.com/crackeer/goweb/server/handler.RenderImage (2 handlers)
+[GIN-debug] GET    /page/index               --> github.com/crackeer/goweb/server/handler.RenderIndex (4 handlers)
+[GIN-debug] GET    /page/link/list           --> github.com/crackeer/goweb/server/handler.RenderLinkList (4 handlers)
+[GIN-debug] GET    /page/link/edit           --> github.com/crackeer/goweb/server/handler.RenderEditLink (4 handlers)
+[GIN-debug] GET    /page/diary/list          --> github.com/crackeer/goweb/server/handler.RenderDiaryList (4 handlers)
+[GIN-debug] GET    /page/diary/detail        --> github.com/crackeer/goweb/server/handler.RenderMarkdown (4 handlers)
+[GIN-debug] GET    /page/diary/edit          --> github.com/crackeer/goweb/server/handler.RenderEditMarkdown (4 handlers)
+[GIN-debug] GET    /page/markdown/detail     --> github.com/crackeer/goweb/server/handler.RenderMarkdown (4 handlers)
+[GIN-debug] GET    /page/markdown/create     --> github.com/crackeer/goweb/server/handler.RenderCreateMarkdown (4 handlers)
+[GIN-debug] GET    /page/markdown/list       --> github.com/crackeer/goweb/server/handler.RenderMarkdownList (4 handlers)
+[GIN-debug] GET    /page/markdown/edit       --> github.com/crackeer/goweb/server/handler.RenderEditMarkdown (4 handlers)
+[GIN-debug] GET    /page/code/create         --> github.com/crackeer/goweb/server/handler.RenderCreateCode (4 handlers)
+[GIN-debug] GET    /page/code/list           --> github.com/crackeer/goweb/server/handler.RenderCodeList (4 handlers)
+[GIN-debug] GET    /page/code/edit           --> github.com/crackeer/goweb/server/handler.RenderEditCode (4 handlers)
+[GIN-debug] GET    /page/code/detail         --> github.com/crackeer/goweb/server/handler.RenderCode (4 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :8888
+signal: killed
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] POST   /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] PUT    /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] PATCH  /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] HEAD   /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] OPTIONS /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] DELETE /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] CONNECT /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] TRACE  /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] GET    /database                 --> github.com/gin-gonic/gin.(*RouterGroup).StaticFile.func1 (2 handlers)
+[GIN-debug] HEAD   /database                 --> github.com/gin-gonic/gin.(*RouterGroup).StaticFile.func1 (2 handlers)
+[GIN-debug] POST   /api/object/update        --> github.com/crackeer/goweb/server/handler.UpdateObject (2 handlers)
+[GIN-debug] POST   /api/object/upload        --> github.com/crackeer/goweb/server/handler.UploadObject (2 handlers)
+[GIN-debug] POST   /api/object/append        --> github.com/crackeer/goweb/server/handler.AppendObject (2 handlers)
+[GIN-debug] POST   /api/object/delete        --> github.com/crackeer/goweb/server/handler.DeleteObject (2 handlers)
+[GIN-debug] GET    /image/:id                --> github.com/crackeer/goweb/server/handler.RenderImage (2 handlers)
+[GIN-debug] GET    /page/index               --> github.com/crackeer/goweb/server/handler.RenderIndex (4 handlers)
+[GIN-debug] GET    /page/link/list           --> github.com/crackeer/goweb/server/handler.RenderLinkList (4 handlers)
+[GIN-debug] GET    /page/link/edit           --> github.com/crackeer/goweb/server/handler.RenderEditLink (4 handlers)
+[GIN-debug] GET    /page/diary/list          --> github.com/crackeer/goweb/server/handler.RenderDiaryList (4 handlers)
+[GIN-debug] GET    /page/diary/detail        --> github.com/crackeer/goweb/server/handler.RenderMarkdown (4 handlers)
+[GIN-debug] GET    /page/diary/edit          --> github.com/crackeer/goweb/server/handler.RenderEditMarkdown (4 handlers)
+[GIN-debug] GET    /page/markdown/detail     --> github.com/crackeer/goweb/server/handler.RenderMarkdown (4 handlers)
+[GIN-debug] GET    /page/markdown/create     --> github.com/crackeer/goweb/server/handler.RenderCreateMarkdown (4 handlers)
+[GIN-debug] GET    /page/markdown/list       --> github.com/crackeer/goweb/server/handler.RenderMarkdownList (4 handlers)
+[GIN-debug] GET    /page/markdown/edit       --> github.com/crackeer/goweb/server/handler.RenderEditMarkdown (4 handlers)
+[GIN-debug] GET    /page/code/create         --> github.com/crackeer/goweb/server/handler.RenderCreateCode (4 handlers)
+[GIN-debug] GET    /page/code/list           --> github.com/crackeer/goweb/server/handler.RenderCodeList (4 handlers)
+[GIN-debug] GET    /page/code/edit           --> github.com/crackeer/goweb/server/handler.RenderEditCode (4 handlers)
+[GIN-debug] GET    /page/code/detail         --> github.com/crackeer/goweb/server/handler.RenderCode (4 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :8888
+signal: killed
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] POST   /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] PUT    /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] PATCH  /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] HEAD   /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] OPTIONS /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] DELETE /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] CONNECT /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] TRACE  /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] GET    /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] POST   /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] PUT    /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] PATCH  /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] HEAD   /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] OPTIONS /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] DELETE /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] CONNECT /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] TRACE  /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] GET    /share/:code              --> github.com/crackeer/goweb/server/handler.RenderShare (3 handlers)
+[GIN-debug] GET    /database                 --> github.com/gin-gonic/gin.(*RouterGroup).StaticFile.func1 (2 handlers)
+[GIN-debug] HEAD   /database                 --> github.com/gin-gonic/gin.(*RouterGroup).StaticFile.func1 (2 handlers)
+[GIN-debug] POST   /api/object/update        --> github.com/crackeer/goweb/server/handler.UpdateObject (2 handlers)
+[GIN-debug] POST   /api/object/upload        --> github.com/crackeer/goweb/server/handler.UploadObject (2 handlers)
+[GIN-debug] POST   /api/object/append        --> github.com/crackeer/goweb/server/handler.AppendObject (2 handlers)
+[GIN-debug] POST   /api/object/delete        --> github.com/crackeer/goweb/server/handler.DeleteObject (2 handlers)
+[GIN-debug] POST   /api/object/share         --> github.com/crackeer/goweb/server/handler.ShareObject (2 handlers)
+[GIN-debug] GET    /image/:id                --> github.com/crackeer/goweb/server/handler.RenderImage (2 handlers)
+[GIN-debug] GET    /page/index               --> github.com/crackeer/goweb/server/handler.RenderIndex (4 handlers)
+[GIN-debug] GET    /page/link/list           --> github.com/crackeer/goweb/server/handler.RenderLinkList (4 handlers)
+[GIN-debug] GET    /page/link/edit           --> github.com/crackeer/goweb/server/handler.RenderEditLink (4 handlers)
+[GIN-debug] GET    /page/diary/list          --> github.com/crackeer/goweb/server/handler.RenderDiaryList (4 handlers)
+[GIN-debug] GET    /page/diary/detail        --> github.com/crackeer/goweb/server/handler.RenderMarkdown (4 handlers)
+[GIN-debug] GET    /page/diary/edit          --> github.com/crackeer/goweb/server/handler.RenderEditMarkdown (4 handlers)
+[GIN-debug] GET    /page/markdown/detail     --> github.com/crackeer/goweb/server/handler.RenderMarkdown (4 handlers)
+[GIN-debug] GET    /page/markdown/create     --> github.com/crackeer/goweb/server/handler.RenderCreateMarkdown (4 handlers)
+[GIN-debug] GET    /page/markdown/list       --> github.com/crackeer/goweb/server/handler.RenderMarkdownList (4 handlers)
+[GIN-debug] GET    /page/markdown/edit       --> github.com/crackeer/goweb/server/handler.RenderEditMarkdown (4 handlers)
+[GIN-debug] GET    /page/code/create         --> github.com/crackeer/goweb/server/handler.RenderCreateCode (4 handlers)
+[GIN-debug] GET    /page/code/list           --> github.com/crackeer/goweb/server/handler.RenderCodeList (4 handlers)
+[GIN-debug] GET    /page/code/edit           --> github.com/crackeer/goweb/server/handler.RenderEditCode (4 handlers)
+[GIN-debug] GET    /page/code/detail         --> github.com/crackeer/goweb/server/handler.RenderCode (4 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :8888
+2022/01/04 10:52:36 http: panic serving 10.202.19.212:48256: runtime error: invalid memory address or nil pointer dereference
+goroutine 178 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x9868e0, 0xfc7220})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/server/handler.RenderEditCode(0x9)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:224 +0x69
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/crackeer/goweb/server/middleware.RenderPage.func1(0xc000194100)
+	/home/liuhu016/gitee/goweb/server/middleware/page.go:30 +0x32
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000310340, 0xc000194100)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000310340, {0xabc5f0, 0xc000320460}, 0xc000194c00)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc000090a80}, {0xabc5f0, 0xc000320460}, 0xc000194c00)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc0002e6be0, {0xac10c0, 0xc000302240})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2022/01/04 10:52:36 http: panic serving 10.202.19.212:48260: runtime error: invalid memory address or nil pointer dereference
+goroutine 158 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x9868e0, 0xfc7220})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/server/handler.RenderEditCode(0x9)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:224 +0x69
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/crackeer/goweb/server/middleware.RenderPage.func1(0xc00046a100)
+	/home/liuhu016/gitee/goweb/server/middleware/page.go:30 +0x32
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000310340, 0xc00046a100)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000310340, {0xabc5f0, 0xc0001da000}, 0xc00046a000)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc000376090}, {0xabc5f0, 0xc0001da000}, 0xc00046a000)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc0001fc0a0, {0xac10c0, 0xc000302240})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2022/01/04 10:52:36 http: panic serving 10.202.19.212:48262: runtime error: invalid memory address or nil pointer dereference
+goroutine 163 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x9868e0, 0xfc7220})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/server/handler.RenderEditCode(0x9)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:224 +0x69
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/crackeer/goweb/server/middleware.RenderPage.func1(0xc0004c0100)
+	/home/liuhu016/gitee/goweb/server/middleware/page.go:30 +0x32
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000310340, 0xc0004c0100)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000310340, {0xabc5f0, 0xc0004de000}, 0xc0004c0000)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc0004ac090}, {0xabc5f0, 0xc0004de000}, 0xc0004c0000)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc000228000, {0xac10c0, 0xc000302240})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2022/01/04 10:52:36 http: panic serving 10.202.19.212:48264: runtime error: invalid memory address or nil pointer dereference
+goroutine 181 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x9868e0, 0xfc7220})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/server/handler.RenderEditCode(0x9)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:224 +0x69
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/crackeer/goweb/server/middleware.RenderPage.func1(0xc000194e00)
+	/home/liuhu016/gitee/goweb/server/middleware/page.go:30 +0x32
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000310340, 0xc000194e00)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000310340, {0xabc5f0, 0xc000320540}, 0xc000194d00)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc000090ea0}, {0xabc5f0, 0xc000320540}, 0xc000194d00)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc0002e6e60, {0xac10c0, 0xc000302240})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2022/01/04 10:52:36 http: panic serving 10.202.19.210:59676: runtime error: invalid memory address or nil pointer dereference
+goroutine 184 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x9868e0, 0xfc7220})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/server/handler.RenderEditCode(0x9)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:224 +0x69
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/crackeer/goweb/server/middleware.RenderPage.func1(0xc000195000)
+	/home/liuhu016/gitee/goweb/server/middleware/page.go:30 +0x32
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000310340, 0xc000195000)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000310340, {0xabc5f0, 0xc000320620}, 0xc000194f00)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc000091290}, {0xabc5f0, 0xc000320620}, 0xc000194f00)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc0002e70e0, {0xac10c0, 0xc000302240})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2022/01/04 10:52:36 http: panic serving 10.202.19.210:59678: runtime error: invalid memory address or nil pointer dereference
+goroutine 161 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x9868e0, 0xfc7220})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/server/handler.RenderEditCode(0x9)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:224 +0x69
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/crackeer/goweb/server/middleware.RenderPage.func1(0xc00046a300)
+	/home/liuhu016/gitee/goweb/server/middleware/page.go:30 +0x32
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000310340, 0xc00046a300)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000310340, {0xabc5f0, 0xc0001da0e0}, 0xc00046a200)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc0003764b0}, {0xabc5f0, 0xc0001da0e0}, 0xc00046a200)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc0001fc320, {0xac10c0, 0xc000302240})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2022/01/04 10:52:36 http: panic serving 10.202.19.210:59686: runtime error: invalid memory address or nil pointer dereference
+goroutine 166 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x9868e0, 0xfc7220})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/server/handler.RenderEditCode(0x9)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:224 +0x69
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/crackeer/goweb/server/middleware.RenderPage.func1(0xc0004c0300)
+	/home/liuhu016/gitee/goweb/server/middleware/page.go:30 +0x32
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000310340, 0xc0004c0300)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000310340, {0xabc5f0, 0xc0004de0e0}, 0xc0004c0200)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc0004ac4b0}, {0xabc5f0, 0xc0004de0e0}, 0xc0004c0200)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc000228140, {0xac10c0, 0xc000302240})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+2022/01/04 10:52:36 http: panic serving 10.202.19.210:59688: runtime error: invalid memory address or nil pointer dereference
+goroutine 196 [running]:
+net/http.(*conn).serve.func1()
+	/usr/local/go1.17/src/net/http/server.go:1802 +0xb9
+panic({0x9868e0, 0xfc7220})
+	/usr/local/go1.17/src/runtime/panic.go:1047 +0x266
+github.com/crackeer/goweb/server/handler.RenderEditCode(0x9)
+	/home/liuhu016/gitee/goweb/server/handler/page.go:224 +0x69
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/crackeer/goweb/server/middleware.RenderPage.func1(0xc00046a500)
+	/home/liuhu016/gitee/goweb/server/middleware/page.go:30 +0x32
+github.com/gin-gonic/gin.(*Context).Next(...)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/context.go:168
+github.com/gin-gonic/gin.(*Engine).handleHTTPRequest(0xc000310340, 0xc00046a500)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:555 +0x671
+github.com/gin-gonic/gin.(*Engine).ServeHTTP(0xc000310340, {0xabc5f0, 0xc0001da1c0}, 0xc00046a400)
+	/home/liuhu016/go/pkg/mod/github.com/gin-gonic/gin@v1.7.7/gin.go:511 +0x1d2
+net/http.serverHandler.ServeHTTP({0xc000376900}, {0xabc5f0, 0xc0001da1c0}, 0xc00046a400)
+	/usr/local/go1.17/src/net/http/server.go:2879 +0x43b
+net/http.(*conn).serve(0xc0001fc5a0, {0xac10c0, 0xc000302240})
+	/usr/local/go1.17/src/net/http/server.go:1930 +0xb08
+created by net/http.(*Server).Serve
+	/usr/local/go1.17/src/net/http/server.go:3034 +0x4e8
+signal: killed
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] POST   /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] PUT    /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] PATCH  /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] HEAD   /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] OPTIONS /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] DELETE /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] CONNECT /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] TRACE  /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] GET    /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] POST   /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] PUT    /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] PATCH  /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] HEAD   /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] OPTIONS /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] DELETE /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] CONNECT /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] TRACE  /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] GET    /share/:code              --> github.com/crackeer/goweb/server/handler.RenderShare (3 handlers)
+[GIN-debug] GET    /database                 --> github.com/gin-gonic/gin.(*RouterGroup).StaticFile.func1 (2 handlers)
+[GIN-debug] HEAD   /database                 --> github.com/gin-gonic/gin.(*RouterGroup).StaticFile.func1 (2 handlers)
+[GIN-debug] POST   /api/object/update        --> github.com/crackeer/goweb/server/handler.UpdateObject (2 handlers)
+[GIN-debug] POST   /api/object/upload        --> github.com/crackeer/goweb/server/handler.UploadObject (2 handlers)
+[GIN-debug] POST   /api/object/append        --> github.com/crackeer/goweb/server/handler.AppendObject (2 handlers)
+[GIN-debug] POST   /api/object/delete        --> github.com/crackeer/goweb/server/handler.DeleteObject (2 handlers)
+[GIN-debug] POST   /api/object/share         --> github.com/crackeer/goweb/server/handler.ShareObject (2 handlers)
+[GIN-debug] GET    /image/:id                --> github.com/crackeer/goweb/server/handler.RenderImage (2 handlers)
+[GIN-debug] GET    /page/link/list           --> github.com/crackeer/goweb/server/handler.RenderLinkList (4 handlers)
+[GIN-debug] GET    /page/link/edit           --> github.com/crackeer/goweb/server/handler.RenderEditLink (4 handlers)
+[GIN-debug] GET    /page/markdown/detail     --> github.com/crackeer/goweb/server/handler.RenderMarkdown (4 handlers)
+[GIN-debug] GET    /page/markdown/create     --> github.com/crackeer/goweb/server/handler.RenderCreateMarkdown (4 handlers)
+[GIN-debug] GET    /page/markdown/list       --> github.com/crackeer/goweb/server/handler.RenderMarkdownList (4 handlers)
+[GIN-debug] GET    /page/markdown/edit       --> github.com/crackeer/goweb/server/handler.RenderEditMarkdown (4 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :8888
+signal: killed
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] POST   /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] PUT    /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] PATCH  /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] HEAD   /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] OPTIONS /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] DELETE /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] CONNECT /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] TRACE  /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] GET    /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] POST   /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] PUT    /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] PATCH  /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] HEAD   /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] OPTIONS /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] DELETE /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] CONNECT /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] TRACE  /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] GET    /share/:code              --> github.com/crackeer/goweb/server/handler.RenderShare (3 handlers)
+[GIN-debug] GET    /database                 --> github.com/gin-gonic/gin.(*RouterGroup).StaticFile.func1 (2 handlers)
+[GIN-debug] HEAD   /database                 --> github.com/gin-gonic/gin.(*RouterGroup).StaticFile.func1 (2 handlers)
+[GIN-debug] POST   /api/object/update        --> github.com/crackeer/goweb/server/handler.UpdateObject (2 handlers)
+[GIN-debug] POST   /api/object/upload        --> github.com/crackeer/goweb/server/handler.UploadObject (2 handlers)
+[GIN-debug] POST   /api/object/append        --> github.com/crackeer/goweb/server/handler.AppendObject (2 handlers)
+[GIN-debug] POST   /api/object/delete        --> github.com/crackeer/goweb/server/handler.DeleteObject (2 handlers)
+[GIN-debug] POST   /api/object/share         --> github.com/crackeer/goweb/server/handler.ShareObject (2 handlers)
+[GIN-debug] GET    /image/:id                --> github.com/crackeer/goweb/server/handler.RenderImage (2 handlers)
+[GIN-debug] GET    /page/link/list           --> github.com/crackeer/goweb/server/handler.RenderLinkList (4 handlers)
+[GIN-debug] GET    /page/link/edit           --> github.com/crackeer/goweb/server/handler.RenderEditLink (4 handlers)
+[GIN-debug] GET    /page/markdown/detail     --> github.com/crackeer/goweb/server/handler.RenderMarkdown (4 handlers)
+[GIN-debug] GET    /page/markdown/create     --> github.com/crackeer/goweb/server/handler.RenderCreateMarkdown (4 handlers)
+[GIN-debug] GET    /page/markdown/list       --> github.com/crackeer/goweb/server/handler.RenderMarkdownList (4 handlers)
+[GIN-debug] GET    /page/markdown/edit       --> github.com/crackeer/goweb/server/handler.RenderEditMarkdown (4 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :8888
+signal: killed
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] POST   /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] PUT    /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] PATCH  /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] HEAD   /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] OPTIONS /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] DELETE /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] CONNECT /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] TRACE  /page/login               --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] GET    /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] POST   /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] PUT    /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] PATCH  /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] HEAD   /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] OPTIONS /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] DELETE /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] CONNECT /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] TRACE  /page/logout              --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] GET    /share/:code              --> github.com/crackeer/goweb/server/handler.RenderShare (3 handlers)
+[GIN-debug] GET    /database                 --> github.com/gin-gonic/gin.(*RouterGroup).StaticFile.func1 (2 handlers)
+[GIN-debug] HEAD   /database                 --> github.com/gin-gonic/gin.(*RouterGroup).StaticFile.func1 (2 handlers)
+[GIN-debug] POST   /api/object/update        --> github.com/crackeer/goweb/server/handler.UpdateObject (2 handlers)
+[GIN-debug] POST   /api/object/upload        --> github.com/crackeer/goweb/server/handler.UploadObject (2 handlers)
+[GIN-debug] POST   /api/object/append        --> github.com/crackeer/goweb/server/handler.AppendObject (2 handlers)
+[GIN-debug] POST   /api/object/delete        --> github.com/crackeer/goweb/server/handler.DeleteObject (2 handlers)
+[GIN-debug] POST   /api/object/share         --> github.com/crackeer/goweb/server/handler.ShareObject (2 handlers)
+[GIN-debug] GET    /image/:id                --> github.com/crackeer/goweb/server/handler.RenderImage (2 handlers)
+[GIN-debug] GET    /page/link/list           --> github.com/crackeer/goweb/server/handler.RenderLinkList (4 handlers)
+[GIN-debug] GET    /page/link/edit           --> github.com/crackeer/goweb/server/handler.RenderEditLink (4 handlers)
+[GIN-debug] GET    /page/markdown/detail     --> github.com/crackeer/goweb/server/handler.RenderMarkdown (4 handlers)
+[GIN-debug] GET    /page/markdown/create     --> github.com/crackeer/goweb/server/handler.RenderCreateMarkdown (4 handlers)
+[GIN-debug] GET    /page/markdown/list       --> github.com/crackeer/goweb/server/handler.RenderMarkdownList (4 handlers)
+[GIN-debug] GET    /page/markdown/edit       --> github.com/crackeer/goweb/server/handler.RenderEditMarkdown (4 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :8888
+signal: killed
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /login                    --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] POST   /login                    --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] PUT    /login                    --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] PATCH  /login                    --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] HEAD   /login                    --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] OPTIONS /login                    --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] DELETE /login                    --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] CONNECT /login                    --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] TRACE  /login                    --> github.com/crackeer/goweb/server/handler.RenderLogin (3 handlers)
+[GIN-debug] GET    /logout                   --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] POST   /logout                   --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] PUT    /logout                   --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] PATCH  /logout                   --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] HEAD   /logout                   --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] OPTIONS /logout                   --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] DELETE /logout                   --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] CONNECT /logout                   --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] TRACE  /logout                   --> github.com/crackeer/goweb/server/handler.RenderLogout (3 handlers)
+[GIN-debug] GET    /share/:code              --> github.com/crackeer/goweb/server/handler.RenderShare (3 handlers)
+[GIN-debug] GET    /database                 --> github.com/gin-gonic/gin.(*RouterGroup).StaticFile.func1 (2 handlers)
+[GIN-debug] HEAD   /database                 --> github.com/gin-gonic/gin.(*RouterGroup).StaticFile.func1 (2 handlers)
+[GIN-debug] POST   /api/object/update        --> github.com/crackeer/goweb/server/handler.UpdateObject (2 handlers)
+[GIN-debug] POST   /api/object/upload        --> github.com/crackeer/goweb/server/handler.UploadObject (2 handlers)
+[GIN-debug] POST   /api/object/delete        --> github.com/crackeer/goweb/server/handler.DeleteObject (2 handlers)
+[GIN-debug] POST   /api/object/share         --> github.com/crackeer/goweb/server/handler.ShareObject (2 handlers)
+[GIN-debug] GET    /image/:id                --> github.com/crackeer/goweb/server/handler.RenderImage (2 handlers)
+[GIN-debug] GET    /link/list                --> github.com/crackeer/goweb/server/handler.RenderLinkList (4 handlers)
+[GIN-debug] GET    /link/edit                --> github.com/crackeer/goweb/server/handler.RenderEditLink (4 handlers)
+[GIN-debug] GET    /markdown/detail          --> github.com/crackeer/goweb/server/handler.RenderMarkdown (4 handlers)
+[GIN-debug] GET    /markdown/create          --> github.com/crackeer/goweb/server/handler.RenderCreateMarkdown (4 handlers)
+[GIN-debug] GET    /markdown/list            --> github.com/crackeer/goweb/server/handler.RenderMarkdownList (4 handlers)
+[GIN-debug] GET    /markdown/edit            --> github.com/crackeer/goweb/server/handler.RenderEditMarkdown (4 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://pkg.go.dev/github.com/gin-gonic/gin#readme-don-t-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :8888
