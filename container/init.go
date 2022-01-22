@@ -25,8 +25,6 @@ func Init(configPath string) error {
 		return fmt.Errorf("unmarshal config content error, %s", decodeError.Error())
 	}
 	InitDB()
-	LockDatabase()
-	UnlockDatabase()
 
 	return nil
 }
