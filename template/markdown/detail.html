@@ -13,10 +13,65 @@
 <div style="margin: 20px auto; text-align: center;">
     <button type="button" class="btn btn-danger" id="delete-id">删除</button>
     <a class="btn btn-primary" id="update-id" href="/{{page_type}}/edit?id={{data.object.id|stringformat:"%.f"}}">修改</a>
-    <button type="button" class="btn btn-warning" id="share-id">分享</button>
+    <button type="button" class="btn btn-warning" id="share-id" data-toggle="share" data-target="#share">分享</button>
 </div>
 <input type="hidden" value="{{data.object.id|stringformat:" %.f"}}" id="id">
 <input type="hidden" value="{{data.object.tag}}" id="tag">
+
+<div class="modal fade" id="share" tabindex="-1" role="dialog">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">&times;</span></button>
+                <h4 class="modal-title"">选择分享时长</h4>
+            </div>
+            <div class=" modal-body">
+                <div class="radio">
+                    <label><input type="radio" name="share-duration" value="1800" >半小时</label>
+                </div>
+                <div class="radio">
+                    <label><input type="radio" name="share-duration" value="3600" >1小时</label>
+                </div>
+                <div class="radio">
+                    <label><input type="radio" name="share-duration" value="10800" >3小时</label>
+                </div>
+                <div class="radio">
+                    <label><input type="radio" name="share-duration" value="86400" >1天</label>
+                </div>
+                <div class="radio">
+                    <label><input type="radio" name="share-duration" value="259200" >3天</label>
+                </div>
+                <div class="radio">
+                    <label><input type="radio" name="share-duration" value="604800" >一周</label>
+                </div>
+                <div class="radio">
+                    <label><input type="radio" name="share-duration" value="1296000">15天</label>
+                </div>
+                <div class="radio">
+                    <label><input type="radio" name="share-duration" value="2592000">1个月</label>
+                </div>
+            </div>
+            <div class="panel panel-primary" style="margin: 0 10px">
+                <div class="panel-heading">
+                    <h3 class="panel-title">最近3次分享</h3>
+                </div>
+                <ul class="list-group">
+                    {% for item in data.share_list %}
+                    <a class="list-group-item" href="/share/{{item.tag}}" target="_blank">
+                        <p class="title">过期时间：{{ item.content}}</p>
+                    </a>
+                    {% endfor %}
+                </ul>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
+                <button type="button" class="btn btn-primary" id="confirm-share">确认</button>
+            </div>
+        </div>
+    </div>
+</div>
+
 <script text="text/javascript">
     $(document).ready(function () {
         editormd.markdownToHTML("markdown-view", {});
@@ -40,69 +95,29 @@
                 })
             });
         })
-        //http://bootboxjs.com/v4.x/documentation.html#bb-prompt-dialog
         $('#share-id').click(function () {
-            bootbox.prompt({
-                title: "请选择分享时长",
-                inputType: 'select',
-                value : -1,
-                inputOptions: [
-                    {
-                        text: '半小时',
-                        value: 3600 * 0.5,
-                    },
-                    {
-                        text: '3小时',
-                        value: 3600 * 3,
-                    },
-                    {
-                        text: '6小时',
-                        value: 3600 * 6,
-                    },
-                    {
-                        text: '12小时',
-                        value: 3600 * 12,
-                    },
-                    {
-                        text: '一天',
-                        value: 3600 * 24,
-                    },
-                    {
-                        text: '三天',
-                        value: 3600 * 24 * 3,
-                    },
-                    {
-                        text: '一周',
-                        value: 3600 * 24 * 7,
-                    },
-                    {
-                        text: '半个月',
-                        value: 3600 * 24 * 15,
-                    },
-                    {
-                        text: '永久',
-                        value: -1
-                    }
-                ],
-                callback: function (result) {
-                    if(result == null) {
-                        return
-                    }
-                    let data = { id: parseInt($('#id').val()), duration : parseInt(result)}
-                    $.ajax({
-                        method: 'post',
-                        url: '/api/object/share',
-                        contentType: 'application/json',
-                        data: JSON.stringify(data),
-                        success: function (result) {
-                            if (result.code == 0) {
-                                window.open(result.data.share_url, '_blank')
-                            }
-                        }
-                    })
-                }
-            });
+            $('#share').modal()
+        })
 
+        $('#confirm-share').click(function() {
+            let duration = $('input[name=share-duration]:checked').val()
+            let val =  parseInt(duration)
+            if(val < 1) {
+                return
+            }
+            let data = { id: parseInt($('#id').val()), duration : val}
+            $.ajax({
+                method: 'post',
+                url: '/api/object/share',
+                contentType: 'application/json',
+                data: JSON.stringify(data),
+                success: function (result) {
+                    if (result.code == 0) {
+                        $('#share').modal('hide')
+                        window.open(result.data.share_url, '_blank')
+                    }
+                }
+            })
         })
 
     })

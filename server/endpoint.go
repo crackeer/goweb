@@ -20,7 +20,7 @@ func Run() error {
 
 	router.GET("share/:code", middleware.InitPage(), middleware.RenderPage(), handler.RenderShare)
 	router.Use(middleware.Login())
-	router.StaticFile("database", config.Sqlite3DatabaseFile)
+	router.StaticFile("database", config.Database)
 	api := router.Group("api")
 	api.POST("object/update", handler.UpdateObject)
 	api.POST("object/upload", handler.UploadObject)

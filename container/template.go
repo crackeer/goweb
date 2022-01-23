@@ -9,15 +9,13 @@ import (
 //  @return string
 func GetFullTemplatePath(name string) string {
 	return strings.Join([]string{
-		config.TemplateFileDir, name, config.TemplateFileExt,
+		config.TemplateConfig.Dir, name, config.TemplateConfig.Ext,
 	}, "")
 }
 
 // GetFullTemplatePath
 //  @param name
 //  @return string
-func GetSkeletionTemplatePath() string {
-	return strings.Join([]string{
-		config.TemplateFileDir, config.TemplateSkeletonFile, config.TemplateFileExt,
-	}, "")
+func GetSkeletonTemplatePath() string {
+	return GetFullTemplatePath(config.TemplateConfig.Skeleton)
 }

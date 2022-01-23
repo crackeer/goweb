@@ -8,17 +8,11 @@ import (
 	"github.com/crackeer/goweb/container"
 )
 
-const (
-	pageSize int64 = 20
-)
-
 // Update
 //  @receiver object
 //  @return error
 func (object *Object) Update() error {
-
 	if object.ID < 1 {
-
 		retData := &Object{
 			Title:      object.Title,
 			Content:    object.Content,
@@ -90,12 +84,10 @@ func GetAll(objectType string) ([]*Object, error) {
 //  @return *Object
 //  @return error
 func GetObjectByTag(objectType string, theTag string) (*Object, error) {
-	obj := &Object{}
-	err := container.GetDatabase().Model(&Object{}).Where(map[string]interface{}{
+	return QueryOne(map[string]interface{}{
 		"type": objectType,
 		"tag":  theTag,
-	}).Order("id desc").First(obj).Error
-	return obj, err
+	})
 }
 
 // GetTags
@@ -116,7 +108,7 @@ func GetTags(objectType string) ([]string, error) {
 //  @param page
 //  @return []string
 //  @return error
-func GetObjectList(objectType string, queryTag string, page int64) ([]*Object, int64, error) {
+func GetObjectList(objectType string, queryTag string, page int64, pageSize int64) ([]*Object, int64, error) {
 	list := []*Object{}
 	var total int64
 	offset := (page - 1) * pageSize
@@ -137,11 +129,9 @@ func GetObjectList(objectType string, queryTag string, page int64) ([]*Object, i
 //  @return *Object
 //  @return error
 func GetObjectByID(id int64) (*Object, error) {
-	retData := &Object{}
-	err := container.GetDatabase().Model(&Object{}).Where(map[string]interface{}{
+	return QueryOne(map[string]interface{}{
 		"id": id,
-	}).First(retData).Error
-	return retData, err
+	})
 }
 
 // DeleteObjectByID
@@ -151,4 +141,24 @@ func DeleteObjectByID(id int64) error {
 	return container.GetDatabase().Where(map[string]interface{}{
 		"id": id,
 	}).Delete(&Object{}).Error
+}
+
+// QueryOne
+//  @param query
+//  @return *Object
+//  @return error
+func QueryOne(query map[string]interface{}) (*Object, error) {
+	retData := &Object{}
+	err := container.GetDatabase().Model(&Object{}).Where(query).Order("id desc").First(retData).Error
+	return retData, err
+}
+
+// QueryList
+//  @param query
+//  @return []Object
+//  @return error
+func QueryList(query map[string]interface{}) ([]Object, error) {
+	retData := []Object{}
+	err := container.GetDatabase().Model(&Object{}).Where(query).Order("id desc").Find(&retData).Error
+	return retData, err
 }
