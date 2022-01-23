@@ -85,12 +85,14 @@ func RenderLogin(ctx *gin.Context) {
 // RenderLinkList
 //  @param ctx
 func RenderLinkList(ctx *gin.Context) {
+	setTitle(ctx, "书签")
 	setData(ctx, objectService.GetAllLinkList())
 }
 
 // RenderLinkList
 //  @param ctx
 func RenderEditLink(ctx *gin.Context) {
+	setTitle(ctx, "书签管理")
 	setData(ctx, objectService.GetAllLinkList())
 }
 
@@ -122,6 +124,7 @@ func RenderMarkdown(ctx *gin.Context) {
 			list = append(list, shares[i].ToMap())
 		}
 	}
+	setTitle(ctx, object.Title)
 
 	setData(ctx, map[string]interface{}{
 		"object":     object.ToMap(),
@@ -132,7 +135,7 @@ func RenderMarkdown(ctx *gin.Context) {
 // RenderCreateMarkdown
 //  @param ctx
 func RenderCreateMarkdown(ctx *gin.Context) {
-
+	setTitle(ctx, "新建文档")
 	tags, _ := model.GetTags(model.TypeMD)
 	setData(ctx, tags)
 }
@@ -173,7 +176,7 @@ func RenderMarkdownList(ctx *gin.Context) {
 
 	tag := ctx.DefaultQuery("tag", tags[0])
 	conf := container.GetConfig()
-
+	setTitle(ctx, "文档列表 - 分类："+tag)
 	objects, total, _ := model.GetObjectList(model.TypeMD, tag, int64(val), conf.PageSize)
 
 	list := []map[string]interface{}{}

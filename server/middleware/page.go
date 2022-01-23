@@ -46,7 +46,7 @@ func getPageConfig(ctx *gin.Context) define.PageConf {
 	}
 
 	parts := strings.Split(page, "/")
-	if len(conf.Type) < 1 && len(parts) > 0 {
+	if len(parts) > 0 {
 		conf.Type = parts[0]
 	}
 
