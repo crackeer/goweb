@@ -174,22 +174,30 @@ func RenderMarkdownList(ctx *gin.Context) {
 	page := ctx.DefaultQuery("page", "1")
 	val, _ := strconv.Atoi(page)
 
-	tag := ctx.DefaultQuery("tag", tags[0])
+	tag := ctx.DefaultQuery("tag", "")
+	keyword := ctx.DefaultQuery("keyword", "")
 	conf := container.GetConfig()
 	setTitle(ctx, "文档列表 - 分类："+tag)
-	objects, total, _ := model.GetObjectList(model.TypeMD, tag, int64(val), conf.PageSize)
+	objects, total, _ := model.GetObjectList(model.TypeMD, tag, keyword, int64(val), conf.PageSize)
 
 	list := []map[string]interface{}{}
 	for _, v := range objects {
 		list = append(list, v.ToMap())
 	}
 
+	totalPage := total / conf.PageSize
+	if total%conf.PageSize > 0 {
+		totalPage += 1
+	}
+
 	setData(ctx, map[string]interface{}{
-		"tags":  tags,
-		"list":  list,
-		"page":  val,
-		"tag":   tag,
-		"total": total,
+		"tags":       tags,
+		"keyword":    keyword,
+		"list":       list,
+		"page":       val,
+		"tag":        tag,
+		"total_page": totalPage,
+		"total":      total,
 	})
 
 }

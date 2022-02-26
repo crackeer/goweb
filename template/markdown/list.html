@@ -1,15 +1,28 @@
-<form class="form-horizontal">
+
+<div class="form-horizontal">
+    <div class="form-group">
+        <label for="title" class="col-sm-1 control-label"></label>
+        <div class="col-sm-7">
+            <input type="text" class="form-control" name="keyword" placeholder="请输入关键词" value="{{data.keyword}}" id="keyword">
+        </div>
+        <div class="col-sm-3">
+            <button type="button" class="btn btn-primary" id="search">搜索</button>
+        </div>
+    </div>
     <div class="form-group">
         <label for="title" class="col-sm-1 control-label">标签</label>
         <div class="col-sm-11">
+            <label class="radio-inline">
+                <input type="radio" name="tag" value="" class="quick-tag" {% if(''==data.tag) %} checked {% endif %}>全部
+            </label>
             {% for t in data.tags %}
             <label class="radio-inline">
-                <input type="radio" name="tag-radio" value="{{t}}" class="quick-tag" {% if(t==data.tag) %} checked {% endif %}>{{t}}
+                <input type="radio" name="tag" value="{{t}}" class="quick-tag" {% if(t==data.tag) %} checked {% endif %}>{{t}}
             </label>
             {% endfor %}
         </div>
     </div>
-</form>
+</div>
 
 <ul class="list-group">
     {% for item in data.list %}
@@ -22,9 +35,17 @@
     </a>
     {% endfor %}
 </ul>
+<div style="text-align: center;">
+<div style="margin: 10px auto;">
+   <button type="button" class="btn-sm btn btn-link" id="prev-page">上一页</button>
+    当前第{{data.page}}页 / 共{{data.total_page}}页
+    <button type="button" class="btn-sm btn btn-link" id="next-page">下一页</button>
+    </div>
+</div>
 
 <input type="hidden" value="{{data.tag}}" id="tag">
 <input type="hidden" value="{{data.page}}" id="page">
+<input type="hidden" value="{{data.total_page}}" id="total_page">
 <style>
     .title {
         font-size: 16px;
@@ -43,8 +64,32 @@
 </style>
 <script text="text/javascript">
     $(document).ready(function () {
-        $('.quick-tag').change(function () {
-            window.location.href = '/markdown/list?tag=' + $(this).val() + '&page=' + $('#page').val()
+        function updatePage(tag, page, keyword) {
+            window.location.href = '/markdown/list?tag=' + tag + '&page=' + page+'&keyword=' + keyword
+        }
+        $('.quick-tag').change(function() {
+            updatePage($(this).val(), 1, '')
         })
+        $('#search').click(function() {
+            updatePage('' , 1, $('#keyword').val())
+        })
+
+        $('#next-page').click(function() {
+            let curPage = parseInt($('#page').val())
+            let totalPage = parseInt($('#total_page').val())
+            if(curPage >= totalPage) {
+                return
+            }
+            updatePage('' , curPage + 1, $('#keyword').val())
+        })
+
+        $('#prev-page').click(function() {
+            let curPage = parseInt($('#page').val())
+            if(curPage <=1 ) {
+                return
+            }
+            updatePage('' , curPage - 1, $('#keyword').val())
+        })
+
     })
 </script>
