@@ -61,7 +61,7 @@ func DefaultPage(ctx *gin.Context) *Page {
 	return &Page{
 		GinCtx:       ctx,
 		context:      map[string]interface{}{},
-		skeletonFile: container.GetSkeletionTemplatePath(),
+		skeletonFile: container.GetSkeletonTemplatePath(),
 	}
 }
 
@@ -71,7 +71,7 @@ func NewPage(ctx *gin.Context, title string, data interface{}) *Page {
 		Title:        title,
 		Data:         data,
 		context:      map[string]interface{}{},
-		skeletonFile: container.GetSkeletionTemplatePath(),
+		skeletonFile: container.GetSkeletonTemplatePath(),
 	}
 }
 

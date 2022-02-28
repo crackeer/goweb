@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 	"strconv"
+	"time"
 
 	"github.com/crackeer/goweb/common"
 	"github.com/crackeer/goweb/container"
@@ -84,16 +85,18 @@ func RenderLogin(ctx *gin.Context) {
 // RenderLinkList
 //  @param ctx
 func RenderLinkList(ctx *gin.Context) {
+	setTitle(ctx, "书签")
 	setData(ctx, objectService.GetAllLinkList())
 }
 
 // RenderLinkList
 //  @param ctx
 func RenderEditLink(ctx *gin.Context) {
+	setTitle(ctx, "书签管理")
 	setData(ctx, objectService.GetAllLinkList())
 }
 
-// RenderDiaryList
+// RenderMarkdown
 //  @param ctx
 func RenderMarkdown(ctx *gin.Context) {
 	id := ctx.DefaultQuery("id", "0")
@@ -101,17 +104,39 @@ func RenderMarkdown(ctx *gin.Context) {
 	val, _ := strconv.Atoi(id)
 	object, _ := model.GetObjectByID(int64(val))
 
+	shares, _ := model.QueryList(map[string]interface{}{
+		"type":  model.TypeShare,
+		"title": id,
+	})
+	list := []map[string]interface{}{}
+	for i, val := range shares {
+		ts, _ := strconv.Atoi(val.Content)
+		if len(list) >= 3 {
+			break
+		}
+		if ts < 0 {
+			shares[i].Content = "不过期"
+			list = append(list, shares[i].ToMap())
+			continue
+		}
+		if ts > int(time.Now().Unix()) {
+			shares[i].Content = time.Unix(int64(ts), 0).Format("2006-01-02 03:04:05 PM")
+			list = append(list, shares[i].ToMap())
+		}
+	}
+	setTitle(ctx, object.Title)
+
 	setData(ctx, map[string]interface{}{
-		"object": object.ToMap(),
+		"object":     object.ToMap(),
+		"share_list": list,
 	})
 }
 
 // RenderCreateMarkdown
 //  @param ctx
 func RenderCreateMarkdown(ctx *gin.Context) {
-
+	setTitle(ctx, "新建文档")
 	tags, _ := model.GetTags(model.TypeMD)
-
 	setData(ctx, tags)
 }
 
@@ -150,7 +175,9 @@ func RenderMarkdownList(ctx *gin.Context) {
 	val, _ := strconv.Atoi(page)
 
 	tag := ctx.DefaultQuery("tag", tags[0])
-	objects, total, _ := model.GetObjectList(model.TypeMD, tag, int64(val))
+	conf := container.GetConfig()
+	setTitle(ctx, "文档列表 - 分类："+tag)
+	objects, total, _ := model.GetObjectList(model.TypeMD, tag, int64(val), conf.PageSize)
 
 	list := []map[string]interface{}{}
 	for _, v := range objects {

@@ -39,23 +39,14 @@ func RenderPage() gin.HandlerFunc {
 
 func getPageConfig(ctx *gin.Context) define.PageConf {
 	page := strings.Trim(ctx.Request.URL.Path, "/")
-	config := container.GetConfig()
 
-	conf, exists := config.Page[page]
-
-	if !exists {
-		return define.PageConf{
-			Type: page,
-			TPL:  page,
-		}
-	}
-
-	if len(conf.TPL) < 1 {
-		conf.TPL = page
+	conf := define.PageConf{
+		Type: page,
+		TPL:  page,
 	}
 
 	parts := strings.Split(page, "/")
-	if len(conf.Type) < 1 && len(parts) > 0 {
+	if len(parts) > 0 {
 		conf.Type = parts[0]
 	}
 
