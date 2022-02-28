@@ -22,6 +22,7 @@ func Run() error {
 	router.Use(middleware.Login())
 	router.StaticFile("database", config.Database)
 	api := router.Group("api")
+	
 	api.POST("object/update", handler.UpdateObject)
 	api.POST("object/upload", handler.UploadObject)
 	api.POST("object/delete", handler.DeleteObject)
@@ -38,7 +39,7 @@ func Run() error {
 	page.GET("markdown/edit", handler.RenderEditMarkdown)
 
 	router.NoRoute(func(c *gin.Context) {
-		c.Redirect(http.StatusTemporaryRedirect, "/link/list")
+		c.Redirect(http.StatusTemporaryRedirect, "/markdown/list")
 	})
 
 	return router.Run(fmt.Sprintf(":%d", config.Port))

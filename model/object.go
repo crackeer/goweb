@@ -108,14 +108,16 @@ func GetTags(objectType string) ([]string, error) {
 //  @param page
 //  @return []string
 //  @return error
-func GetObjectList(objectType string, queryTag string, page int64, pageSize int64) ([]*Object, int64, error) {
+func GetObjectList(objectType, tag, keyword string, page int64, pageSize int64) ([]*Object, int64, error) {
 	list := []*Object{}
 	var total int64
 	offset := (page - 1) * pageSize
-	tx := container.GetDatabase().Model(&Object{}).Where(map[string]interface{}{
-		"type": objectType,
-		"tag":  queryTag,
-	})
+	tx := container.GetDatabase().Model(&Object{})
+	if len(tag) > 0 {
+		tx = tx.Where("tag = ?", tag).Where("type = ?", objectType)
+	} else if len(keyword) > 0 {
+		tx = tx.Where("type = ? and (title like ? or content like ?)", objectType, fmt.Sprintf("%%%s%%", keyword), fmt.Sprintf("%%%s%%", keyword))
+	}
 	tx.Count(&total)
 
 	err := tx.Select([]string{
