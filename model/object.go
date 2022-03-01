@@ -113,10 +113,13 @@ func GetObjectList(objectType, tag, keyword string, page int64, pageSize int64) 
 	var total int64
 	offset := (page - 1) * pageSize
 	tx := container.GetDatabase().Model(&Object{})
-	if len(tag) > 0 {
-		tx = tx.Where("tag = ? and type = ?", tag, objectType)
-	} else if len(keyword) > 0 {
+	if len(keyword) > 0 {
 		tx = tx.Where("type = ? and (title like ? or content like ?)", objectType, fmt.Sprintf("%%%s%%", keyword), fmt.Sprintf("%%%s%%", keyword))
+	} else {
+		tx = tx.Where("type = ?", objectType)
+		if len(tag) > 0 {
+			tx = tx.Where("tag = ?", tag)
+		}
 	}
 	tx.Count(&total)
 
