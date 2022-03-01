@@ -4,14 +4,12 @@
   <li class="active"><strong>{{data.object.title}}</strong></li>
 </ol>
 
-<div class="panel panel-default">
-    <div class="panel-body">
-        <div id="markdown-view" style="margin-top: 20px;">
-            <textarea style="display:none;">{{data.object.content}}</textarea>
-        </div>
-    </div>
+
+<div id="markdown-view">
+    <textarea style="display:none;">{{data.object.content}}</textarea>
 </div>
-<div style="margin: 20px auto; text-align: center;">
+
+ <div style="margin: 20px auto; text-align: center;">
     <button type="button" class="btn btn-danger" id="delete-id">删除</button>
     <a class="btn btn-primary" id="update-id" href="/{{page_type}}/edit?id={{data.object.id|stringformat:"%.f"}}">修改</a>
     <button type="button" class="btn btn-warning" id="share-id" data-toggle="share" data-target="#share">分享</button>
