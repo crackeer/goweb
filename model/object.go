@@ -22,7 +22,9 @@ func (object *Object) Update() error {
 			UpdateTime: common.GetNowTimeString(),
 		}
 
-		return container.GetDatabase().Create(retData).Error
+		err := container.GetDatabase().Create(retData).Error
+		object.ID = retData.ID
+		return err
 	}
 
 	return container.GetDatabase().Model(&Object{}).Where(map[string]interface{}{

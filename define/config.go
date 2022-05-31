@@ -11,6 +11,7 @@ type TemplateConfig struct {
 type Config struct {
 	Port           int64          `json:"port"`
 	Database       string         `json:"database"`
+	BoltDB         string         `json:"bolt_db"`
 	TemplateConfig TemplateConfig `json:"template"`
 	Domain         string         `json:"domain"`
 
