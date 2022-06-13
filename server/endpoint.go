@@ -15,6 +15,7 @@ func Run() error {
 	router := gin.New()
 	config := container.GetConfig()
 	gin.SetMode(gin.DebugMode)
+	router.StaticFS("/frontend", http.Dir("./frontend"))
 	router.Any("/login", middleware.InitPage(), middleware.RenderPage(), handler.RenderLogin)
 	router.Any("/logout", middleware.InitPage(), middleware.RenderPage(), handler.RenderLogout)
 
@@ -22,7 +23,7 @@ func Run() error {
 	router.Use(middleware.Login())
 	router.StaticFile("database", config.Database)
 	api := router.Group("api")
-	
+
 	api.POST("object/update", handler.UpdateObject)
 	api.POST("object/upload", handler.UploadObject)
 	api.POST("object/delete", handler.DeleteObject)
