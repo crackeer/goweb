@@ -2,9 +2,8 @@
     "password_md5": "a12dadb8024fd2ddc5a86120ebf50c27",
     "key": "123456789",
     "port": 8888,
-    "database": "/home/liuhu016/sqlite3.db",
+    "database": "./sqlite4.db",
     "domain": "ke.com",
-    "password_md5": "a12dadb8024fd2ddc5a86120ebf50c27",
     "template" : {
         "ext" : ".html",
         "dir" : "./template/",

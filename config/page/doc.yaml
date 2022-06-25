@@ -1,0 +1,15 @@
+tag: "文章"
+list:
+  list:
+    frame_file: "frame/default.html"
+    content_file: "doc/list.vue"
+    data_api: "goweb/api_v1_list_object"
+    type: "vue"
+    href_title: "文章列表"
+    default_params:
+      abc: "abc"
+    extension:
+      keys:
+        - aaa
+        - bbb
+    title: ""

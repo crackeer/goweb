@@ -1,0 +1,18 @@
+base_uri:
+  default: "http://localhost:8888"
+  test: "http://localhost:9999"
+
+timeout: 10000
+sign_alg: "test"
+success_code: "0"
+code_key: "code"
+message_key: "status"
+data_key: "data"
+header:
+  source: "alliance"
+
+api:
+  api_v1_list_object:
+    path: "api/v1/list/object"
+    method: "GET"
+    content_type: ""

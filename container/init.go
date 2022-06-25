@@ -26,6 +26,8 @@ func Init(configPath string) error {
 	}
 	InitDB()
 
+	InitAPIRequestClient()
+
 	return nil
 }
 
