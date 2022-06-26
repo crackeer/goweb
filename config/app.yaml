@@ -1,0 +1,11 @@
+key: "123456789"
+port: 8888
+page_size: 20
+password_md5: "a12dadb8024fd2ddc5a86120ebf50c27"
+resource:
+  database: "./sqlite3.db"
+  public_dir: "./public"
+  page_dir: "./resource"
+  page_conf_dir: "./config/page"
+  api_conf_dir: "./config/api"
+  default_frame_file: "./resource/frame/default.html"

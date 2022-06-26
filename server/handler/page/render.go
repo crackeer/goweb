@@ -1,6 +1,8 @@
 package page
 
 import (
+	"errors"
+	"fmt"
 	"net/http"
 	"strings"
 
@@ -10,32 +12,55 @@ import (
 	"github.com/gin-gonic/gin"
 )
 
+func Render(ctx *gin.Context) {
+
+	if html, err := renderByConfig(ctx); err == nil {
+		ctx.Data(http.StatusOK, "text/html", []byte(html))
+		return
+	} else {
+		fmt.Println(err.Error())
+	}
+
+	if html, err := renderByPath(ctx); err == nil {
+		ctx.Data(http.StatusOK, "text/html", []byte(html))
+		return
+	}
+
+	ctx.Data(http.StatusOK, "text/html", []byte("page not found"))
+
+}
+
+func renderByPath(ctx *gin.Context) (string, error) {
+	appConfig := container.GetAppConfig()
+	pageFilePath := mergePath(appConfig.Resource.PageDir, strings.TrimRight(ctx.Request.URL.Path, "/")+".html")
+	return render.RenderHTML(appConfig.Resource.DefaultFrameFile, pageFilePath, nil)
+}
+
 // Render
 //  @param ctx
-func Render(ctx *gin.Context) {
+func renderByConfig(ctx *gin.Context) (string, error) {
 	pagePath := ctx.Request.URL.Path
-
 	parts := strings.Split(strings.Trim(pagePath, "/"), "/")
+	appConfig := container.GetAppConfig()
 
-	configPrefix := "config/page/"
-
-	resourcePath := "resource"
-	groupPageConfig, err := config.LoadYamlGroupPageConfig(configPrefix + parts[0])
+	pageConfigPath := mergePath(appConfig.Resource.PageConfDir, parts[0])
+	fmt.Println(appConfig.Resource, pageConfigPath)
+	groupPageConfig, err := config.LoadYamlGroupPageConfig(pageConfigPath)
 
 	if err != nil {
-		ctx.Data(http.StatusOK, "text/html", []byte(err.Error()))
-		return
+		return "", err
 	}
 	pageID := strings.Join(parts[1:], "/")
 	pageConfig, exists := groupPageConfig.List[pageID]
 	if !exists {
-		ctx.Data(http.StatusOK, "text/html", []byte("page not found"))
-		return
+		return "", errors.New("page not found")
 	}
 
 	framePath := ""
 	if len(pageConfig.FrameFile) > 0 {
-		framePath = resourcePath + "/" + pageConfig.FrameFile
+		framePath = mergePath(appConfig.Resource.PageDir, pageConfig.FrameFile)
+	} else if len(appConfig.Resource.DefaultFrameFile) > 0 {
+		framePath = appConfig.Resource.DefaultFrameFile
 	}
 
 	opt := render.DefaultOption()
@@ -46,6 +71,9 @@ func Render(ctx *gin.Context) {
 		}
 	}
 
-	raws, _ := render.RenderHTML(framePath, resourcePath+"/"+pageConfig.ContentFile, opt)
-	ctx.Data(http.StatusOK, "text/html", []byte(raws))
+	return render.RenderHTML(framePath, mergePath(appConfig.Resource.PageDir, pageConfig.ContentFile), opt)
+}
+
+func mergePath(prefix string, addFile string) string {
+	return strings.TrimRight(prefix, "/") + "/" + strings.Trim(addFile, "/")
 }

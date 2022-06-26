@@ -1,6 +1,8 @@
 package container
 
 import (
+	"errors"
+
 	"github.com/boltdb/bolt"
 	_ "github.com/mattn/go-sqlite3"
 	"gorm.io/driver/sqlite"
@@ -8,29 +10,40 @@ import (
 )
 
 var (
-	DB     *gorm.DB
-	boltDB *bolt.DB
+	SqliteDB *gorm.DB
+	boltDB   *bolt.DB
 )
 
-func InitDB() {
-	db, err := gorm.Open(sqlite.Open(config.Database), &gorm.Config{})
+// InitDB
+//  @param sqliteDBFile
+//  @param boltDBFile
+func InitDB(sqliteDBFile string, boltDBFile string) error {
+	db, err := gorm.Open(sqlite.Open(sqliteDBFile), &gorm.Config{})
 	if err != nil {
-		panic("failed to connect database")
+		return errors.New("failed to connect database")
 	}
-	DB = db
-	initBoltDB()
+	SqliteDB = db
+	if len(boltDBFile) > 0 {
+		initBoltDB(boltDBFile)
+	}
+
+	return nil
 }
 
+// GetDatabase
+//  @return *gorm.DB
 func GetDatabase() *gorm.DB {
-	return DB
+	return SqliteDB
 }
 
-func getBoltDatabase() *bolt.DB {
+// GetBoltDatabase
+//  @return *bolt.DB
+func GetBoltDatabase() *bolt.DB {
 	return boltDB
 }
 
-func initBoltDB() error {
-	db, err := bolt.Open(config.BoltDB, 0600, nil)
+func initBoltDB(boltDBFile string) error {
+	db, err := bolt.Open(boltDBFile, 0600, nil)
 	if err != nil {
 		return err
 	}

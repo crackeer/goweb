@@ -5,7 +5,6 @@ import (
 	"io/ioutil"
 	"strings"
 
-	"github.com/crackeer/goweb/container"
 	"github.com/flosch/pongo2/v4"
 	"github.com/gin-gonic/gin"
 )
@@ -61,7 +60,7 @@ func DefaultPage(ctx *gin.Context) *Page {
 	return &Page{
 		GinCtx:       ctx,
 		context:      map[string]interface{}{},
-		skeletonFile: container.GetSkeletonTemplatePath(),
+		skeletonFile: "",
 	}
 }
 
@@ -71,7 +70,7 @@ func NewPage(ctx *gin.Context, title string, data interface{}) *Page {
 		Title:        title,
 		Data:         data,
 		context:      map[string]interface{}{},
-		skeletonFile: container.GetSkeletonTemplatePath(),
+		skeletonFile: "",
 	}
 }
 

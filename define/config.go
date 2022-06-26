@@ -1,23 +1,21 @@
 package define
 
-// TemplateConfig
-type TemplateConfig struct {
-	Ext      string `json:"ext"`
-	Dir      string `json:"dir"`
-	Skeleton string `json:"skeleton"`
+// Config
+type AppConfig struct {
+	Port        int64     `yaml:"port"`
+	Resource    *Resource `yaml:"resource"`
+	PasswordMD5 string    `yaml:"password_md5"`
+	PageSize    int64     `yaml:"page_size"`
 }
 
-// Config
-type Config struct {
-	Port           int64          `json:"port"`
-	Database       string         `json:"database"`
-	BoltDB         string         `json:"bolt_db"`
-	TemplateConfig TemplateConfig `json:"template"`
-	Domain         string         `json:"domain"`
-
-	PasswordMD5 string `json:"password_md5"`
-	PageSize    int64  `json:"page_size"`
-	//Key         string `json:"key"`
+type Resource struct {
+	BoltDBFile       string `json:"bolt_db"`
+	SqliteDBFile     string `yaml:"sqlite_db_file"`
+	PageDir          string `yaml:"page_dir"`
+	PageConfDir      string `yaml:"page_conf_dir"`
+	APIConfDir       string `yaml:"api_conf_dir"`
+	PublicDir        string `yaml:"public_dir"`
+	DefaultFrameFile string `yaml:"default_frame_file"`
 }
 
 type PageConf struct {

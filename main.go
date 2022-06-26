@@ -16,7 +16,7 @@ var configPath string
 func main() {
 	fmt.Println(os.Args)
 
-	flag.StringVar(&configPath, "c", "./config.json", "config file")
+	flag.StringVar(&configPath, "c", "./config/app.yaml", "config file")
 	flag.Parse()
 
 	if len(configPath) < 1 {
@@ -28,7 +28,7 @@ func main() {
 	errChan := make(chan error)
 
 	go func() {
-		err := server.Run()
+		err := server.Run(container.GetAppConfig())
 		errChan <- err
 	}()
 

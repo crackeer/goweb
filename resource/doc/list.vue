@@ -42,8 +42,6 @@
     </div>
 </template>
 
-
-
 <script type="text/javascript">
 $(document).ready(function () {
     var vm = Vue.createApp({

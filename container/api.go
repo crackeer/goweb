@@ -8,7 +8,8 @@ import (
 var APIRequestClient *api.RequestClient
 
 // InitAPIRequestClient
-func InitAPIRequestClient() {
+func InitAPIRequestClient() error {
 	apiMetaGetter := getter.NewYamlAPIMetaGetter("config/api")
 	APIRequestClient = api.NewRequestClient(apiMetaGetter)
+	return nil
 }
