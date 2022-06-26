@@ -1,30 +1,41 @@
 package table
 
 import (
-	"fmt"
-	"net/http"
-
+	"github.com/crackeer/gopkg/ginhelper"
+	"github.com/crackeer/gopkg/util"
 	"github.com/crackeer/goweb/container"
 	"github.com/crackeer/goweb/model"
 	"github.com/gin-gonic/gin"
 )
 
-// GetList
+// List
 //  @param ctx
-func GetList(ctx *gin.Context) {
+func List(ctx *gin.Context) {
 	tableName := ctx.Param("table")
-	fmt.Println(tableName)
 	tableObj, err := model.NewTable(container.GetDatabase(), tableName)
 	if err != nil {
-		ctx.JSON(http.StatusOK, map[string]interface{}{
-			"code":    -1,
-			"message": err.Error(),
-		})
+		ginhelper.Failure(ctx, -1, err.Error())
 		return
 	}
-	list := tableObj.Query(map[string]interface{}{})
-	ctx.JSON(http.StatusOK, map[string]interface{}{
-		"code": -1,
-		"data": list,
+	params := ginhelper.AllParams(ctx)
+	page := util.LoadMap(params).GetInt64("_page_", 1)
+	pageSize := util.LoadMap(params).GetInt64("_page_size_", 20)
+	delete(params, "_page_")
+	delete(params, "_page_size_")
+
+	list := tableObj.GetPageList(params, page, pageSize)
+	total := tableObj.Count(params)
+
+	totalPage := total / pageSize
+	if total%pageSize != 0 {
+		totalPage = 1 + totalPage
+	}
+
+	ginhelper.Success(ctx, map[string]interface{}{
+		"list":       list,
+		"page_size":  pageSize,
+		"page":       page,
+		"total":      total,
+		"total_page": totalPage,
 	})
 }

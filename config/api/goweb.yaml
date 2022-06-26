@@ -15,4 +15,9 @@ api:
   api_v1_list_object:
     path: "api/v1/list/object"
     method: "GET"
-    content_type: ""
+  api_v1_query_object:
+    path: "api/v1/query/object"
+    method: "GET"
+  api_v1_distinct_object:
+    path: "api/v1/distinct/object"
+    method: "GET"

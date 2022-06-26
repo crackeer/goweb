@@ -3,7 +3,7 @@ port: 8888
 page_size: 20
 password_md5: "a12dadb8024fd2ddc5a86120ebf50c27"
 resource:
-  database: "./sqlite3.db"
+  sqlite_db_file: "./resource/sqlite3.db"
   public_dir: "./public"
   page_dir: "./resource"
   page_conf_dir: "./config/page"

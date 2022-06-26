@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/crackeer/gopkg/ginhelper"
 	"github.com/crackeer/goweb/define"
 	"github.com/crackeer/goweb/server/handler"
 	pager "github.com/crackeer/goweb/server/handler/page"
@@ -31,12 +32,15 @@ func Run(config *define.AppConfig) error {
 }
 
 func setupAPIRouter(router *gin.Engine) {
-	apiRouter := router.Group("api/v1")
-	apiRouter.GET("list/:table", table.GetList)
+	apiRouter := router.Group("api/v1", ginhelper.DoResponseJSON())
+	apiRouter.GET("query/:table", table.Query)
+	apiRouter.GET("list/:table", table.List)
+	apiRouter.POST("create/:table", table.Create)
+	apiRouter.POST("update/:table", table.Update)
+	apiRouter.POST("delete/:table", table.Delete)
+	apiRouter.GET("distinct/:table", table.Distinct)
 
-	apiRouter.POST("object/update", handler.UpdateObject)
 	apiRouter.POST("object/upload", handler.UploadObject)
-	apiRouter.POST("object/delete", handler.DeleteObject)
 	apiRouter.POST("object/share", handler.ShareObject)
 	apiRouter.GET("test", test.RequestAPI)
 }

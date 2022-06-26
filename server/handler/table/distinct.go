@@ -1,0 +1,31 @@
+package table
+
+import (
+	"github.com/crackeer/gopkg/ginhelper"
+	"github.com/crackeer/gopkg/util"
+	"github.com/crackeer/goweb/container"
+	"github.com/crackeer/goweb/model"
+	"github.com/gin-gonic/gin"
+)
+
+// Distinct
+//  @param ctx
+func Distinct(ctx *gin.Context) {
+	tableName := ctx.Param("table")
+	tableObj, err := model.NewTable(container.GetDatabase(), tableName)
+	if err != nil {
+		ginhelper.Failure(ctx, -1, err.Error())
+		return
+	}
+	params := ginhelper.AllParams(ctx)
+	field := util.LoadMap(params).GetString("_field_", "")
+	if len(field) < 1 {
+		ginhelper.Failure(ctx, -1, "_field_ required")
+		return
+	}
+	delete(params, "_field_")
+
+	list := tableObj.Distinct(field, params)
+
+	ginhelper.Success(ctx, list)
+}

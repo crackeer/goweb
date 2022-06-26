@@ -7,7 +7,9 @@ import (
 	"strings"
 
 	"github.com/crackeer/gopkg/config"
+	"github.com/crackeer/gopkg/ginhelper"
 	"github.com/crackeer/gopkg/render"
+	"github.com/crackeer/gopkg/util"
 	"github.com/crackeer/goweb/container"
 	"github.com/gin-gonic/gin"
 )
@@ -65,9 +67,14 @@ func renderByConfig(ctx *gin.Context) (string, error) {
 
 	opt := render.DefaultOption()
 	if len(pageConfig.DataAPI) > 0 {
-		response, _ := container.APIRequestClient.Request(pageConfig.DataAPI, map[string]interface{}{}, map[string]string{}, "")
+		params := ginhelper.AllParams(ctx)
+		response, _ := container.APIRequestClient.Request(pageConfig.DataAPI, params, map[string]string{}, "")
+		var apiData interface{}
+		if err := util.Unmarshal(response.Data, &apiData); err != nil {
+			apiData = response.Data
+		}
 		opt.InjectData = map[string]interface{}{
-			"api_data": response.Data,
+			"api_data": apiData,
 		}
 	}
 
