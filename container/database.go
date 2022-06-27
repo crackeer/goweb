@@ -2,39 +2,47 @@ package container
 
 import (
 	"errors"
+	"io/ioutil"
+	"strings"
 
 	"github.com/boltdb/bolt"
+	"github.com/crackeer/gopkg/util"
 	_ "github.com/mattn/go-sqlite3"
 	"gorm.io/driver/sqlite"
 	"gorm.io/gorm"
 )
 
 var (
-	SqliteDB *gorm.DB
+
+	// DBMap 
+	DBMap map[string]*gorm.DB
 	boltDB   *bolt.DB
 )
 
 // InitDB
 //  @param sqliteDBFile
 //  @param boltDBFile
-func InitDB(sqliteDBFile string, boltDBFile string) error {
-	db, err := gorm.Open(sqlite.Open(sqliteDBFile), &gorm.Config{})
-	if err != nil {
-		return errors.New("failed to connect database")
-	}
-	SqliteDB = db
-	if len(boltDBFile) > 0 {
-		initBoltDB(boltDBFile)
-	}
+func InitDB(dir string) error {
+	fileList := util.GetFiles(dir)
+	for _, file := range fileList {
+		if !strings.HasSuffix(file, ".yaml") {
+			continue
+		}
 
+	}
+}
+
+// GetDatabase 
+//  @param name 
+//  @return *gorm.DB 
+func GetDatabase(name string) *gorm.DB {
+	if db, exists := DBMap[name];exists {
+		return db
+	}
 	return nil
 }
 
-// GetDatabase
-//  @return *gorm.DB
-func GetDatabase() *gorm.DB {
-	return SqliteDB
-}
+/*
 
 // GetBoltDatabase
 //  @return *bolt.DB
@@ -68,3 +76,4 @@ func initBoltDB(boltDBFile string) error {
 		fmt.Println(string(val), bucket1, bucket2)
 	*/
 }
+*/

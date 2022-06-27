@@ -22,9 +22,6 @@ func Run(config *define.AppConfig) error {
 	//前端静态文件
 	router.StaticFS("/public", http.Dir(config.Resource.PublicDir))
 	router.GET("image/:id", handler.RenderImage)
-	//下载数据库文件
-	router.StaticFile("download/sqlite", config.Resource.SqliteDBFile)
-	router.StaticFile("download/bolt", config.Resource.BoltDBFile)
 
 	setupAPIRouter(router)
 
@@ -33,7 +30,7 @@ func Run(config *define.AppConfig) error {
 }
 
 func setupAPIRouter(router *gin.Engine) {
-	apiRouter := router.Group("api/v1", ginhelper.DoResponseJSON())
+	apiRouter := router.Group("api/v1/:database", ginhelper.DoResponseJSON())
 	apiRouter.GET("query/:table", table.Query)
 	apiRouter.GET("list/:table", table.List)
 	apiRouter.POST("create/:table", table.Create)
@@ -41,7 +38,7 @@ func setupAPIRouter(router *gin.Engine) {
 	apiRouter.POST("delete/:table", table.Delete)
 	apiRouter.GET("distinct/:table", table.Distinct)
 	apiRouter.POST("exec/sql", database.Exec)
-	apiRouter.GET("database/tables", database.Tables)
+	apiRouter.GET("tables", database.Tables)
 
 	apiRouter.POST("object/upload", handler.UploadObject)
 	apiRouter.POST("object/share", handler.ShareObject)
