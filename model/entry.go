@@ -30,7 +30,7 @@ func NewTable(db *gorm.DB, name string) (*Table, error) {
 	}, nil
 }
 
-// SetPrimaryKey
+// SetPrimaryKey ...
 //  @receiver table
 //  @param key
 func (table *Table) SetPrimaryKey(key string) {

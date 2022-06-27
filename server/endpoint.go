@@ -7,6 +7,7 @@ import (
 	"github.com/crackeer/gopkg/ginhelper"
 	"github.com/crackeer/goweb/define"
 	"github.com/crackeer/goweb/server/handler"
+	"github.com/crackeer/goweb/server/handler/database"
 	pager "github.com/crackeer/goweb/server/handler/page"
 	"github.com/crackeer/goweb/server/handler/table"
 	"github.com/crackeer/goweb/server/handler/test"
@@ -39,6 +40,8 @@ func setupAPIRouter(router *gin.Engine) {
 	apiRouter.POST("update/:table", table.Update)
 	apiRouter.POST("delete/:table", table.Delete)
 	apiRouter.GET("distinct/:table", table.Distinct)
+	apiRouter.POST("exec/sql", database.Exec)
+	apiRouter.GET("database/tables", database.Tables)
 
 	apiRouter.POST("object/upload", handler.UploadObject)
 	apiRouter.POST("object/share", handler.ShareObject)

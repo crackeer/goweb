@@ -1,6 +1,10 @@
 package model
 
-import "encoding/json"
+import (
+	"encoding/json"
+
+	"gorm.io/gorm"
+)
 
 const (
 	TypeLink  = "link"
@@ -39,4 +43,22 @@ func (object *Object) ToMap() map[string]interface{} {
 	retData := map[string]interface{}{}
 	json.Unmarshal(bytes, &retData)
 	return retData
+}
+
+// AllTables ...
+//  @param key
+//  @return []map
+func AllTables(db *gorm.DB) []map[string]interface{} {
+	list := []map[string]interface{}{}
+	db.Table("sqlite_master").Where(map[string]interface{}{
+		"type": "table",
+	}).Find(&list)
+	return list
+}
+
+// ExecSQL
+//  @param db
+//  @return []map
+func ExecSQL(db *gorm.DB, sql string) error {
+	return db.Exec(sql).Error
 }
