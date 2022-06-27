@@ -10,8 +10,9 @@ import (
 
 // Table
 type Table struct {
-	Name string
-	DB   *gorm.DB
+	Name    string
+	DB      *gorm.DB
+	OrderBy string
 
 	primaryKey string
 }
