@@ -15,7 +15,7 @@ func Init(configPath string) error {
 		panic(fmt.Sprintf("init app config error: %s", err.Error()))
 	}
 
-	if err := InitDB(AppConfig.Resource.SqliteDBFile, AppConfig.Resource.BoltDBFile); err != nil {
+	if err := InitDB(AppConfig.Resource.DatabaseConfDir, AppConfig.Env); err != nil {
 		panic(fmt.Sprintf("init database config error: %s", err.Error()))
 	}
 

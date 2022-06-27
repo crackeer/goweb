@@ -1,5 +1,5 @@
 product: &product
-  drive: "sqlite"
+  driver: "sqlite"
   file: "./resource/sqlite3.db"
 
 develop:

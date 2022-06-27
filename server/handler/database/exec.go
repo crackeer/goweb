@@ -15,7 +15,7 @@ func Exec(ctx *gin.Context) {
 		ginhelper.Failure(ctx, ginhelper.CodeDefaultError, err.Error())
 		return
 	}
-	err = model.ExecSQL(container.GetDatabase(), string(bytes))
+	err = model.ExecSQL(container.GetWriteDB(ctx.Param("database")), string(bytes))
 	if err != nil {
 		ginhelper.Failure(ctx, ginhelper.CodeDefaultError, err.Error())
 		return

@@ -10,6 +10,6 @@ import (
 // Tables ...
 //  @param ctx
 func Tables(ctx *gin.Context) {
-	list := model.AllTables(container.GetDatabase())
+	list := model.AllTables(container.GetReadDB(ctx.Param("database")))
 	ginhelper.Success(ctx, list)
 }

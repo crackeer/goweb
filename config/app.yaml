@@ -4,7 +4,7 @@ page_size: 20
 password_md5: "a12dadb8024fd2ddc5a86120ebf50c27"
 env: "develop"
 resource:
-  database_config_dir: "./config/database"
+  database_conf_dir: "./config/database"
   public_dir: "./public"
   page_dir: "./resource"
   page_conf_dir: "./config/page"
