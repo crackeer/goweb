@@ -1,0 +1,6 @@
+product: &product
+  drive: "sqlite"
+  file: "./resource/sqlite3.db"
+
+develop:
+  <<: *product

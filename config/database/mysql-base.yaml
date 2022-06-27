@@ -1,0 +1,14 @@
+product: &product
+  driver: "mysql"
+  write_host: "host:3306"
+  write_username: "admin"
+  write_password: "sjalks"
+  read_host: "rhost:3306"
+  read_username: "admin"
+  read_password: "pass"
+  database: "simple"
+  charset: "utf8mb4"
+  collation: "utf8mb4_general_ci"
+
+develop:
+  <<: *product

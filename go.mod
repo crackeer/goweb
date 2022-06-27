@@ -12,4 +12,4 @@ require (
 	gorm.io/gorm v1.22.5
 )
 
-replace github.com/crackeer/gopkg => D:/github/gopkg
+// replace github.com/crackeer/gopkg => D:/github/gopkg
