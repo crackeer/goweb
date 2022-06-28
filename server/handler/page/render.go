@@ -1,6 +1,7 @@
 package page
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"net/http"
@@ -66,17 +67,43 @@ func renderByConfig(ctx *gin.Context) (string, error) {
 	}
 
 	opt := render.DefaultOption()
-	if len(pageConfig.DataAPI) > 0 {
-		params := ginhelper.AllParams(ctx)
-		response, _ := container.APIRequestClient.Request(pageConfig.DataAPI, params, map[string]string{}, "")
+	params := ginhelper.AllParams(ctx)
+	jsData := map[string]interface{}{
+		"query": params,
+	}
+	bytes1, err := json.Marshal(pageConfig.DataAPIMesh)
+	fmt.Println(string(bytes1))
+	if len(pageConfig.DataAPIMesh) > 0 {
+		fmt.Println(pageConfig.DataAPIMesh)
+		response, _, err := container.APIRequestClient.Mesh(pageConfig.DataAPIMesh, params, map[string]string{}, "")
+		if err != nil {
+			return fmt.Sprintf("api mesh request error: %s", err.Error()), nil
+		}
+		groupAPIData := map[string]interface{}{}
+		for name, item := range response {
+			var apiData interface{}
+			if err := util.Unmarshal(item.Data, &apiData); err != nil {
+				groupAPIData[name] = item.Data
+			} else {
+				groupAPIData[name] = apiData
+			}
+		}
+		jsData["api_data"] = groupAPIData
+
+	} else if len(pageConfig.DataAPI) > 0 {
+		response, err := container.APIRequestClient.Request(pageConfig.DataAPI, params, map[string]string{}, "")
+		if err != nil {
+			return fmt.Sprintf("api request error: %s", err.Error()), nil
+		}
 		var apiData interface{}
 		if err := util.Unmarshal(response.Data, &apiData); err != nil {
 			apiData = response.Data
 		}
-		opt.InjectData = map[string]interface{}{
-			"api_data": apiData,
-		}
+		jsData["api_data"] = apiData
 	}
+	opt.InjectData = jsData
+	bytes, err := json.Marshal(opt.InjectData)
+	fmt.Println(string(bytes))
 
 	return render.RenderHTML(framePath, mergePath(appConfig.Resource.PageDir, pageConfig.ContentFile), opt)
 }

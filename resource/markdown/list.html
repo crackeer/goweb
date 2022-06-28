@@ -7,7 +7,7 @@
 <template id="template">
     <div style="padding: 1px 0 20px;">
         标签：
-        <label class="radio-inline" v-for="(item, i) in tags">
+        <label class="radio-inline" v-for="(item, i) in tag_list">
             <input type="radio" name="tag" value="{{item}}">{{item}}
         </label>
     </div>
@@ -21,7 +21,7 @@
             <th>更新时间</th>
         </tr>
         <tbody>
-        <tr v-for="(item, i) in list">
+        <tr v-for="(item, i) in list_data.list">
             <td>{{item.id}}</td>
             <td><a href="javascript:;" @click="greet(item.title, item.content)">{{item.title}}</a></td>
             <td>{{item.tag}}</td>
@@ -32,9 +32,9 @@
 
     <div style="text-align: center;">
         <div style="margin: 10px auto;">
-        <button type="button" class="btn-sm btn btn-link"  v-if="page > 1">上一页</button>
-            第{{page}}页 / 共{{total_page}}页
-            <button type="button" class="btn-sm btn btn-link" @click="next" v-if="page < total_page">下一页</button>
+        <button type="button" class="btn-sm btn btn-link"  v-if="list_data.page > 1">上一页</button>
+            第{{list_data.page}}页 / 共{{list_data.total_page}}页
+            <button type="button" class="btn-sm btn btn-link" @click="next" v-if="list_data.page < list_data.total_page">下一页</button>
             </div>
     </div>
 
@@ -66,12 +66,11 @@ $(document).ready(function () {
             let retData = __JS_DATA__.api_data
             retData['title'] = ''
             retData['content'] = ''
-            retData['tags'] = []
             return retData
         },
         template: '#template',
         mounted() {
-            this.getTag()
+            //this.getTag()
         },
         methods: {
             async getTag() {

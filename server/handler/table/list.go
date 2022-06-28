@@ -15,10 +15,10 @@ func List(ctx *gin.Context) {
 		return
 	}
 	params := ginhelper.AllParams(ctx)
-	page := util.LoadMap(params).GetInt64("_page_", 1)
-	pageSize := util.LoadMap(params).GetInt64("_page_size_", 20)
-	delete(params, "_page_")
-	delete(params, "_page_size_")
+	page := util.LoadMap(params).GetInt64("_page", 1)
+	pageSize := util.LoadMap(params).GetInt64("_page_size", 20)
+	delete(params, "_page")
+	delete(params, "_page_size")
 
 	list := tableObj.GetPageList(params, page, pageSize)
 	total := tableObj.Count(params)

@@ -15,12 +15,12 @@ func Distinct(ctx *gin.Context) {
 		return
 	}
 	params := ginhelper.AllParams(ctx)
-	field := util.LoadMap(params).GetString("_field_", "")
+	field := util.LoadMap(params).GetString("_field", "")
 	if len(field) < 1 {
 		ginhelper.Failure(ctx, -1, "_field_ required")
 		return
 	}
-	delete(params, "_field_")
+	delete(params, "_field")
 
 	list := tableObj.Distinct(field, params)
 
