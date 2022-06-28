@@ -13,4 +13,6 @@ require (
 	gorm.io/gorm v1.23.4
 )
 
-replace github.com/crackeer/gopkg => /Users/liuhu016/github/my-gopkg
+// replace github.com/crackeer/gopkg => /Users/liuhu016/github/my-gopkg
+
+replace github.com/crackeer/gopkg => D:/github/gopkg
