@@ -8,7 +8,7 @@ list:
         - 
           api_id: "goweb/api_v1_list_object"
           params:
-            tag: "@_root.tag?<nil>"
+            tag: "@_root.tag/@nil"
             _page: "@_root._page/1"
             _page_size: "@_root._page_size/20"
           as: "list_data"
@@ -20,7 +20,23 @@ list:
     type: "vue"
     href_title: "文章列表"
     default_params:
-      abc: "abc"
+    extension:
+      keys:
+        - aaa
+        - bbb
+    title: ""
+  create:
+    content_file: "markdown/create.html"
+    data_api: "goweb/api_v1_list_object"
+    data_api_mesh:
+      - 
+        - 
+          api_id: "goweb/api_v1_distinct_object"
+          params:
+            _field: "tag"
+          as: "tag_list"
+    type: "vue"
+    href_title: "文章列表"
     extension:
       keys:
         - aaa

@@ -69,12 +69,15 @@ func renderByConfig(ctx *gin.Context) (string, error) {
 	opt := render.DefaultOption()
 	params := ginhelper.AllParams(ctx)
 	jsData := map[string]interface{}{
-		"query": params,
+		"query":     params,
+		"extension": pageConfig.Extension,
 	}
 	bytes1, err := json.Marshal(pageConfig.DataAPIMesh)
 	fmt.Println(string(bytes1))
+	for k, v := range pageConfig.DefaultParams {
+		params[k] = v
+	}
 	if len(pageConfig.DataAPIMesh) > 0 {
-		fmt.Println(pageConfig.DataAPIMesh)
 		response, _, err := container.APIRequestClient.Mesh(pageConfig.DataAPIMesh, params, map[string]string{}, "")
 		if err != nil {
 			return fmt.Sprintf("api mesh request error: %s", err.Error()), nil
@@ -89,7 +92,6 @@ func renderByConfig(ctx *gin.Context) (string, error) {
 			}
 		}
 		jsData["api_data"] = groupAPIData
-
 	} else if len(pageConfig.DataAPI) > 0 {
 		response, err := container.APIRequestClient.Request(pageConfig.DataAPI, params, map[string]string{}, "")
 		if err != nil {
