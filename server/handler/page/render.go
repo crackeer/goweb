@@ -104,6 +104,7 @@ func renderByConfig(ctx *gin.Context) (string, error) {
 		jsData["api_data"] = apiData
 	}
 	opt.InjectData = jsData
+	opt.Title = pageConfig.Title
 	bytes, err := json.Marshal(opt.InjectData)
 	fmt.Println(string(bytes))
 

@@ -18,13 +18,12 @@ list:
             _field: "tag"
           as: "tag_list"
     type: "vue"
-    href_title: "文章列表"
     default_params:
     extension:
       keys:
         - aaa
         - bbb
-    title: ""
+    title: "文章列表"
   create:
     content_file: "markdown/create.html"
     data_api: "goweb/api_v1_list_object"
@@ -36,9 +35,8 @@ list:
             _field: "tag"
           as: "tag_list"
     type: "vue"
-    href_title: "文章列表"
+    title: "创建文档"
     extension:
       keys:
         - aaa
         - bbb
-    title: ""
