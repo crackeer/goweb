@@ -1,84 +1,106 @@
 <ol class="breadcrumb">
     <li><a href="/markdown/list">首页</a></li>
-    <li>修改</li>
-    <li class="active"><strong>{{data.object.title}}</strong></li>
-  </ol>
-{% if(data.object.type == "markdown")%}
-<form class="form-horizontal">
-    <div class="form-group">
-        <label for="title" class="col-sm-1 control-label">标题</label>
-        <div class="col-sm-11">
-            <input type="text" class="form-control" id="title" placeholder="请输入标题" value="{{data.object.title}}">
-        </div>
-    </div>
-</form>
-{% else %}
-   <input type="hidden" value="{{data.object.title}}" id="title">
-{% endif %}
+    <li class="active"><strong>新建</strong></li>
+</ol>
 
-<div id="editor" style="margin-top: 20px;">
-    <!-- Tips: Editor.md can auto append a `<textarea>` tag -->
-    <textarea style="display:none;">{{data.object.content}}</textarea>
-</div>
-{% if(data.object.type == "markdown")%}
-<form class="form-horizontal">
-    <div class="form-group">
-        <label for="title" class="col-sm-1 control-label">标签</label>
-        <div class="col-sm-5">
-            <input type="text" class="form-control" id="tag" placeholder="请输入标签" value="{{data.object.tag}}">
+<div id="app"></div>
+<template id="template">
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="title" class="col-sm-1 control-label">标题</label>
+            <div class="col-sm-11">
+                <input type="text" class="form-control" v-model="title" placeholder="请输入标题">
+            </div>
         </div>
+    </form>
+    <div id="editor" style="margin-top: 20px;">
+        <!-- Tips: Editor.md can auto append a `<textarea>` tag -->
+        <textarea style="display:none;"></textarea>
     </div>
-    <div class="form-group">
-        <div class="col-sm-offset-1 col-sm-9">
-            {% for tag in data.tags %}
-            <label class="radio-inline">
-                <input type="radio" name="tag-radio" value="{{tag}}" class="quick-tag" {% if(tag == data.object.tag)%}checked{% endif %}>{{tag}}
-            </label>
-            {% endfor %}
+    <form class="form-horizontal">
+        <div class="form-group">
+            <label for="title" class="col-sm-1 control-label">标签</label>
+            <div class="col-sm-5">
+                <input type="text" class="form-control" v-model="tag" placeholder="请输入标签">
+            </div>
         </div>
+        <div class="form-group">
+            <div class="col-sm-offset-1 col-sm-9">
+                <label class="radio-inline" v-for="(item, i) in tag_list">
+                    <input type="radio" name="tag" :value="item"  v-model="tag">{{item}}
+                </label>
+            </div>
+        </div>
+    </form>
+    <div style="margin: 20px auto; text-align: center;">
+        <button type="button" class="btn btn-primary" @click="doUpdate">修改</button>
     </div>
-</form>
-{% else %}
-   <input type="hidden" value="{{data.object.title}}" id="title">
-    <input type="hidden" value="{{data.object.tag}}" id="tag">
-{% endif %}
-
-<div style="margin: 20px auto; text-align: center;">
-    <button type="button" class="btn btn-primary" id="update-id">修改</button>
-</div>
-<input type="hidden" value="{{data.object.id|stringformat:"%.f"}}" id="id">
+</template>
 
 <script text="text/javascript">
-    $(document).ready(function () {
-        window.Editor =  editor = editormd("editor", {
-            width: "100%",
-            height: '800px',
-            delay: 1000,
-            path: "//cdn.jsdelivr.net/npm/editor.md@1.5.0/lib/",
-            toolbarIcons: function () {
-                // Or return editormd.toolbarModes[name]; // full, simple, mini
-                // Using "||" set icons align right.
-                return ["undo", "redo", "|", "bold", "hr", "|", "preview", "watch", "|", "fullscreen", "link", "table", "||", "watch", "fullscreen", "preview"]
+$(document).ready(function () {
+    var vm = Vue.createApp({
+        data() {
+            let retData = {}
+            retData['tag_list'] = __JS_DATA__.api_data.tag_list
+            if(__JS_DATA__.api_data.list_data.list.length> 0) {
+                retData['content'] = __JS_DATA__.api_data.list_data.list[0].content
+                retData['tag'] = __JS_DATA__.api_data.list_data.list[0].tag
+                retData['title'] = __JS_DATA__.api_data.list_data.list[0].title
+                retData['id'] = __JS_DATA__.query.id
+            }
+            retData["Editor"] = null
+            return retData
+        },
+        template: '#template',
+        mounted() {
+            this.initEditor()
+        },
+        methods: {
+            async initEditor(){
+                this.Editor = editormd("editor", {
+                    width: "100%",
+                    height: '800px',
+                    //min_height:'500px',
+                    //autoHeight      : true,
+                    //toolbar : false ,     
+                    delay: 1000,
+                    editorTheme: 'xq-light',
+                    value : this.content,
+                    path: "//cdn.jsdelivr.net/npm/editor.md@1.5.0/lib/",
+                    toolbarIcons: function () {
+                        // Or return editormd.toolbarModes[name]; // full, simple, mini
+                        // Using "||" set icons align right.
+                        return ["undo", "redo", "|", "bold", "hr", "|", "preview", "watch", "|", "fullscreen", "link", "table", "||", "watch", "fullscreen", "preview"]
+                    },
+                });
+                //this.Editor.setValue(this.content)
             },
-        });
-
-        $('.quick-tag').change(function () {
-            $('#tag').val($(this).val())
-        })
-        $('#update-id').click(function () {
-            let data = { title: $('#title').val(), content:editor.getValue(), tag: $('#tag').val(), type: 'markdown', id : parseInt($('#id').val()) }
-            $.ajax({
-                method: 'post',
-                url: '/api/object/update',
-                contentType: 'application/json',
-                data: JSON.stringify(data),
-                success: function (result) {
-                    if (result.code == 0) {
-                        window.location.href="/{{page_type}}/detail?id=" +  $('#id').val()
-                    }
+            async selectTag(value){
+                this.tag = value.target.value
+            },
+            async doUpdate() {
+                let nowTime = dayjs().format('YYYY-MM-DD HH:mm:ss')
+                let data = {
+                    title: this.title, 
+                    content:this.Editor.getValue(), 
+                    tag: this.tag, 
+                    id: this.id,
+                    update_time : nowTime
                 }
-            })
-        })
+                if(this.title.trim().length < 1) {
+                    alert('请输入标题')
+                }
+                if(this.tag.trim().length < 1) {
+                    alert('请选择tag')
+                }
+                console.log(data)
+                let result = await axios.post('/api/v1/base/update/object', data)
+                window.location.href = "/markdown/list?tag=" + this.tag
 
+            }
+        }
     })
+    vm.mount('#app')
+})
 </script>

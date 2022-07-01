@@ -17,6 +17,7 @@
             <th>ID</th>
             <th>标题</th>
             <th>标签</th>
+            <th>操作</th>
             <th>创建时间</th>
             <th>更新时间</th>
         </tr>
@@ -25,6 +26,7 @@
             <td>{{item.id}}</td>
             <td><a href="javascript:;" @click="greet(item.title, item.content)">{{item.title}}</a></td>
             <td>{{item.tag}}</td>
+            <td><a href="javascript:;" @click="deleteDoc(item.id)">删除</a><a :href="'/markdown/edit?id=' + item.id">编辑</a></td>
             <td>{{item.create_time}}</td>
             <td>{{item.update_time}}</td>
         </tr>
@@ -39,7 +41,7 @@
     </div>
 
     <div class="modal fade" id="share" tabindex="-1" role="dialog">
-        <div class="modal-dialog" role="document" style="width: 80%;">
+        <div class="modal-dialog" role="document" style="width: 70%;">
             <div class="modal-content">
                 <div class="modal-header">
                     <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
@@ -72,7 +74,6 @@ $(document).ready(function () {
         },
         template: '#template',
         mounted() {
-            console.log(this.query)
             if(this.query.tag != undefined) {
                 this.tag = this.query.tag
             }
@@ -82,6 +83,19 @@ $(document).ready(function () {
                 let result = await axios.get('/api/v1/base/distinct/object?_field_=tag')
                 console.log(result)
                 this.tags = result.data.data
+            },
+            async deleteDoc(id) {
+                bootbox.confirm("This is the default confirm!", (result) => {
+                    if(result) {
+                        this.doDelete(id)
+                    }
+                })
+            },
+            async doDelete(id) {
+                let res = axios.post('/api/v1/base/delete/object', {
+                    id
+                })
+                window.location.reload()
             },
             async greet(title, content) {
                 this.title = title                
