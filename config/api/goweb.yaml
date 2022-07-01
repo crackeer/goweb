@@ -12,12 +12,12 @@ header:
   source: "alliance"
 
 api:
-  api_v1_list_object:
+  api_v1_base_list_object:
     path: "api/v1/base/list/object"
     method: "GET"
-  api_v1_query_object:
+  api_v1_base_query_object:
     path: "api/v1/base/query/object"
     method: "GET"
-  api_v1_distinct_object:
+  api_v1_base_distinct_object:
     path: "api/v1/base/distinct/object"
     method: "GET"
