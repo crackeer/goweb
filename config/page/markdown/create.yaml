@@ -1,0 +1,11 @@
+content_file: "markdown/create.html"
+data_api: "goweb/api_v1_base_list_object"
+data_api_mesh:
+  - 
+    - 
+      api_id: "goweb/api_v1_base_distinct_object"
+      params:
+        _field: "tag"
+      as: "tag_list"
+type: "vue"
+title: "创建文档"

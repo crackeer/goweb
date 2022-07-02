@@ -1,12 +1,11 @@
-key: "123456789"
 port: 8888
-page_size: 20
 password_md5: "a12dadb8024fd2ddc5a86120ebf50c27"
 env: "develop"
-resource:
-  database_conf_dir: "./config/database"
-  public_dir: "./public"
-  page_dir: "./resource"
-  page_conf_dir: "./config/page"
-  api_conf_dir: "./config/api"
-  default_frame_file: "./resource/frame/default.html"
+resource_dir: "./resource"
+page_conf_dir: "./config/page"
+api_conf_dir: "./config/api"
+default_frame_file: "frame/default.html"
+public_file_extension:
+  css: "text/css"
+  js: "application/javascript"
+  

@@ -1,6 +1,6 @@
 base_uri:
-  default: "http://localhost:8888"
-  test: "http://localhost:9999"
+  default: "http://192.168.3.88:8888"
+  test: "http://192.168.3.88:8888"
 
 timeout: 10000
 sign_alg: "test"
@@ -13,11 +13,11 @@ header:
 
 api:
   api_v1_base_list_object:
-    path: "api/v1/base/list/object"
+    path: "database/base/list/object"
     method: "GET"
   api_v1_base_query_object:
-    path: "api/v1/base/query/object"
+    path: "database/base/query/object"
     method: "GET"
   api_v1_base_distinct_object:
-    path: "api/v1/base/distinct/object"
+    path: "database/base/distinct/object"
     method: "GET"

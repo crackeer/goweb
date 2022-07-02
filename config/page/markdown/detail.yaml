@@ -1,0 +1,10 @@
+content_file: "markdown/detail1.html"
+data_api_mesh:
+  - 
+    - 
+      api_id: "goweb/api_v1_base_query_object"
+      params:
+        id: "@_root.id/0"
+      as: "list_data"
+type: "vue"
+title: "文档详情"

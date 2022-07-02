@@ -2,29 +2,52 @@ package page
 
 import (
 	"encoding/json"
-	"errors"
 	"fmt"
+	"io/ioutil"
 	"net/http"
 	"strings"
 
-	"github.com/crackeer/gopkg/config"
-	"github.com/crackeer/gopkg/ginhelper"
+	ginhelper "github.com/crackeer/gopkg/gin"
 	"github.com/crackeer/gopkg/render"
 	"github.com/crackeer/gopkg/util"
 	"github.com/crackeer/goweb/container"
 	"github.com/gin-gonic/gin"
 )
 
+// Render
+//  @param ctx
 func Render(ctx *gin.Context) {
 
-	if html, err := renderByConfig(ctx); err == nil {
-		ctx.Data(http.StatusOK, "text/html", []byte(html))
-		return
-	} else {
-		fmt.Println(err.Error())
+	appConfig := container.GetAppConfig()
+	fmt.Println(ctx.Request.URL.Path, appConfig.PublicFileExtension)
+	isStaic := false
+	contentType := "text/plain"
+	for ext, cType := range appConfig.PublicFileExtension {
+		if strings.HasSuffix(ctx.Request.URL.Path, "."+ext) {
+			isStaic = true
+			contentType = cType
+		}
 	}
 
-	if html, err := renderByPath(ctx); err == nil {
+	path := strings.TrimRight(ctx.Request.URL.Path, "/")
+
+	if isStaic {
+		filePath := mergePath(appConfig.ResourceDir, path)
+		bytes, err := ioutil.ReadFile(filePath)
+		if err != nil {
+			ctx.Data(http.StatusOK, "text/html", []byte(err.Error()))
+		} else {
+			ctx.Data(http.StatusOK, contentType, bytes)
+		}
+		return
+	}
+
+	if html, err := renderByConfig(ctx, path); err == nil {
+		ctx.Data(http.StatusOK, "text/html", []byte(html))
+		return
+	}
+
+	if html, err := renderByPath(ctx, path); err == nil {
 		ctx.Data(http.StatusOK, "text/html", []byte(html))
 		return
 	}
@@ -33,37 +56,30 @@ func Render(ctx *gin.Context) {
 
 }
 
-func renderByPath(ctx *gin.Context) (string, error) {
+func renderByPath(ctx *gin.Context, path string) (string, error) {
 	appConfig := container.GetAppConfig()
-	pageFilePath := mergePath(appConfig.Resource.PageDir, strings.TrimRight(ctx.Request.URL.Path, "/")+".html")
-	return render.RenderHTML(appConfig.Resource.DefaultFrameFile, pageFilePath, nil)
+	pageFilePath := mergePath(appConfig.ResourceDir, path+".html")
+	return render.RenderHTML(appConfig.DefaultFrameFile, pageFilePath, nil)
 }
 
 // Render
 //  @param ctx
-func renderByConfig(ctx *gin.Context) (string, error) {
-	pagePath := ctx.Request.URL.Path
-	parts := strings.Split(strings.Trim(pagePath, "/"), "/")
+func renderByConfig(ctx *gin.Context, path string) (string, error) {
+
 	appConfig := container.GetAppConfig()
 
-	pageConfigPath := mergePath(appConfig.Resource.PageConfDir, parts[0])
-	fmt.Println(appConfig.Resource, pageConfigPath)
-	groupPageConfig, err := config.LoadYamlGroupPageConfig(pageConfigPath)
+	pageConfigPath := mergePath(appConfig.PageConfDir, path)
+	pageConfig, err := loadPageConfig(pageConfigPath)
 
 	if err != nil {
 		return "", err
 	}
-	pageID := strings.Join(parts[1:], "/")
-	pageConfig, exists := groupPageConfig.List[pageID]
-	if !exists {
-		return "", errors.New("page not found")
-	}
 
 	framePath := ""
 	if len(pageConfig.FrameFile) > 0 {
-		framePath = mergePath(appConfig.Resource.PageDir, pageConfig.FrameFile)
-	} else if len(appConfig.Resource.DefaultFrameFile) > 0 {
-		framePath = appConfig.Resource.DefaultFrameFile
+		framePath = mergePath(appConfig.ResourceDir, pageConfig.FrameFile)
+	} else if len(appConfig.DefaultFrameFile) > 0 {
+		framePath = mergePath(appConfig.ResourceDir, appConfig.DefaultFrameFile)
 	}
 
 	opt := render.DefaultOption()
@@ -108,7 +124,7 @@ func renderByConfig(ctx *gin.Context) (string, error) {
 	bytes, err := json.Marshal(opt.InjectData)
 	fmt.Println(string(bytes))
 
-	return render.RenderHTML(framePath, mergePath(appConfig.Resource.PageDir, pageConfig.ContentFile), opt)
+	return render.RenderHTML(framePath, mergePath(appConfig.ResourceDir, pageConfig.ContentFile), opt)
 }
 
 func mergePath(prefix string, addFile string) string {

@@ -1,0 +1,18 @@
+content_file: "markdown/list.html"
+data_api_mesh:
+  - 
+    - 
+      api_id: "goweb/api_v1_base_list_object"
+      params:
+        tag: "@_root.tag/@nil"
+        _page: "@_root._page/1"
+        _page_size: "@_root._page_size/20"
+      as: "list_data"
+    - 
+      api_id: "goweb/api_v1_base_distinct_object"
+      params:
+        _field: "tag"
+      as: "tag_list"
+type: "vue"
+default_params:
+title: "文章列表"
