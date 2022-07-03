@@ -1,13 +1,12 @@
 <div id="app"></div>
 <template id="template">
     <ol class="breadcrumb">
-        <li><a href="/markdown/list">首页</a></li>
         <li><a :href="'/markdown/list?tag=' + tag">{{tag}}</a></li>
         <li class="active"><strong>{{title}}</strong></li>
     </ol>
    
-    <div id="markdown-view" style="margin-top: 20px;"> </div>
-     <div style="margin: 20px auto; text-align: center;">
+     <div id="markdown-view"> </div>
+     <div style="margin: 10px auto; text-align: center;">
         <button type="button" class="btn btn-danger" @click="deleteDoc" style="margin-right: 20px;">删除</button>
         <a class="btn btn-primary" :href="'/markdown/edit?id='+this.id">修改</a>
     </div>
@@ -43,7 +42,7 @@ $(document).ready(function () {
                 })
             },
             async doDelete(id) {
-                let res = axios.post('/api/v1/base/delete/object', {
+                let res = axios.post('/api/goapi/base_object_delete', {
                     id
                 })
                 window.location.href = '/markdown/list?tag=' + this.tag

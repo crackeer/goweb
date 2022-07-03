@@ -26,11 +26,47 @@
 </head>
 
 <body>
+    <nav class="navbar navbar-default navbar-fixed-top">
+        <div class="container-fluid" style="padding: 0 7.5%;">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse"
+                    data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar">sss</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Brand</a>
+            </div>
+            <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                <ul class="nav navbar-nav">
+                    <li><a href="/markdown/list">文档列表</a></li>
+                    <li><a href="/markdown/create">新建</a></li>
+                    <li><a href="/database/exec">数据库表管理</a></li>
+                    <li class="dropdown">
+                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
+                            aria-expanded="false">Dropdown <span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#">Action</a></li>
+                            <li><a href="#">Another action</a></li>
+                            <li><a href="#">Something else here</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">Separated link</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#">One more separated link</a></li>
+                        </ul>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
     <script type="text/javascript">
         window.__JS_DATA__ = {{-JSData-}}
     </script>
 
-    <div style="margin:20px auto;width:80%;">
+    <div style="margin:0px auto;width:90%;">
         <div style="padding-top: 1px">
             {{-Content-}}
         </div>
@@ -46,6 +82,7 @@
         width: 40%;
         height: 40%;
     }
+    body { padding-top: 70px; }
 </style>
 
 </html>

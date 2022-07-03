@@ -1,7 +1,4 @@
-<ol class="breadcrumb">
-    <li><a href="/markdown/list">首页</a></li>
-    <li class="active"><strong>新建</strong></li>
-</ol>
+
 
 <div id="app"></div>
 <template id="template">
@@ -121,7 +118,7 @@ $(document).ready(function () {
                     alert('请选择tag')
                 }
                 console.log(data)
-                let result = await axios.post('/api/v1/base/create/object', data)
+                let result = await axios.post('/api/goapi/base_object_create', data)
                 window.location.href = "/markdown/list?tag=" + this.tag
 
             }

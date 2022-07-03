@@ -21,6 +21,18 @@ api:
   base_object_distinct:
     path: "database/base/distinct/object"
     method: "GET"
+  base_object_create:
+    path: "database/base/create/object"
+    method: "POST"
+    content_type: "application/json"
+  base_object_update:
+    path: "database/base/update/object"
+    method: "POST"
+    content_type: "application/json"
+  base_object_delete:
+    path: "database/base/delete/object"
+    method: "POST"
+    content_type: "application/json"
   base_tables:
     path: "database/base/tables"
     method: "GET"

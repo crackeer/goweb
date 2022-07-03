@@ -7,4 +7,5 @@ default_frame_file: "frame/default.html"
 public_file_extension:
   css: "text/css"
   js: "application/javascript"
+  ttf: "application/octet-stream"
   

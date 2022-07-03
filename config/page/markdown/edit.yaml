@@ -2,16 +2,16 @@ content_file: "markdown/edit.html"
 data_api_mesh:
   - 
     - 
-        api_id: "goapi/base_object_list"
-        params:
+      api_id: "goapi/base_object_list"
+      params:
         id: "@_root.id/0"
         _page: "@_root._page/1"
         _page_size: "@_root._page_size/20"
-        as: "list_data"
+      as: "list_data"
     - 
-        api_id: "goapi/base_object_distinct"
-        params:
+      api_id: "goapi/base_object_distinct"
+      params:
         _field: "tag"
-        as: "tag_list"
+      as: "tag_list"
 type: "vue"
 title: "修改文档"

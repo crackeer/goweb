@@ -17,7 +17,6 @@ import (
 // Render
 //  @param ctx
 func Render(ctx *gin.Context) {
-
 	appConfig := container.GetAppConfig()
 	fmt.Println(ctx.Request.URL.Path, appConfig.PublicFileExtension)
 	isStaic := false
@@ -51,7 +50,6 @@ func Render(ctx *gin.Context) {
 		ctx.Data(http.StatusOK, "text/html", []byte(html))
 		return
 	}
-
 	ctx.Data(http.StatusOK, "text/html", []byte("page not found"))
 
 }
@@ -59,7 +57,8 @@ func Render(ctx *gin.Context) {
 func renderByPath(ctx *gin.Context, path string) (string, error) {
 	appConfig := container.GetAppConfig()
 	pageFilePath := mergePath(appConfig.ResourceDir, path+".html")
-	return render.RenderHTML(appConfig.DefaultFrameFile, pageFilePath, nil)
+	framePath := mergePath(appConfig.ResourceDir, appConfig.DefaultFrameFile)
+	return render.RenderHTML(framePath, pageFilePath, nil)
 }
 
 // Render
