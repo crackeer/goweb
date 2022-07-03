@@ -19,7 +19,7 @@ func Init(configPath string) error {
 			panic(fmt.Sprintf("init database config error: %s", err.Error()))
 		}*/
 
-	InitAPIRequestClient()
+	InitAPIRequestClient(AppConfig.APIConfDir)
 
 	return nil
 }

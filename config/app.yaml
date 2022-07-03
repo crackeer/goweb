@@ -1,5 +1,4 @@
 port: 8888
-password_md5: "a12dadb8024fd2ddc5a86120ebf50c27"
 env: "develop"
 resource_dir: "./resource"
 page_conf_dir: "./config/page"

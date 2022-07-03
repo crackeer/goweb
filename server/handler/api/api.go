@@ -1,18 +1,30 @@
 package api
 
 import (
-	"net/http"
+	"fmt"
 
+	ginhelper "github.com/crackeer/gopkg/gin"
+	"github.com/crackeer/gopkg/util"
 	"github.com/crackeer/goweb/container"
 	"github.com/gin-gonic/gin"
 )
 
-// RequestAPI
+// RequestAPI ...
 //  @param ctx
 func RequestAPI(ctx *gin.Context) {
-	response, err := container.APIRequestClient.Request("goweb/api_v1_list_object", map[string]interface{}{}, map[string]string{}, "")
-	ctx.JSON(http.StatusOK, map[string]interface{}{
-		"response": string(response.OriginBody),
-		"error":    err,
-	})
+	service := ctx.Param("service")
+	api := ctx.Param("api")
+	params := ginhelper.AllParams(ctx)
+	appConfig := container.GetAppConfig()
+	response, err := container.APIRequestClient.Request(service+"/"+api, params, map[string]string{}, appConfig.Env)
+	fmt.Println(response.Data)
+	if err != nil {
+		ginhelper.Failure(ctx, -1, err.Error())
+	} else {
+		var apiData interface{}
+		if err := util.Unmarshal(response.Data, &apiData); err != nil {
+			apiData = response.Data
+		}
+		ginhelper.Success(ctx, apiData)
+	}
 }

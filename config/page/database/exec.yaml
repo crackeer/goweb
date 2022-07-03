@@ -1,0 +1,8 @@
+content_file: "database/exec.html"
+type: "vue"
+title: "执行SQL"
+data_api_mesh:
+  - 
+    - 
+      api_id: "goapi/base_tables"
+      as: "tables"

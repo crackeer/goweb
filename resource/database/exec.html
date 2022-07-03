@@ -1,0 +1,84 @@
+<h3>数据库执行SQL</h3>
+<hr/>
+<div id="app"></div>
+<template id="template">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">请输入SQL:</h3>
+        </div>
+        <div class="panel-body">
+           <textarea class="form-control" rows="10" v-model="sql"></textarea>
+           <div style="text-align: center;margin-top: 10px;">
+                <button class="btn btn-primary" type="submit" @click="execSQL">执行SQL</button>
+           </div>
+        </div>
+    </div>
+    
+    <h4>数据库中已有的表列表：</h4>
+    <ul class="nav nav-tabs" role="tablist">
+        <li role="presentation" v-for="(item, i) in tables" :class="{'active' : i==0}">
+            <a :href="'#'+item.name" aria-controls="home" role="tab" data-toggle="tab" >
+                {{item.name}}
+            </a>
+        </li>
+    </ul>
+    <!-- Tab panes -->
+    <div class="tab-content">
+        <div role="tabpanel" class="tab-pane" v-for="(item, i) in tables" :id="item.name" :class="{'active' : i==0}">
+            <textarea class="form-control" rows="10" style="margin-top: 10px;">{{item.sql}}</textarea>
+        </div>
+    
+    </div>
+    <div class="panel panel-primary" style="margin-top: 10px;">
+        <div class="panel-heading">
+            <h3 class="panel-title">SQLite SQL Sample:</h3>
+        </div>
+        <div class="panel-body">
+            <p>SQLite教程：https://www.runoob.com/sqlite/sqlite-tutorial.html</p>
+            <p>删除table</p>
+            <textarea class="form-control" rows="2">DROP TABLE table_name;
+drop table if exists table_name;
+            </textarea>
+            <p>修改表名称</p>
+            <textarea class="form-control" rows="1">ALTER TABLE UserInfo RENAME TO NewUserInfo;</textarea>
+            <p>添加表字段</p>
+            <textarea class="form-control" rows="1">ALTER TABLE UserInfo ADD COLUMN Sex Text NOT NULL;</textarea>
+             <p>查询表结构</p>
+            <textarea class="form-control" rows="1">PRAGMA TABLE_INFO (UserInfo);</textarea>
+            <p>删除表字段方法：https://blog.csdn.net/gyymen/article/details/53534267</p>
+           
+        </div>
+    </div>
+</template>
+
+<script type="text/javascript">
+$(document).ready(function () {
+    var vm = Vue.createApp({
+        data() {
+            let list = __JS_DATA__.api_data.tables
+            console.log(list)
+            return {
+                tables: list,
+                sql: ""
+            }
+        },
+        template: '#template',
+        methods: {
+            async execSQL(title, content) {
+                let result = await axios.post('/api/goapi/base_exec_sql', {
+                    sql: this.sql,
+                })
+                console.log(result)
+                if(result.data.code != 0) {
+                    alert(result.data.message)
+                } else {
+                    alert('执行成功')
+                    window.location.reload()
+                }
+                //window.location.href = "/markdown/list?tag=" + this.tag
+            }
+        }
+    })
+    vm.mount('#app')
+})
+</script>

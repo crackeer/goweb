@@ -6,18 +6,25 @@ timeout: 10000
 sign_alg: "test"
 success_code: "0"
 code_key: "code"
-message_key: "status"
+message_key: "message"
 data_key: "data"
 header:
   source: "alliance"
 
 api:
-  api_v1_base_list_object:
+  base_object_list:
     path: "database/base/list/object"
     method: "GET"
-  api_v1_base_query_object:
+  base_object_query:
     path: "database/base/query/object"
     method: "GET"
-  api_v1_base_distinct_object:
+  base_object_distinct:
     path: "database/base/distinct/object"
     method: "GET"
+  base_tables:
+    path: "database/base/tables"
+    method: "GET"
+  base_exec_sql:
+    path: "database/base/exec/sql"
+    method: "POST"
+    content_type: "application/json"
