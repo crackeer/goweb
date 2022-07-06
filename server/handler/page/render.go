@@ -1,6 +1,7 @@
 package page
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"io/ioutil"
@@ -8,10 +9,11 @@ import (
 	"strings"
 
 	ginhelper "github.com/crackeer/gopkg/gin"
-	"github.com/crackeer/gopkg/render"
 	"github.com/crackeer/gopkg/util"
 	"github.com/crackeer/goweb/container"
+	"github.com/crackeer/goweb/define"
 	"github.com/gin-gonic/gin"
+	rollRender "github.com/unrolled/render"
 )
 
 // Render
@@ -56,9 +58,7 @@ func Render(ctx *gin.Context) {
 
 func renderByPath(ctx *gin.Context, path string) (string, error) {
 	appConfig := container.GetAppConfig()
-	pageFilePath := mergePath(appConfig.ResourceDir, path+".html")
-	framePath := mergePath(appConfig.ResourceDir, appConfig.DefaultFrameFile)
-	return render.RenderHTML(framePath, pageFilePath, nil)
+	return renderCake(appConfig.ResourceDir, appConfig.DefaultFrameFile, path, nil)
 }
 
 // Render
@@ -74,14 +74,11 @@ func renderByConfig(ctx *gin.Context, path string) (string, error) {
 		return "", err
 	}
 
-	framePath := ""
+	layout := appConfig.DefaultFrameFile
 	if len(pageConfig.FrameFile) > 0 {
-		framePath = mergePath(appConfig.ResourceDir, pageConfig.FrameFile)
-	} else if len(appConfig.DefaultFrameFile) > 0 {
-		framePath = mergePath(appConfig.ResourceDir, appConfig.DefaultFrameFile)
+		layout = pageConfig.FrameFile
 	}
 
-	opt := render.DefaultOption()
 	params := ginhelper.AllParams(ctx)
 	jsData := map[string]interface{}{
 		"query":     params,
@@ -89,13 +86,64 @@ func renderByConfig(ctx *gin.Context, path string) (string, error) {
 	}
 	bytes1, err := json.Marshal(pageConfig.DataAPIMesh)
 	fmt.Println(string(bytes1))
+	apiData, err := requestDataAPI(pageConfig, params)
+	if err != nil {
+		return err.Error(), nil
+	}
+	jsData["api_data"] = apiData
+
+	//dataString, _ := util.MarshalEscapeHtml(jsData)
+
+	pageData := map[string]interface{}{
+		"title": pageConfig.Title,
+		"data":  jsData,
+	}
+
+	value, err := renderCake(appConfig.ResourceDir, layout, pageConfig.ContentFile, pageData)
+	if err != nil {
+		return err.Error(), nil
+	}
+	return value, nil
+
+	//return render.RenderHTML(framePath, mergePath(appConfig.ResourceDir, pageConfig.ContentFile), opt)
+}
+
+func mergePath(prefix string, addFile string) string {
+	return strings.TrimRight(prefix, "/") + "/" + strings.Trim(addFile, "/")
+}
+
+func renderCake(dir, layout, name string, data interface{}) (string, error) {
+	fmt.Println(dir, layout, name)
+	object := rollRender.New(rollRender.Options{
+		Directory:  dir,                           // Specify what path to load the templates from.
+		FileSystem: &rollRender.LocalFileSystem{}, // Specify filesystem from where files are loaded.
+		Layout:     layout,                        // Specify a layout template. Layouts can call {{ yield }} to render the current template or {{ partial "css" }} to render a partial from the current template.
+		Extensions: []string{".html"},             // Specify extensions to load for templates.
+		Delims: rollRender.Delims{
+			Left:  "{[{",
+			Right: "}]}",
+		},
+		Asset:      nil,
+		AssetNames: nil,
+	})
+
+	buffer := bytes.NewBufferString("")
+	err := object.HTML(buffer, 200, name, data)
+	if err != nil {
+		return "", err
+	}
+	return buffer.String(), nil
+}
+
+func requestDataAPI(pageConfig *define.PageConfig, params map[string]interface{}) (interface{}, error) {
 	for k, v := range pageConfig.DefaultParams {
 		params[k] = v
 	}
+
 	if len(pageConfig.DataAPIMesh) > 0 {
 		response, _, err := container.APIRequestClient.Mesh(pageConfig.DataAPIMesh, params, map[string]string{}, "")
 		if err != nil {
-			return fmt.Sprintf("api mesh request error: %s", err.Error()), nil
+			return nil, fmt.Errorf("api mesh request error: %s", err.Error())
 		}
 		groupAPIData := map[string]interface{}{}
 		for name, item := range response {
@@ -106,26 +154,19 @@ func renderByConfig(ctx *gin.Context, path string) (string, error) {
 				groupAPIData[name] = apiData
 			}
 		}
-		jsData["api_data"] = groupAPIData
-	} else if len(pageConfig.DataAPI) > 0 {
+		return groupAPIData, nil
+	}
+
+	if len(pageConfig.DataAPI) > 0 {
 		response, err := container.APIRequestClient.Request(pageConfig.DataAPI, params, map[string]string{}, "")
 		if err != nil {
-			return fmt.Sprintf("api request error: %s", err.Error()), nil
+			return nil, fmt.Errorf("api request error: %s", err.Error())
 		}
 		var apiData interface{}
 		if err := util.Unmarshal(response.Data, &apiData); err != nil {
 			apiData = response.Data
 		}
-		jsData["api_data"] = apiData
+		return apiData, nil
 	}
-	opt.InjectData = jsData
-	opt.Title = pageConfig.Title
-	bytes, err := json.Marshal(opt.InjectData)
-	fmt.Println(string(bytes))
-
-	return render.RenderHTML(framePath, mergePath(appConfig.ResourceDir, pageConfig.ContentFile), opt)
-}
-
-func mergePath(prefix string, addFile string) string {
-	return strings.TrimRight(prefix, "/") + "/" + strings.Trim(addFile, "/")
+	return nil, nil
 }

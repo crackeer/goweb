@@ -1,4 +1,4 @@
-content_file: "database/exec.html"
+content_file: "database/exec"
 type: "vue"
 title: "执行SQL"
 data_api_mesh:

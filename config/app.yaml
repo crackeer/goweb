@@ -3,7 +3,7 @@ env: "develop"
 resource_dir: "./resource"
 page_conf_dir: "./config/page"
 api_conf_dir: "./config/api"
-default_frame_file: "frame/default.html"
+default_frame_file: "layout/default"
 public_file_extension:
   css: "text/css"
   js: "application/javascript"
