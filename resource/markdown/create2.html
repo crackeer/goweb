@@ -1,3 +1,11 @@
+<link rel="stylesheet" href="https://unpkg.com/bytemd@1.11.0/dist/index.min.css" />
+<link rel="stylesheet" href="https://unpkg.com/github-markdown-css" />
+<script src="https://polyfill.io/v3/polyfill.min.js"></script>
+<script src="https://polyfill.io/v3/polyfill.min.js?features=Uint16Array,Array.prototype.find,smoothscroll"></script>
+<script src="https://unpkg.com/bytemd@1.17.1/dist/index.umd.js"></script>
+<script src="https://unpkg.com/@bytemd/plugin-gfm@1.17.1/dist/index.umd.js"></script>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+    integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
 <div id="app"></div>
 <template id="template">
     <form class="form-horizontal">
@@ -49,20 +57,16 @@
             },
             methods: {
                 async initEditor() {
-                    this.Editor = editor = editormd("editor", {
-                        width: "100%",
-                        height: '800px',
-                        //min_height:'500px',
-                        //autoHeight      : true,
-                        //toolbar : false ,     
-                        delay: 1000,
-                        editorTheme: 'xq-light',
-                        path: "//cdn.jsdelivr.net/npm/editor.md@1.5.0/lib/",
-                        toolbarIcons: function () {
-                            // Or return editormd.toolbarModes[name]; // full, simple, mini
-                            // Using "||" set icons align right.
-                            return ["undo", "redo", "|", "bold", "hr", "|", "preview", "watch", "|", "fullscreen", "link", "table", "||", "watch", "fullscreen", "preview"]
+                    this.Editor = new bytemd.Editor({
+                        target: document.getElementById("editor"),
+                        props: {
+                            value: ""
                         },
+                        plugins: [bytemdPluginGfm()]
+                    });
+                    this.Editor.$on('change',  (e) => {
+                        
+                        this.Editor.$set({ value: e.detail.value });
                     });
                 },
                 async doCreate() {
@@ -90,3 +94,8 @@
         vm.mount('#app')
     })
 </script>
+<style>
+    .bytemd {
+        height: calc(100vh - 100px);
+    }
+</style>
