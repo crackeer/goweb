@@ -89,7 +89,7 @@ $(document).ready(function () {
                 })
             },
             async doDelete(id) {
-                let res = axios.post('/api/v1/base/delete/object', {
+                let res = axios.post('/api/goapi/base_object_delete', {
                     id
                 })
                 window.location.reload()

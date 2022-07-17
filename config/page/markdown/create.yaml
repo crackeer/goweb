@@ -2,7 +2,7 @@ content_file: "markdown/create"
 data_api_mesh:
   - 
     - 
-      api_id: "goapi/base_object_list"
+      api_id: "goapi/base_object_distinct"
       params:
         _field: "tag"
       as: "tag_list"
