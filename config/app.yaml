@@ -9,4 +9,5 @@ public_file_extension:
   js: "application/javascript"
   ttf: "application/octet-stream"
   ico: "image/png"
+  svg: "image/svg+xml"
   
