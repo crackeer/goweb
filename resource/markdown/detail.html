@@ -1,121 +1,55 @@
-<ol class="breadcrumb">
-  <li><a href="/markdown/list?tag={{data.object.tag}}">{{data.object.tag}}</a></li>
-  <li class="active"><strong>{{data.object.title}}</strong></li>
-</ol>
-<div id="markdown-view">
-    <textarea style="display:none;">{{data.object.content}}</textarea>
-</div>
-
- <div style="margin: 0px auto; text-align: center;">
-    <button type="button" class="btn btn-danger" id="delete-id">删除</button>
-    <a class="btn btn-primary" id="update-id" href="/{{page_type}}/edit?id={{data.object.id|stringformat:"%.f"}}">修改</a>
-    <button type="button" class="btn btn-warning" id="share-id" data-toggle="share" data-target="#share">分享</button>
-</div>
-<input type="hidden" value="{{data.object.id|stringformat:" %.f"}}" id="id">
-<input type="hidden" value="{{data.object.tag}}" id="tag">
-
-<div class="modal fade" id="share" tabindex="-1" role="dialog">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span
-                        aria-hidden="true">&times;</span></button>
-                <h4 class="modal-title"">选择分享时长</h4>
-            </div>
-            <div class=" modal-body">
-                <div class="radio">
-                    <label><input type="radio" name="share-duration" value="1800" >半小时</label>
-                </div>
-                <div class="radio">
-                    <label><input type="radio" name="share-duration" value="3600" >1小时</label>
-                </div>
-                <div class="radio">
-                    <label><input type="radio" name="share-duration" value="10800" >3小时</label>
-                </div>
-                <div class="radio">
-                    <label><input type="radio" name="share-duration" value="86400" >1天</label>
-                </div>
-                <div class="radio">
-                    <label><input type="radio" name="share-duration" value="259200" >3天</label>
-                </div>
-                <div class="radio">
-                    <label><input type="radio" name="share-duration" value="604800" >一周</label>
-                </div>
-                <div class="radio">
-                    <label><input type="radio" name="share-duration" value="1296000">15天</label>
-                </div>
-                <div class="radio">
-                    <label><input type="radio" name="share-duration" value="2592000">1个月</label>
-                </div>
-            </div>
-            <div class="panel panel-primary" style="margin: 0 10px">
-                <div class="panel-heading">
-                    <h3 class="panel-title">最近3次分享</h3>
-                </div>
-                <ul class="list-group">
-                    {% for item in data.share_list %}
-                    <a class="list-group-item" href="/share/{{item.tag}}" target="_blank">
-                        <p class="title">过期时间：{{ item.content}}</p>
-                    </a>
-                    {% endfor %}
-                </ul>
-            </div>
-            <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">取消</button>
-                <button type="button" class="btn btn-primary" id="confirm-share">确认</button>
-            </div>
-        </div>
+<div id="app"></div>
+<template id="template">
+    <ol class="breadcrumb" style="margin-bottom: 0;">
+        <li>文档</li>
+        <li><a :href="'/markdown/list?tag=' + tag">{{tag}}</a></li>
+        <li class="active"><strong>{{title}}</strong></li>
+    </ol>
+   
+     <div id="markdown-view"> </div>
+     <div style="margin: 10px auto; text-align: center;">
+        <button type="button" class="btn btn-danger" @click="deleteDoc" style="margin-right: 20px;">删除</button>
+        <a class="btn btn-primary" :href="'/markdown/edit?id='+this.id">修改</a>
     </div>
-</div>
+</template>
 
 <script text="text/javascript">
-    $(document).ready(function () {
-        editormd.markdownToHTML("markdown-view", {});
-
-        $('#delete-id').click(function () {
-            bootbox.confirm("确认要删除该文档？将无法恢复", function (result) {
-                if (!result) {
-                    return
-                }
-                let data = { id: parseInt($('#id').val()) }
-                $.ajax({
-                    method: 'post',
-                    url: '/api/object/delete',
-                    contentType: 'application/json',
-                    data: JSON.stringify(data),
-                    success: function (result) {
-                        if (result.code == 0) {
-                            window.location.href = "/{{page_type}}/list?tag=" + $('#tag').val()
-                        }
+$(document).ready(function () {
+    var vm = Vue.createApp({
+        data() {
+            let retData = {}
+            retData['tag_list'] = __JS_DATA__.api_data.tag_list
+            if(__JS_DATA__.api_data.list_data.length> 0) {
+                retData['content'] = __JS_DATA__.api_data.list_data[0].content
+                retData['tag'] = __JS_DATA__.api_data.list_data[0].tag
+                retData['title'] = __JS_DATA__.api_data.list_data[0].title
+                retData['id'] = __JS_DATA__.query.id
+            }
+            retData["Editor"] = null
+            return retData
+        },
+        template: '#template',
+        mounted() {
+            editormd.markdownToHTML("markdown-view", {
+                markdown: this.content,
+            });
+        },
+        methods: {
+           async deleteDoc() {
+                bootbox.confirm("确认删除该文档？无法恢复", (result) => {
+                    if(result) {
+                        this.doDelete(this.id)
                     }
                 })
-            });
-        })
-        $('#share-id').click(function () {
-            $('#share').modal()
-        })
-
-        $('#confirm-share').click(function() {
-            let duration = $('input[name=share-duration]:checked').val()
-            let val =  parseInt(duration)
-            if(val < 1) {
-                return
-            }
-            let data = { id: parseInt($('#id').val()), duration : val}
-            $.ajax({
-                method: 'post',
-                url: '/api/object/share',
-                contentType: 'application/json',
-                data: JSON.stringify(data),
-                success: function (result) {
-                    if (result.code == 0) {
-                        $('#share').modal('hide')
-                        window.open(result.data.share_url, '_blank')
-                    }
-                }
-            })
-        })
-
+            },
+            async doDelete(id) {
+                let res = axios.post('/api/goapi/base_object_delete', {
+                    id
+                })
+                window.location.href = '/markdown/list?tag=' + this.tag
+            },
+        }
     })
-
+    vm.mount('#app')
+})
 </script>

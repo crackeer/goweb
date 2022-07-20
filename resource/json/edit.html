@@ -1,0 +1,21 @@
+<script src="/public/jsoneditor/9.8.0/jsoneditor.js"></script>
+<link href="/public/jsoneditor/9.8.0/jsoneditor.css" rel="stylesheet">
+
+<div id="jsoneditor" style="width: 100%; height: calc(100vh - 100px);"></div>
+
+<script>
+
+    const container = document.getElementById("jsoneditor")
+    const options = {
+        "mode": "code",
+        "search": true,
+        "indentation": 4,
+    }
+    const editor = new JSONEditor(container, options)
+
+    const initialJson = {
+    }
+    editor.set(initialJson)
+
+    const updatedJson = editor.get()
+</script>

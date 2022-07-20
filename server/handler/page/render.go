@@ -2,7 +2,6 @@ package page
 
 import (
 	"bytes"
-	"encoding/json"
 	"fmt"
 	"io/ioutil"
 	"net/http"
@@ -21,18 +20,18 @@ import (
 func Render(ctx *gin.Context) {
 	appConfig := container.GetAppConfig()
 	fmt.Println(ctx.Request.URL.Path, appConfig.PublicFileExtension)
-	isStaic := false
+	isStatic := false
 	contentType := "text/plain"
 	for ext, cType := range appConfig.PublicFileExtension {
 		if strings.HasSuffix(ctx.Request.URL.Path, "."+ext) {
-			isStaic = true
+			isStatic = true
 			contentType = cType
 		}
 	}
 
 	path := strings.TrimRight(ctx.Request.URL.Path, "/")
 
-	if isStaic {
+	if isStatic {
 		filePath := mergePath(appConfig.ResourceDir, path)
 		bytes, err := ioutil.ReadFile(filePath)
 		if err != nil {
@@ -58,11 +57,15 @@ func Render(ctx *gin.Context) {
 
 func renderByPath(ctx *gin.Context, path string) (string, error) {
 	appConfig := container.GetAppConfig()
-	return renderCake(appConfig.ResourceDir, appConfig.DefaultFrameFile, path, nil)
+	name := strings.Trim(path, "/")
+	return renderCake(appConfig.ResourceDir, appConfig.DefaultFrameFile, name, nil)
 }
 
-// Render
+// renderByConfig
 //  @param ctx
+//  @param path
+//  @return string
+//  @return error
 func renderByConfig(ctx *gin.Context, path string) (string, error) {
 
 	appConfig := container.GetAppConfig()
@@ -84,15 +87,11 @@ func renderByConfig(ctx *gin.Context, path string) (string, error) {
 		"query":     params,
 		"extension": pageConfig.Extension,
 	}
-	bytes1, err := json.Marshal(pageConfig.DataAPIMesh)
-	fmt.Println(string(bytes1))
 	apiData, err := requestDataAPI(pageConfig, params)
 	if err != nil {
 		return err.Error(), nil
 	}
 	jsData["api_data"] = apiData
-
-	//dataString, _ := util.MarshalEscapeHtml(jsData)
 
 	pageData := map[string]interface{}{
 		"title": pageConfig.Title,
@@ -105,7 +104,6 @@ func renderByConfig(ctx *gin.Context, path string) (string, error) {
 	}
 	return value, nil
 
-	//return render.RenderHTML(framePath, mergePath(appConfig.ResourceDir, pageConfig.ContentFile), opt)
 }
 
 func mergePath(prefix string, addFile string) string {
@@ -113,7 +111,6 @@ func mergePath(prefix string, addFile string) string {
 }
 
 func renderCake(dir, layout, name string, data interface{}) (string, error) {
-	fmt.Println(dir, layout, name)
 	object := rollRender.New(rollRender.Options{
 		Directory:  dir,                           // Specify what path to load the templates from.
 		FileSystem: &rollRender.LocalFileSystem{}, // Specify filesystem from where files are loaded.
