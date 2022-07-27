@@ -47,3 +47,7 @@ api:
     path: "database/base/create/code"
     method: "POST"
     content_type: "application/json"
+  base_code_update:
+    path: "database/base/update/code"
+    method: "POST"
+    content_type: "application/json"

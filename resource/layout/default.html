@@ -70,6 +70,20 @@
             }
             return window.__JS_DATA__.api_data[key]
         }
+        function getQuery(key, value) {
+            let url = new URLSearchParams(window.location.search)
+            //console.log(url, window.location.search, key, url.get('id') || value)
+            return url.get(key) || value
+        }
+        function appendQuery(query) {
+            let params = new URLSearchParams("")
+            Object.keys(query).forEach(k => {
+                params.append(k, query[k])
+            })
+           
+            let newURL = window.location.pathname + "?" + params.toString()
+            window.history.pushState(null, "", newURL)
+        }
     </script>
     <div style="margin:0px auto;width:90%;">
         <div style="padding-top: 1px">
