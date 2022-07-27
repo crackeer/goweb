@@ -1,21 +1,80 @@
 <script src="/public/jsoneditor/9.8.0/jsoneditor.js"></script>
 <link href="/public/jsoneditor/9.8.0/jsoneditor.css" rel="stylesheet">
 
-<div id="jsoneditor" style="width: 100%; height: calc(100vh - 100px);"></div>
 
-<script>
+<div id="app"></div>
+<template id="template">
+    <div class="row">
+        <div class="col-md-2">
+            <ul class="list-group">
+                <template v-for="item in list">
+                    <li class="list-group-item">{{item.comment}}</li>
+                </template>
+                
+            </ul>
+        </div>
+        <div class="col-md-10">
+            <div id="jsoneditor" style="width: 100%; height: calc(100vh - 100px);"></div>
+            <button @click="save">保存</button>
+        </div>
+    </div>
+</template>
 
-    const container = document.getElementById("jsoneditor")
-    const options = {
-        "mode": "code",
-        "search": true,
-        "indentation": 4,
-    }
-    const editor = new JSONEditor(container, options)
 
-    const initialJson = {
-    }
-    editor.set(initialJson)
+<script text="text/javascript">
+    $(document).ready(function () {
+        var GEditor = null
 
-    const updatedJson = editor.get()
+        var vm = Vue.createApp({
+            data() {
+                let retData = {
+                    content: {},
+                    id: ''
+                }
+                let list = __JS_DATA__.api_data.list_data.list
+                console.log(list.length, list[0])
+                if (list.length > 0) {
+                    retData['content'] = JSON.parse(list[0].content)
+                    retData['id'] = list[0].id
+                }
+                retData['list'] = list
+                return retData
+            },
+            template: '#template',
+            async mounted() {
+                await this.initEditor()
+            },
+            methods: {
+                async initEditor() {
+                    const container = document.getElementById("jsoneditor")
+                    const options = {
+                        "mode": "code",
+                        "search": true,
+                        "indentation": 4,
+                    }
+                    GEditor = new JSONEditor(container, options)
+
+                    GEditor.set(this.content)
+                },
+                async save() {
+                    let jsonRaw = JSON.stringify(GEditor.get())
+                    let fname = window.prompt("输入描述")
+                    let nowTime = dayjs().format('YYYY-MM-DD HH:mm:ss')
+                    if(fname == null) {
+                        fname = nowTime
+                    }
+                    let data = {
+                        comment: fname,
+                        content: jsonRaw,
+                        type: 'json',
+                        create_time: nowTime,
+                        update_time: nowTime
+                    }
+                    let result = await axios.post('/api/goapi/base_code_create', data)
+                    window.location.reload()
+                }
+            }
+        })
+        vm.mount('#app')
+    })
 </script>

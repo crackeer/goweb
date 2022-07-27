@@ -40,3 +40,10 @@ api:
     path: "database/base/exec/sql"
     method: "POST"
     content_type: "application/json"
+  base_code_list:
+    path: "database/base/list/code"
+    method: "GET"
+  base_code_create:
+    path: "database/base/create/code"
+    method: "POST"
+    content_type: "application/json"
