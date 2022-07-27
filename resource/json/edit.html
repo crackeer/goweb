@@ -8,7 +8,9 @@
         <div class="col-md-2">
             <ul class="list-group">
                 <template v-for="item in list">
-                    <li class="list-group-item">{{item.comment}}</li>
+                    <button class="list-group-item" :class="{
+                        'active' : item.id == id
+                    }" @click="setJSON(item)">{{item.comment}}</button>
                 </template>
                 
             </ul>
@@ -24,17 +26,18 @@
 <script text="text/javascript">
     $(document).ready(function () {
         var GEditor = null
-
         var vm = Vue.createApp({
             data() {
                 let retData = {
                     content: {},
                     id: ''
                 }
-                let list = __JS_DATA__.api_data.list_data.list
+                let list = getAPIData('list_data', {
+                    'list' : []
+                })['list']
                 console.log(list.length, list[0])
                 if (list.length > 0) {
-                    retData['content'] = JSON.parse(list[0].content)
+                    retData['content'] = list[0].content
                     retData['id'] = list[0].id
                 }
                 retData['list'] = list
@@ -43,6 +46,7 @@
             template: '#template',
             async mounted() {
                 await this.initEditor()
+                window.addEventListener('keydown', this.emitKeyDown)
             },
             methods: {
                 async initEditor() {
@@ -54,7 +58,12 @@
                     }
                     GEditor = new JSONEditor(container, options)
 
-                    GEditor.set(this.content)
+                    GEditor.set(JSON.parse(this.content))
+                },
+                setJSON(item) {
+                    this.id= item.id
+                    this.content = item.content
+                    GEditor.update(JSON.parse(this.content))
                 },
                 async save() {
                     let jsonRaw = JSON.stringify(GEditor.get())
@@ -72,6 +81,13 @@
                     }
                     let result = await axios.post('/api/goapi/base_code_create', data)
                     window.location.reload()
+                },
+                async emitKeyDown(event) {
+                    console.log(event.code, event.metaKey, event, event.code == 'KeyS' && event.metaKey)
+                    if(event.code == 'KeyS' && event.metaKey) {
+                        alert("Save")
+                        event.preventDefault()
+                    }
                 }
             }
         })

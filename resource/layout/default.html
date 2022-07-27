@@ -62,12 +62,18 @@
             </div>
         </div>
     </nav>
-   <script type="text/javascript">
-        window.__JS_DATA__ = {[{.data}]}
+    <script type="text/javascript">
+        window.__JS_DATA__ = {[{.data }]}
+        function getAPIData(key, value) {
+            if(window.__JS_DATA__.api_data[key] == undefined){
+                return value
+            }
+            return window.__JS_DATA__.api_data[key]
+        }
     </script>
     <div style="margin:0px auto;width:90%;">
         <div style="padding-top: 1px">
-             {[{ yield }]}
+            {[{ yield }]}
         </div>
     </div>
 
@@ -81,7 +87,10 @@
         width: 40%;
         height: 40%;
     }
-    body { padding-top: 70px; }
+
+    body {
+        padding-top: 70px;
+    }
 </style>
 
 </html>
