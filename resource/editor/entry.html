@@ -1,7 +1,6 @@
 <script src="/public/jsoneditor/9.8.0/jsoneditor.js"></script>
 <link href="/public/jsoneditor/9.8.0/jsoneditor.css" rel="stylesheet">
 
-
 <div id="app"></div>
 <template id="template">
     <div class="row">
@@ -18,7 +17,7 @@
 
         </div>
         <div class="col-md-10">
-            <div id="editor" style="width: 100%; ">
+            <div id="editor" :style="{'height':height}">
                 <textarea style="display:none;"></textarea>
             </div>
         </div>
@@ -35,7 +34,8 @@
                 let retData = {
                     content: '{}',
                     id: getQuery('id') || 0,
-                    language: ''
+                    language: '',
+                    height: ''
                 }
                 let list = getAPIData('list_data', {
                     'list': []
@@ -47,9 +47,12 @@
             template: '#template',
             async mounted() {
                 if (this.language == 'json') {
+                    this.height = 'calc(100vh - 100px)'
                     await this.initJSONEditor()
                 } else if (this.language == 'golang') {
                     await this.initDefaultEditor('go')
+                } else if (this.language == 'javascript') {
+                    await this.initDefaultEditor('javascript')
                 }
 
                 window.addEventListener('keydown', this.emitKeyDown)
@@ -59,7 +62,7 @@
             },
             methods: {
                 async initJSONEditor() {
-                    const container = document.getElementById("jsoneditor")
+                    const container = document.getElementById("editor")
                     const options = {
                         "mode": "code",
                         "search": true,
@@ -78,11 +81,13 @@
                         searchReplace: true,
                         theme: 'default',
                         preview: false,
-                        path: "//cdn.jsdelivr.net/npm/editor.md@1.5.0/lib/",
+                        showTrailingSpace : false,
+                        path: "/public/editormd/lib/",
+                        fontSize:'15px',
+                        //path: "//cdn.jsdelivr.net/npm/editor.md@1.5.0/lib/",
                         mode: 'go',
                         toolbarIcons: false
                     });
-                    console.log(GMDEditor)
                 },
                 async getDataByID(id) {
                     let result = await axios.get('/api/goapi/base_code_list?id=' + id)
@@ -97,9 +102,9 @@
                     if (this.language == 'json') {
                         GEditor.update(JSON.parse(this.content))
                     } else {
-                        setInterval(() => {
+                        setTimeout(() => {
                             GMDEditor.setValue(this.content)
-                        }, 1000)
+                        }, 300)
 
                     }
 
