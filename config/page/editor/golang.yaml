@@ -1,0 +1,14 @@
+content_file: "editor/entry"
+data_api_mesh:
+  - 
+    - 
+      api_id: "goapi/base_code_list"
+      params:
+        _page: "@_root._page/1"
+        _page_size: 100
+        type: "golang"
+      as: "list_data"
+type: "vue"
+title: "Golang编辑"
+extension:
+  language: "golang"

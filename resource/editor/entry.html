@@ -7,17 +7,20 @@
     <div class="row">
         <div class="col-md-2">
             <ul class="list-group">
-                <button class="list-group-item list-group-item-danger" style="text-align: center;" @click="clear">清空</button>
+                <button class="list-group-item list-group-item-danger" style="text-align: center;"
+                    @click="clear">清空</button>
                 <template v-for="item in list">
                     <button class="list-group-item" :class="{
                         'active' : item.id == id
-                    }" @click="setJSON(item)">{{item.comment}}</button>
+                    }" @click="setData(item)">{{item.comment}}</button>
                 </template>
             </ul>
-            
+
         </div>
         <div class="col-md-10">
-            <div id="jsoneditor" style="width: 100%; height: calc(100vh - 100px);"></div>
+            <div id="editor" style="width: 100%; ">
+                <textarea style="display:none;"></textarea>
+            </div>
         </div>
     </div>
 </template>
@@ -26,28 +29,36 @@
 <script text="text/javascript">
     $(document).ready(function () {
         var GEditor = null
+        var GMDEditor = null
         var vm = Vue.createApp({
             data() {
                 let retData = {
                     content: '{}',
                     id: getQuery('id') || 0,
+                    language: ''
                 }
                 let list = getAPIData('list_data', {
                     'list': []
                 })['list']
+                retData['language'] = getConfigData('language', 'json')
                 retData['list'] = list
                 return retData
             },
             template: '#template',
             async mounted() {
-                await this.initEditor()
+                if (this.language == 'json') {
+                    await this.initJSONEditor()
+                } else if (this.language == 'golang') {
+                    await this.initDefaultEditor('go')
+                }
+
                 window.addEventListener('keydown', this.emitKeyDown)
                 if (this.id > 0) {
-                    this.getJSONByID(this.id)
+                    this.getDataByID(this.id)
                 }
             },
             methods: {
-                async initEditor() {
+                async initJSONEditor() {
                     const container = document.getElementById("jsoneditor")
                     const options = {
                         "mode": "code",
@@ -55,19 +66,43 @@
                         "indentation": 4,
                     }
                     GEditor = new JSONEditor(container, options)
-                    //GEditor.set(JSON.parse(this.content))
                 },
-                async getJSONByID(id) {
+                async initDefaultEditor(mode) {
+                    GMDEditor = editormd("editor", {
+                        width: "100%",
+                        height: 'calc(100vh - 100px)',
+                        min_height: '500px',
+                        watch: false,
+                        toolbar: false,
+                        codeFold: true,
+                        searchReplace: true,
+                        theme: 'default',
+                        preview: false,
+                        path: "//cdn.jsdelivr.net/npm/editor.md@1.5.0/lib/",
+                        mode: 'go',
+                        toolbarIcons: false
+                    });
+                    console.log(GMDEditor)
+                },
+                async getDataByID(id) {
                     let result = await axios.get('/api/goapi/base_code_list?id=' + id)
                     if (result.data.code == 0 && result.data.data.list.length > 0) {
                         let data = result.data.data.list[0]
-                        this.setJSON(result.data.data.list[0])
+                        this.setData(result.data.data.list[0])
                     }
                 },
-                setJSON(item) {
+                setData(item) {
                     this.id = item.id
                     this.content = item.content
-                    GEditor.update(JSON.parse(this.content))
+                    if (this.language == 'json') {
+                        GEditor.update(JSON.parse(this.content))
+                    } else {
+                        setInterval(() => {
+                            GMDEditor.setValue(this.content)
+                        }, 1000)
+
+                    }
+
                     if (this.id > 0) {
                         appendQuery({
                             'id': item.id
@@ -78,19 +113,19 @@
                     }
 
                 },
-                async createJSON(comment, content) {
+                async create(comment, content) {
                     let nowTime = dayjs().format('YYYY-MM-DD HH:mm:ss')
                     let data = {
                         comment: comment || nowTime,
                         content: content,
-                        type: 'json',
+                        type: this.language,
                         create_time: nowTime,
                         update_time: nowTime
                     }
                     let result = await axios.post('/api/goapi/base_code_create', data)
                     window.location.reload()
                 },
-                async updateJSON(id, content) {
+                async update(id, content) {
                     let nowTime = dayjs().format('YYYY-MM-DD HH:mm:ss')
                     let data = {
                         id: id,
@@ -102,7 +137,12 @@
                 },
                 async emitKeyDown(event) {
                     if (event.code == 'KeyS' && event.metaKey) {
-                        let content = JSON.stringify(GEditor.get())
+                        let content = ''
+                        if (this.language == 'json') {
+                            content = JSON.stringify(GEditor.get())
+                        } else {
+                            content = GMDEditor.getValue()
+                        }
                         event.preventDefault()
 
                         if (this.id < 1) {
@@ -111,20 +151,28 @@
                                 inputType: 'textarea',
                                 callback: (result) => {
                                     if (result != null) {
-                                        this.createJSON(result, content)
+                                        this.create(result, content)
                                     }
                                 }
                             });
                         } else {
-                            await this.updateJSON(this.id, content)
+                            await this.update(this.id, content)
                         }
                     }
                 },
                 async clear() {
-                    this.setJSON({
-                        id : 0,
-                        content : '{}'
-                    })
+                    if (this.language == 'json') {
+                        this.setData({
+                            id: 0,
+                            content: '{}'
+                        })
+                    } else {
+                        this.setData({
+                            id: 0,
+                            content: ''
+                        })
+                    }
+
                 }
             }
         })

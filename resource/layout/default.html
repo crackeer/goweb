@@ -44,7 +44,8 @@
                     <li><a href="/markdown/list">文档列表</a></li>
                     <li><a href="/markdown/create">新建</a></li>
                     <li><a href="/database/exec">数据库表管理</a></li>
-                    <li><a href="/json/edit">JSON编辑</a></li>
+                    <li><a href="/editor/json">JSON编辑器</a></li>
+                    <li><a href="/editor/golang">Golang编辑器</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true"
                             aria-expanded="false">Dropdown <span class="caret"></span></a>
@@ -69,6 +70,12 @@
                 return value
             }
             return window.__JS_DATA__.api_data[key]
+        }
+        function getConfigData(key, value) {
+            if(window.__JS_DATA__.extension[key] == undefined){
+                return value
+            }
+            return window.__JS_DATA__.extension[key]
         }
         function getQuery(key, value) {
             let url = new URLSearchParams(window.location.search)

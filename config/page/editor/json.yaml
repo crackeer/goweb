@@ -1,4 +1,4 @@
-content_file: "json/edit"
+content_file: "editor/entry"
 data_api_mesh:
   - 
     - 
@@ -10,3 +10,5 @@ data_api_mesh:
       as: "list_data"
 type: "vue"
 title: "JSON编辑"
+extension:
+  language: "json"
