@@ -4,19 +4,22 @@
 <div id="app"></div>
 <template id="template">
     <div class="row">
-        <div class="col-md-2">
+        <div class="col-md-3">
+
+            <div class="btn-group btn-group-sm" role="group" style="margin-bottom: 5px;">
+                  <button type="button" class="btn btn-default" @click="clear">新增</button>
+                  <button type="button" class="btn btn-default btn-danger">删除当前</button>
+              </div>
+
             <ul class="list-group">
-                <button class="list-group-item list-group-item-danger" style="text-align: center;"
-                    @click="clear">清空</button>
                 <template v-for="item in list">
                     <button class="list-group-item" :class="{
                         'active' : item.id == id
-                    }" @click="setData(item)">{{item.comment}}</button>
+                    }" @click="setData(item)">{{item.comment}}<span class="badge" v-if="id == item.id && changed">有修改</span></h3></button>
                 </template>
             </ul>
-
         </div>
-        <div class="col-md-10">
+        <div class="col-md-9">
             <div id="editor" :style="{'height':height}">
                 <textarea style="display:none;"></textarea>
             </div>
@@ -35,7 +38,8 @@
                     content: '{}',
                     id: getQuery('id') || 0,
                     language: '',
-                    height: ''
+                    height: '',
+                    changed : false
                 }
                 let list = getAPIData('list_data', {
                     'list': []
@@ -81,13 +85,21 @@
                         searchReplace: true,
                         theme: 'default',
                         preview: false,
-                        showTrailingSpace : false,
+                        showTrailingSpace: false,
                         path: "/public/editormd/lib/",
-                        fontSize:'15px',
+                        fontSize: '15px',
                         //path: "//cdn.jsdelivr.net/npm/editor.md@1.5.0/lib/",
                         mode: 'go',
-                        toolbarIcons: false
+                        toolbarIcons: false,
+                        onchange : function() {
+                            alert(5454)
+                        }
                     });
+                },
+                async changed() {
+                    console.log(2653243)
+                    alert('sahjs')
+                    this.changed = true
                 },
                 async getDataByID(id) {
                     let result = await axios.get('/api/goapi/base_code_list?id=' + id)
@@ -138,7 +150,7 @@
                         update_time: nowTime
                     }
                     let result = await axios.post('/api/goapi/base_code_update', data)
-                    window.location.reload()
+                    //window.location.reload()
                 },
                 async emitKeyDown(event) {
                     if (event.code == 'KeyS' && event.metaKey) {
