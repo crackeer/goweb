@@ -51,3 +51,7 @@ api:
     path: "database/base/update/code"
     method: "POST"
     content_type: "application/json"
+  base_code_delete:
+    path: "database/base/delete/code"
+    method: "POST"
+    content_type: "application/json"

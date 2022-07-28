@@ -7,8 +7,8 @@
         <div class="col-md-3">
 
             <div class="btn-group btn-group-sm" role="group" style="margin-bottom: 5px;">
-                  <button type="button" class="btn btn-default" @click="clear">新增</button>
-                  <button type="button" class="btn btn-default btn-danger">删除当前</button>
+                  <button type="button" class="btn btn-default" @click="toCreate">新增</button>
+                  <button type="button" class="btn btn-default btn-danger" @click="toDelete" v-if="id > 0">删除当前</button>
               </div>
 
             <ul class="list-group">
@@ -21,7 +21,7 @@
         </div>
         <div class="col-md-9">
             <div id="editor" :style="{'height':height}">
-                <textarea style="display:none;"></textarea>
+                <textarea style="display:none;" @change="changeText"></textarea>
             </div>
         </div>
     </div>
@@ -84,22 +84,15 @@
                         codeFold: true,
                         searchReplace: true,
                         theme: 'default',
-                        preview: false,
-                        showTrailingSpace: false,
                         path: "/public/editormd/lib/",
                         fontSize: '15px',
                         //path: "//cdn.jsdelivr.net/npm/editor.md@1.5.0/lib/",
-                        mode: 'go',
+                        mode: mode,
                         toolbarIcons: false,
-                        onchange : function() {
-                            alert(5454)
-                        }
                     });
                 },
-                async changed() {
-                    console.log(2653243)
-                    alert('sahjs')
-                    this.changed = true
+                async changeText() {
+                    alert(7)
                 },
                 async getDataByID(id) {
                     let result = await axios.get('/api/goapi/base_code_list?id=' + id)
@@ -125,8 +118,7 @@
                             'id': item.id
                         })
                     } else {
-                        appendQuery({
-                        })
+                        appendQuery({})
                     }
 
                 },
@@ -177,7 +169,7 @@
                         }
                     }
                 },
-                async clear() {
+                async toCreate() {
                     if (this.language == 'json') {
                         this.setData({
                             id: 0,
@@ -189,7 +181,26 @@
                             content: ''
                         })
                     }
-
+                },
+                async toDelete() {
+                    if(this.id < 1) {
+                        bootbox.alert('暂无要删除的')
+                        return
+                    }
+                    bootbox.confirm('确认删除？', (result) => {
+                        if(result) {
+                            this.doDelete(this.id)
+                        }
+                    })
+                },
+                async doDelete(id) {
+                    let result = await axios.post('/api/goapi/base_code_delete', {
+                        id : id
+                    })
+                    bootbox.alert('删除成功')
+                    if(result.data.code == 0) {
+                        window.location.href = window.location.pathname
+                    }
                 }
             }
         })
