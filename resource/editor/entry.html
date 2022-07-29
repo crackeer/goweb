@@ -5,7 +5,6 @@
 <template id="template">
     <div class="row">
         <div class="col-md-3">
-
             <div class="btn-group btn-group-sm" role="group" style="margin-bottom: 5px;">
                   <button type="button" class="btn btn-default" @click="toCreate">新增</button>
                   <button type="button" class="btn btn-default btn-danger" @click="toDelete" v-if="id > 0">删除当前</button>
@@ -21,7 +20,7 @@
         </div>
         <div class="col-md-9">
             <div id="editor" :style="{'height':height}">
-                <textarea style="display:none;" @change="changeText"></textarea>
+                <textarea style="display:none;"></textarea>
             </div>
         </div>
     </div>
@@ -91,9 +90,6 @@
                         toolbarIcons: false,
                     });
                 },
-                async changeText() {
-                    alert(7)
-                },
                 async getDataByID(id) {
                     let result = await axios.get('/api/goapi/base_code_list?id=' + id)
                     if (result.data.code == 0 && result.data.data.list.length > 0) {
@@ -105,14 +101,23 @@
                     this.id = item.id
                     this.content = item.content
                     if (this.language == 'json') {
-                        GEditor.update(JSON.parse(this.content))
+                        if(GEditor == null) {
+                            setTimeout(() => {
+                                GEditor.update(JSON.parse(this.content))
+                            }, 600)
+                        } else {
+                            GEditor.update(JSON.parse(this.content))
+                        }
                     } else {
-                        setTimeout(() => {
+                        if(GMDEditor == null || GMDEditor.cm == null) {
+                            setTimeout(() => {
+                                GMDEditor.setValue(this.content)
+                            }, 1000)
+                        } else {
                             GMDEditor.setValue(this.content)
-                        }, 300)
-
+                        }
+                        
                     }
-
                     if (this.id > 0) {
                         appendQuery({
                             'id': item.id
@@ -123,7 +128,7 @@
 
                 },
                 async create(comment, content) {
-                    let nowTime = dayjs().format('YYYY-MM-DD HH:mm:ss')
+                    let nowTime = getNowTime()
                     let data = {
                         comment: comment || nowTime,
                         content: content,
@@ -135,7 +140,7 @@
                     window.location.reload()
                 },
                 async update(id, content) {
-                    let nowTime = dayjs().format('YYYY-MM-DD HH:mm:ss')
+                    let nowTime = getNowTime()
                     let data = {
                         id: id,
                         content: content,
